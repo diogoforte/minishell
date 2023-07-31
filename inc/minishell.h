@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 23:03:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 23:44:24 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
-extern char	**environ;
-
 int		parsing(char *line, char ***envp);
 int		execute(char **cmd, char ***envp);
 char	*pathfinder(char *cmd, char ***envp);
@@ -40,14 +38,12 @@ void	pwd(void);
 void	env(char ***envp);
 char	**splitonce(char *str, char delim);
 void	handle_sigint(int sig);
-
 char	*find_end(char *start);
 char	**resize_cmd(char **cmd, int count);
 void	strip_quotes(char *arg);
 char	**parse_cmd(char *line);
 char	*get_env(char ***envp, char *cmd);
 char	*assign_variable(char *cmd);
-
 void	export(char **cmd, char ***envp);
 char	**dup_envp(char **envp);
 char	**env_add(char ***envp, char *cmd);
