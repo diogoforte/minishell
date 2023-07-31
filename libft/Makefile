@@ -6,7 +6,7 @@
 #    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 17:59:29 by dinunes-          #+#    #+#              #
-#    Updated: 2022/12/09 15:20:46 by dinunes-         ###   ########.fr        #
+#    Updated: 2023/07/31 11:41:02 by dinunes-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ ft_substr ft_putchar_fd ft_putstr_fd ft_putendl_fd ft_putnbr_fd\
 ft_strnstr ft_strncmp ft_atoi ft_isalpha ft_isdigit ft_isalnum\
 ft_isascii ft_isprint ft_toupper ft_tolower ft_calloc ft_strdup\
 ft_strjoin ft_strtrim ft_strmapi ft_striteri ft_itoa ft_split\
+ft_strncpy\
 
 BONUS = ft_lstnew ft_lstadd_front ft_lstsize ft_lstlast ft_lstadd_back\
 ft_lstdelone ft_lstclear ft_lstiter ft_lstmap\

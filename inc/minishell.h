@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 10:23:30 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 12:04:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,11 @@ void	export(char **cmd);
 void	env(char **envp);
 char	**splitonce(char *str, char delim);
 void	handle_sigint(int sig);
+
+char	**parse_args(char *line);
+char	*find_end_of_arg(char *start);
+char	**resize_args(char **args, int count);
+void	strip_quotes(char *arg);
+char	**parse_args(char *line);
 
 #endif

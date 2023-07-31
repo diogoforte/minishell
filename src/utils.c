@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 08:11:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 11:41:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**splitonce(char *str, const char delim)
 	result = (char **)malloc(2 * sizeof(char *));
 	if (!result)
 		return (NULL);
-	delimpos = strchr(str, delim);
+	delimpos = ft_strchr(str, delim);
 	if (delimpos)
 	{
 		*delimpos = '\0';
