@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:41:10 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 06:07:29 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 08:11:36 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,8 @@ void	pwd(void)
 void	export(char **cmd)
 {
 	char	**env;
-	char	*var;
 	char	*value;
-	char	*name;
+	char	**split;
 
 	env = environ;
 	if (!*cmd)
@@ -72,16 +71,17 @@ void	export(char **cmd)
 	}
 	while (*cmd)
 	{
-		var = *cmd;
-		value = "";
-		if (ft_strchr(var, '=') != NULL)
+		split = splitonce(*cmd++, '=');
+		if (split[1] == NULL)
+			value = "";
+		else
+			value = split[1];
+		setenv(split[0], value, 1);
+		if (split)
 		{
-			name = strtok(var, "=");
-			value = strtok(NULL, "=");
-			var = name;
+			free(split);
+			split = NULL;
 		}
-		setenv(var, value, 1);
-		cmd++;
 	}
 }
 
