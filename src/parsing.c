@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 08:00:10 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:17:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	parsing(char *line, char **envp)
 		}
 		i++;
 	}
+	free_list(cmd);
 	return (0);
 }
 
@@ -61,16 +62,26 @@ int	execute(char **cmd, char **envp)
 {
 	pid_t	pid;
 	int		status;
+	char	*path;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(pathfinder(cmd[0], envp), cmd, envp) == -1)
+		path = pathfinder(cmd[0], envp);
+		if (path == NULL)
+		{
+			printf("Command not found: %s\n", cmd[0]);
+			exit(0);
+		}
+		if (execve(path, cmd, envp) == -1)
+		{
 			printf("Error: %s\n", strerror(errno));
+			free(path);
+			exit(0);
+		}
 	}
-	else if (pid < 0)
-		printf("Error: %s\n", strerror(errno));
 	else
 		waitpid(pid, &status, 0);
+	printf("\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:41:10 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 08:11:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:11:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	export(char **cmd)
 		setenv(split[0], value, 1);
 		if (split)
 		{
-			free(split);
+			free_list(split);
 			split = NULL;
 		}
 	}

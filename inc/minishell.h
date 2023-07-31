@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 08:00:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:23:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	pwd(void);
 void	export(char **cmd);
 void	env(char **envp);
 char	**splitonce(char *str, char delim);
+void	handle_sigint(int sig);
 
 #endif
