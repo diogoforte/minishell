@@ -6,19 +6,19 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 12:04:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 23:37:22 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	parsing(char *line, char **envp)
+int	parsing(char *line, char ***envp)
 {
 	char	**cmd;
 	int		i;
 
 	i = 0;
-	cmd = parse_args(line);
+	cmd = parse_cmd(line);
 	while (cmd[i])
 	{
 		if (builtins(cmd, envp))
@@ -34,7 +34,7 @@ int	parsing(char *line, char **envp)
 	return (0);
 }
 
-int	builtins(char **cmd, char **envp)
+int	builtins(char **cmd, char ***envp)
 {
 	if (ft_strncmp(*cmd, "echo", 4) == 0)
 		echo(cmd + 1);
@@ -43,11 +43,11 @@ int	builtins(char **cmd, char **envp)
 	else if (ft_strncmp(*cmd, "pwd", 3) == 0)
 		pwd();
 	else if (ft_strncmp(*cmd, "export", 6) == 0)
-		export(cmd + 1);
+		export(cmd + 1, envp);
 	else if (ft_strncmp(*cmd, "unset", 5) == 0)
 	{
 		if (*(++cmd))
-			unsetenv(*cmd);
+			env_remove(envp, *cmd);
 	}
 	else if (ft_strncmp(*cmd, "env", 3) == 0)
 		env(envp);
@@ -58,7 +58,7 @@ int	builtins(char **cmd, char **envp)
 	return (1);
 }
 
-int	execute(char **cmd, char **envp)
+int	execute(char **cmd, char ***envp)
 {
 	pid_t	pid;
 	int		status;
@@ -73,7 +73,7 @@ int	execute(char **cmd, char **envp)
 			printf("Command not found: %s\n", cmd[0]);
 			exit(0);
 		}
-		if (execve(path, cmd, envp) == -1)
+		if (execve(path, cmd, *envp) == -1)
 		{
 			printf("Error: %s\n", strerror(errno));
 			free(path);

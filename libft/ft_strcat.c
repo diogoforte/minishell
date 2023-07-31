@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 22:55:13 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/07/31 18:27:46 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/07/31 20:55:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+char	*ft_strcat(char *dest, const char *src)
 {
-	char	*line;
-	char	**new_envp;
+	char	*temp;
 
-	line = 0;
-	(void)ac;
-	(void)av;
-	new_envp = dup_envp(envp);
-	signal(2, handle_sigint);
-	while (1)
+	temp = dest;
+	while (*dest != '\0')
+		dest++;
+	while (*src != '\0')
 	{
-		line = readline("minishell~$ ");
-		if (line == NULL)
-			exit(0);
-		parsing(line, &new_envp);
-		free(line);
+		*dest = *src;
+		dest++;
+		src++;
 	}
+	*dest = '\0';
+	return (temp);
 }

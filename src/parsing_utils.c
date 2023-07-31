@@ -6,13 +6,13 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 12:05:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:35:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*find_end_of_arg(char *start)
+char	*find_end(char *start)
 {
 	char	*end;
 	char	quote;
@@ -35,17 +35,17 @@ char	*find_end_of_arg(char *start)
 	return (end);
 }
 
-char	**resize_args(char **args, int count)
+char	**resize_cmd(char **cmd, int count)
 {
-	char	**new_args;
+	char	**new_cmd;
 
-	new_args = malloc((count + 2) * sizeof(char *));
-	if (args != NULL)
+	new_cmd = malloc((count + 2) * sizeof(char *));
+	if (cmd != NULL)
 	{
-		ft_memcpy(new_args, args, count * sizeof(char *));
-		free(args);
+		ft_memcpy(new_cmd, cmd, count * sizeof(char *));
+		free(cmd);
 	}
-	return (new_args);
+	return (new_cmd);
 }
 
 void	strip_quotes(char *arg)
@@ -60,30 +60,31 @@ void	strip_quotes(char *arg)
 	}
 }
 
-char	**parse_args(char *line)
+char	**parse_cmd(char *line)
 {
-	char	**args;
+	char	**cmd;
 	char	*start;
 	char	*end;
-	int		count;
+	int		i;
 
-	args = NULL;
+	cmd = NULL;
 	start = line;
 	end = line;
-	count = 0;
+	i = 0;
 	while (*end)
 	{
 		while (*start && *start == ' ')
 			start++;
-		end = find_end_of_arg(start);
-		args = resize_args(args, count);
-		args[count] = ft_strncpy(malloc(end - start + 1), start, end - start);
-		args[count][end - start] = '\0';
-		strip_quotes(args[count]);
-		count++;
+		end = find_end(start);
+		cmd = resize_cmd(cmd, i);
+		cmd[i] = ft_strncpy(malloc(end - start + 1), start, end - start);
+		cmd[i][end - start] = '\0';
+		cmd[i] = assign_variable(cmd[i]);
+		strip_quotes(cmd[i]);
+		i++;
 		start = end;
 	}
-	args = resize_args(args, count);
-	args[count] = NULL;
-	return (args);
+	cmd = resize_cmd(cmd, i);
+	cmd[i] = NULL;
+	return (cmd);
 }

@@ -6,7 +6,7 @@
 #    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/10 05:13:54 by dinunes-          #+#    #+#              #
-#    Updated: 2023/07/31 12:01:26 by dinunes-         ###   ########.fr        #
+#    Updated: 2023/07/31 15:58:07 by dinunes-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 
 # Sources
-SRC = $(addprefix $(SRC_PATH), main.c parsing.c builtins.c path.c utils.c signals.c parsing_utils.c)
+SRC = $(addprefix $(SRC_PATH), main.c parsing.c builtins.c path.c utils.c signals.c parsing_utils.c env.c)
 
 # Objects
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)

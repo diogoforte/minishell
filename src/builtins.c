@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:41:10 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 10:11:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/07/31 23:35:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,25 @@ void	pwd(void)
 	}
 }
 
-void	export(char **cmd)
+void	env(char ***envp)
 {
-	char	**env;
-	char	*value;
-	char	**split;
+	int	i;
 
-	env = environ;
-	if (!*cmd)
-	{
-		while (*env)
-			printf("export %s\n", *env++);
-		return ;
-	}
-	while (*cmd)
-	{
-		split = splitonce(*cmd++, '=');
-		if (split[1] == NULL)
-			value = "";
-		else
-			value = split[1];
-		setenv(split[0], value, 1);
-		if (split)
-		{
-			free_list(split);
-			split = NULL;
-		}
-	}
+	i = 0;
+	while ((*envp)[i])
+		printf("%s\n", (*envp)[i++]);
 }
 
-void	env(char **envp)
+void	export(char **cmd, char ***envp)
 {
-	while (*envp)
-		printf("%s\n", *envp++);
+	int	i;
+
+	i = 0;
+	if (!*cmd)
+	{
+		while ((*envp)[i])
+			printf("export %s\n", (*envp)[i++]);
+		return ;
+	}
+	*envp = env_add(envp, *cmd);
 }
