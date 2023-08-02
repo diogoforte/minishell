@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 04:26:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 07:17:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parsing(char *line, char ***envp)
 	int		i;
 
 	i = 0;
-	cmd = parse_cmd(line);
+	cmd = parse_cmd(line, envp);
 	while (cmd[i])
 	{
 		if (builtins(cmd, envp))

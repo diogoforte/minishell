@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 04:23:19 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 07:23:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	strip_quotes(char *arg)
 	}
 }
 
-char	**parse_cmd(char *line)
+char	**parse_cmd(char *line, char ***envp)
 {
 	char	**cmd;
 	char	*start;
@@ -99,7 +99,7 @@ char	**parse_cmd(char *line)
 			get_redirections()->in_redir = 2;
 			start = start + 2;
 			end = find_end(start);
-			get_redirections()->heredoc = create_heredoc_file(start);
+			get_redirections()->heredoc = create_heredoc_file(start, envp);
 		}
 		else if (ft_strncmp(start, "<", 1) == 0)
 		{
@@ -117,7 +117,7 @@ char	**parse_cmd(char *line)
 			cmd = resize_cmd(cmd, i);
 			cmd[i] = ft_strncpy(malloc(end - start + 1), start, end - start);
 			cmd[i][end - start] = '\0';
-			cmd[i] = assign_variable(cmd[i]);
+			cmd[i] = assign_variable(cmd[i], envp);
 			strip_quotes(cmd[i]);
 			i++;
 		}

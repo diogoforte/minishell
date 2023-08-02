@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 04:26:59 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 07:24:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	find_delimiter(char *line)
 	return (i);
 }
 
-int	create_heredoc_file(char *str)
+int	create_heredoc_file(char *str, char*** envp)
 {
 	int		fd;
 	int		i;
@@ -40,6 +40,7 @@ int	create_heredoc_file(char *str)
 	j = 0;
 	delimiter1 = NULL;
 	delimiter2 = NULL;
+	final = NULL;
 	while (str[i] && str[i] != '\n')
 		i++;
 	delimiter1 = ft_substr(str, 0, i);
@@ -52,7 +53,7 @@ int	create_heredoc_file(char *str)
 	delimiter2 = ft_substr(str, j, ft_strlen(str) - j);
 	if (!ft_strncmp(delimiter1, delimiter2, ft_strlen(delimiter1)))
 	{
-		final = assign_variable(ft_substr(str, i + 1, j - i - 2));
+		final = assign_variable(ft_substr(str, i + 1, j - i - 2), envp);
 		write(fd, final, ft_strlen(final));
 	}
 	free(delimiter1);

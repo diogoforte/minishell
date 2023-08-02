@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 04:25:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 07:27:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_env(char ***envp, char *cmd)
 	return (NULL);
 }
 
-char	*assign_variable(char *cmd)
+char	*assign_variable(char *cmd, char ***envp)
 {
 	char	*var_start;
 	char	*var_end;
@@ -71,7 +71,7 @@ char	*assign_variable(char *cmd)
 		var_name = ft_strncpy(malloc(var_end - var_start), var_start + 1,
 				var_end - var_start - 1);
 		var_name[var_end - var_start - 1] = '\0';
-		var_value = getenv(var_name);
+		var_value = get_env(envp, var_name);
 		if (var_value == NULL)
 			var_value = "";
 		new_cmd = malloc(strlen(cmd) - strlen(var_name) - 1 + strlen(var_value)
@@ -80,7 +80,7 @@ char	*assign_variable(char *cmd)
 		new_cmd[var_start - cmd] = '\0';
 		ft_strcat(new_cmd, var_value);
 		ft_strcat(new_cmd, var_end);
-		return (assign_variable(new_cmd));
+		return (assign_variable(new_cmd, envp));
 	}
 	return (cmd);
 }
@@ -94,9 +94,7 @@ char	**dup_envp(char **envp)
 	i = 0;
 	j = 0;
 	while (envp[i])
-	{
 		i++;
-	}
 	new_envp = malloc((i + 1) * sizeof(char *));
 	while (j < i)
 	{
@@ -151,9 +149,7 @@ char	**env_remove(char ***envp, char *cmd)
 	while ((*envp)[i])
 	{
 		if (ft_strncmp((*envp)[i], cmd, ft_strlen(cmd)) != 0)
-		{
 			new_envp[j++] = ft_strdup((*envp)[i]);
-		}
 		free((*envp)[i]);
 		i++;
 	}
