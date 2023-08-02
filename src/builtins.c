@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:41:10 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 07:26:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 09:15:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	pwd(void)
 		printf("Error: %s\n", strerror(errno));
 	else
 	{
-		printf(pwd);
+		printf("%s", pwd);
 		printf("\n");
 		free(pwd);
 	}

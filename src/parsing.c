@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 07:17:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 08:56:13 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,6 @@ int	execute(char **cmd, char ***envp)
 	}
 	else
 		waitpid(pid, &status, 0);
-	if (get_redirections()->in_file)
-	{
-		free(get_redirections()->in_file);
-		get_redirections()->in_file = NULL;
-	}
-	if (get_redirections()->out_file)
-	{
-		free(get_redirections()->out_file);
-		get_redirections()->out_file = NULL;
-	}
-	get_redirections()->in_redir = 0;
-	get_redirections()->out_redir = 0;
-	get_redirections()->heredoc = 0;
 	printf("\n");
 	return (0);
 }

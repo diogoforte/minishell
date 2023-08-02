@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 07:24:25 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 08:55:06 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	find_delimiter(char *line)
 	return (i);
 }
 
-int	create_heredoc_file(char *str, char*** envp)
+int	create_heredoc_file(char *str, char ***envp)
 {
 	int		fd;
 	int		i;

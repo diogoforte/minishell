@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 07:27:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 09:21:07 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ char	*assign_variable(char *cmd, char ***envp)
 	int		apostrophe;
 	char	*tmp;
 
+	var_start = NULL;
+	var_end = NULL;
+	var_name = NULL;
+	var_value = NULL;
+	new_cmd = NULL;
 	open_quotes = 0;
 	apostrophe = 0;
 	tmp = cmd;
@@ -67,6 +72,13 @@ char	*assign_variable(char *cmd, char ***envp)
 	{
 		var_end = var_start + 1;
 		while (*var_end && (ft_isalnum(*var_end) || *var_end == '_'))
+		{
+			if (!ft_isalnum(*(var_end + 1)) && *(var_end + 1) != '_')
+				break ;
+			var_end++;
+		}
+		var_end = var_start + 1;
+		while (*var_end && (ft_isalnum(*var_end) || *var_end == '_'))
 			var_end++;
 		var_name = ft_strncpy(malloc(var_end - var_start), var_start + 1,
 				var_end - var_start - 1);
@@ -80,8 +92,10 @@ char	*assign_variable(char *cmd, char ***envp)
 		new_cmd[var_start - cmd] = '\0';
 		ft_strcat(new_cmd, var_value);
 		ft_strcat(new_cmd, var_end);
+		free(var_name);
 		return (assign_variable(new_cmd, envp));
 	}
+	free(var_name);
 	return (cmd);
 }
 
