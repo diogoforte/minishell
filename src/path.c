@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 23:32:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/01 17:30:57 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*pathfinder(char *cmd, char ***envp)
 	while (ft_strncmp((*envp)[i], "PATH", 4))
 		i++;
 	paths = ft_split((*envp)[i] + 5, ':');
-	printf("paths[0]: %s\n", paths[0]);
 	i = 0;
 	while (paths[i])
 	{

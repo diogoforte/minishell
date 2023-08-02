@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 21:35:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 04:23:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,51 @@ char	**parse_cmd(char *line)
 		while (*start && *start == ' ')
 			start++;
 		end = find_end(start);
-		cmd = resize_cmd(cmd, i);
-		cmd[i] = ft_strncpy(malloc(end - start + 1), start, end - start);
-		cmd[i][end - start] = '\0';
-		cmd[i] = assign_variable(cmd[i]);
-		strip_quotes(cmd[i]);
-		i++;
+		if (!ft_strncmp(start, ">", 1) || !ft_strncmp(start, ">>", 2))
+		{
+			if (*start == '>' && *(start + 1) != '>')
+			{
+				get_redirections()->out_redir = 1;
+				start++;
+			}
+			else
+			{
+				get_redirections()->out_redir = 2;
+				start += 2;
+			}
+			while (*start && *start == ' ')
+				start++;
+			end = find_end(start);
+			get_redirections()->out_file = ft_strncpy(malloc(end - start + 1), start, end - start);
+			get_redirections()->out_file[end - start] = '\0';
+		}
+		else if (ft_strncmp(start, "<<", 2) == 0)
+		{
+			get_redirections()->in_redir = 2;
+			start = start + 2;
+			end = find_end(start);
+			get_redirections()->heredoc = create_heredoc_file(start);
+		}
+		else if (ft_strncmp(start, "<", 1) == 0)
+		{
+			get_redirections()->in_redir = 1;
+			start++;
+			while (*start && *start == ' ')
+				start++;
+			end = find_end(start);
+			get_redirections()->in_file = ft_strncpy(malloc(end - start + 1),
+				start, end - start);
+			get_redirections()->in_file[end - start] = '\0';
+		}
+		else
+		{
+			cmd = resize_cmd(cmd, i);
+			cmd[i] = ft_strncpy(malloc(end - start + 1), start, end - start);
+			cmd[i][end - start] = '\0';
+			cmd[i] = assign_variable(cmd[i]);
+			strip_quotes(cmd[i]);
+			i++;
+		}
 		start = end;
 	}
 	cmd = resize_cmd(cmd, i);

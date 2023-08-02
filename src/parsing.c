@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/07/31 23:37:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/02 04:26:16 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,43 @@ int	execute(char **cmd, char ***envp)
 	pid_t	pid;
 	int		status;
 	char	*path;
+	int		in_fd;
+	int		out_fd;
 
+	in_fd = -1;
+	out_fd = -1;
 	pid = fork();
 	if (pid == 0)
 	{
+		if (get_redirections()->in_redir == 2 && get_redirections()->heredoc)
+		{
+			in_fd = open("/tmp/heredoc_file", O_RDONLY);
+			if (in_fd < 0)
+				perror("Error opening heredoc file");
+			dup2(in_fd, STDIN_FILENO);
+			close(in_fd);
+		}
+		else if (get_redirections()->in_redir && get_redirections()->in_file)
+		{
+			in_fd = open(get_redirections()->in_file, O_RDONLY);
+			if (in_fd < 0)
+				perror("Error opening input file");
+			dup2(in_fd, STDIN_FILENO);
+			close(in_fd);
+		}
+		if (get_redirections()->out_redir && get_redirections()->out_file)
+		{
+			if (get_redirections()->out_redir == 1)
+				out_fd = open(get_redirections()->out_file,
+						O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			else if (get_redirections()->out_redir == 2)
+				out_fd = open(get_redirections()->out_file,
+						O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (out_fd < 0)
+				perror("Error opening output file");
+			dup2(out_fd, STDOUT_FILENO);
+			close(out_fd);
+		}
 		path = pathfinder(cmd[0], envp);
 		if (path == NULL)
 		{
@@ -82,6 +115,19 @@ int	execute(char **cmd, char ***envp)
 	}
 	else
 		waitpid(pid, &status, 0);
+	if (get_redirections()->in_file)
+	{
+		free(get_redirections()->in_file);
+		get_redirections()->in_file = NULL;
+	}
+	if (get_redirections()->out_file)
+	{
+		free(get_redirections()->out_file);
+		get_redirections()->out_file = NULL;
+	}
+	get_redirections()->in_redir = 0;
+	get_redirections()->out_redir = 0;
+	get_redirections()->heredoc = 0;
 	printf("\n");
 	return (0);
 }
