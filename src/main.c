@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 04:16:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 09:15:16 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	char	**new_envp;
+	char	**cmd;
 
 	(void)ac;
 	(void)av;
@@ -65,7 +66,10 @@ int	main(int ac, char **av, char **envp)
 		if (line == NULL)
 			exit(0);
 		reset_redirections();
-		parsing(line, &new_envp);
+		cmd = parse_cmd(line, &new_envp);
+		if (cmd)
+			execute(cmd, &new_envp);
+		ft_freematrix(cmd);
 		free(line);
 	}
 }

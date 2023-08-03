@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 01:55:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:22:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,8 @@ typedef struct s_redirect
 	char	*out_file;
 }			t_redirect;
 
-int			parsing(char *line, char ***envp);
 void		execute(char **cmd, char ***envp);
 char		*pathfinder(char *cmd, char ***envp);
-void		free_list(char **list);
-char		*triple_strjoin(char *s1, char *s2, char *s3);
-void		builtins(char **cmd, char ***envp);
 void		echo(char **cmd);
 void		cd(char **cmd);
 void		pwd(void);
@@ -52,7 +48,6 @@ char		**resize_cmd(char **cmd, int count);
 void		strip_quotes(char *arg);
 char		**parse_cmd(char *line, char ***envp);
 char		*get_env(char ***envp, char *cmd);
-char		*assign_variable(char *cmd, char ***envp);
 void		export(char **cmd, char ***envp);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
@@ -60,5 +55,22 @@ t_redirect	*get_redirections(void);
 int			create_heredoc_file(char *str, char ***envp);
 int			find_delimiter(char *line);
 int			*exit_status(int *value);
+char		*assign_variable(char *cmd, char ***envp);
+int			check_quotes(char *cmd);
+int			check_apostrophe(char *cmd);
+char		*find_var_end(char *var_start);
+char		*create_new_cmd(char *cmd, char *var_start, char *var_end, char *var_name, char *var_value);
+int			write_to_file(int fd, char *str, int start, int end, char ***envp);
+char		*skip_spaces(char *start);
+char		*process_cmd(char *start, char **end, char ***cmd, int *i, char ***envp);
+char		*process_redirection_out(char *start, char **end);
+char		*process_redirection_in_heredoc(char *start, char **end, char ***envp);
+char		*process_redirection_in(char *start, char **end);
+char		*process_regular_cmd(char *start, char **end, char ***cmd, int *i, char ***envp);
+void		handle_input_redirection(void);
+void		handle_output_redirection(void);
+char		*execute_command(char **cmd, char ***envp);
+void		handle_exit_status(int *status, char ***envp);
+void		execute_builtin(char **cmd, char ***envp);
 
 #endif

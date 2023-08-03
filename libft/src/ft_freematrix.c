@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_freematrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 05:16:51 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/03 05:15:24 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/03 05:15:42 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../inc/libft.h"
 
-char	**splitonce(char *str, const char delim)
+void	ft_freematrix(char **list)
 {
-	char	**result;
-	char	*delimpos;
+	int	i;
 
-	result = (char **)malloc(2 * sizeof(char *));
-	if (!result)
-		return (NULL);
-	delimpos = ft_strchr(str, delim);
-	if (delimpos)
+	if (list)
 	{
-		*delimpos = '\0';
-		result[0] = str;
-		result[1] = delimpos + 1;
+		i = 0;
+		while (list[i])
+			free(list[i++]);
+		free(list);
 	}
-	else
-	{
-		result[0] = str;
-		result[1] = NULL;
-	}
-	return (result);
 }

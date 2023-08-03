@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 02:14:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 05:17:24 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ char	*pathfinder(char *cmd, char ***envp)
 	}
 	if (!str)
 		printf("Error: %s\n", strerror(errno));
-	free_list(paths);
+	ft_freematrix(paths);
 	return (str);
 }
