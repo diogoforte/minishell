@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 13:37:06 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:24:53 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,12 @@ int	*exit_status(int *value)
 
 void	handle_exit_status(int *status, char ***envp)
 {
-	char	*statusstr;
-	char	*final;
-
+	(void)envp;
 	waitpid(-1, status, 0);
 	if (WIFEXITED(*status))
 	{
 		*status = WEXITSTATUS(*status);
-		statusstr = ft_itoa(*status);
-		final = ft_strjoin("?=", statusstr);
 		exit_status(status);
-		*envp = env_remove(envp, "?");
-		*envp = env_add(envp, final);
-		free(statusstr);
-		free(final);
 	}
 	printf("\n");
 }
