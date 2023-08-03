@@ -6,12 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:36:28 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:35:40 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
 
 char	*process_cmd(char *start, char **end, char ***cmd, int *i, char ***envp)
 {
@@ -47,6 +46,7 @@ char	*process_redirection_out(char *start, char **end)
 	redir->out_file[*end - start] = '\0';
 	return (start);
 }
+
 char	*process_redirection_in(char *start, char **end)
 {
 	t_redirect	*redir;
@@ -67,9 +67,8 @@ char	*process_redirection_in_heredoc(char *start, char **end, char ***envp)
 	start = start + 2;
 	*end = find_end(start);
 	get_redirections()->heredoc = create_heredoc_file(start, envp);
-	return (start);
+		return (start);
 }
-
 
 char	*process_regular_cmd(char *start, char **end, char ***cmd, int *i,
 		char ***envp)

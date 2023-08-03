@@ -6,11 +6,39 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 13:56:31 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:32:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	execute_pipeline(char ***cmds, char ***envp)
+{
+	pid_t	pid;
+	int		i;
+
+	i = 0;
+	while (cmds[i])
+	{
+		pid = fork();
+		if (!pid)
+		{
+			dup2(get_pipe()->infile, 0);
+			if (cmds[i + 1])
+				dup2(get_pipe()->pipe[1], 1);
+			close(get_pipe()->pipe[0]);
+			execute(cmds[i], envp);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			waitpid(pid, NULL, 0);
+			close(get_pipe()->pipe[1]);
+			get_pipe()->infile = get_pipe()->pipe[0];
+			i++;
+		}
+	}
+}
 
 void	execute(char **cmd, char ***envp)
 {

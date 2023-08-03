@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freematrix.c                                    :+:      :+:    :+:   */
+/*   ft_freetensor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/03 05:15:24 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 17:31:39 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/03 15:02:09 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/03 16:46:37 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/libft.h"
+#include <stdlib.h>
 
-void	ft_freematrix(char **matrix)
+void	ft_freetensor(char ***tensor)
 {
 	int	i;
+	int	j;
 
-	if (matrix)
+	i = 0;
+	j = 0;
+	if (tensor)
 	{
-		i = 0;
-		while (matrix[i])
-			free(matrix[i++]);
-		free(matrix);
+		while (tensor[i] != NULL)
+		{
+			j = 0;
+			while (tensor[i][j] != NULL)
+			{
+				free(tensor[i][j]);
+				j++;
+			}
+			free(tensor[i]);
+			i++;
+		}
+		free(tensor);
 	}
 }

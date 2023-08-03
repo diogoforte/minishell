@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 12:49:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:07:56 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,4 @@ void	handle_output_redirection(void)
 		dup2(out_fd, STDOUT_FILENO);
 		close(out_fd);
 	}
-}
-
-void	reset_redirections(void)
-{
-	t_redirect	*redirections;
-
-	redirections = get_redirections();
-	redirections->in_redir = 0;
-	redirections->out_redir = 0;
-	if (redirections->in_file)
-	{
-		free(redirections->in_file);
-		redirections->in_file = NULL;
-	}
-	if (redirections->out_file)
-	{
-		free(redirections->out_file);
-		redirections->out_file = NULL;
-	}
-	redirections->heredoc = 0;
 }

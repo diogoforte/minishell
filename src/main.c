@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 14:08:50 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:36:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	char	**new_envp;
-	char	**cmd;
+	char	***cmds;
 
 	(void)ac;
 	(void)av;
@@ -28,11 +28,12 @@ int	main(int ac, char **av, char **envp)
 		line = readline("minishell~$ ");
 		if (line == NULL)
 			exit(0);
-		reset_redirections();
-		cmd = parse_cmd(line, &new_envp);
-		if (cmd)
-			execute(cmd, &new_envp);
-		ft_freematrix(cmd);
+		reset_structs();
+		cmds = parse_pipeline(line, &envp);
+		pipe(get_pipe()->pipe);
+		if (cmds)
+			execute_pipeline(cmds, &new_envp);
+		ft_freetensor(cmds);
 		free(line);
 	}
 }
