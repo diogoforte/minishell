@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 17:32:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:14:31 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,17 @@ char	***parse_pipeline(char *line, char ***envp)
 	while (commands[num_commands])
 		num_commands++;
 	parsed_pipeline = malloc((num_commands + 1) * sizeof(char **));
-	if (!parsed_pipeline)
-		return (NULL);
 	while (commands[i])
 	{
 		trimmed_command = trim_spaces(commands[i]);
-		parsed_pipeline[i] = NULL;
-		parsed_pipeline[i] = resize_cmd(parsed_pipeline[i], i);
 		parsed_pipeline[i] = parse_cmd(trimmed_command, envp);
 		i++;
 	}
 	parsed_pipeline[i] = NULL;
+	ft_freematrix(commands);
 	return (parsed_pipeline);
 }
+
 
 char	*trim_spaces(char *str)
 {

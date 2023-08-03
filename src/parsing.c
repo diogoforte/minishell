@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:36:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:07:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ char	**resize_cmd(char **cmd, int count)
 	{
 		ft_memcpy(new_cmd, cmd, count * sizeof(char *));
 		free(cmd);
+		cmd = NULL;
 	}
 	return (new_cmd);
 }
+
 
 void	strip_quotes(char *arg)
 {
