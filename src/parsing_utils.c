@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 09:24:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 01:59:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ char	**resize_cmd(char **cmd, int count)
 void	strip_quotes(char *arg)
 {
 	int	arg_len;
-	int quote_count1;
-	int quote_count2;
-	int i;
+	int	quote_count1;
+	int	quote_count2;
+	int	i;
 
 	arg_len = ft_strlen(arg);
 	quote_count1 = 0;
@@ -67,7 +67,8 @@ void	strip_quotes(char *arg)
 			quote_count2++;
 		i++;
 	}
-	if ((quote_count1 == 2 || quote_count2 == 2) && (arg[0] == '"' || arg[0] == '\''))
+	if ((quote_count1 == 2 || quote_count2 == 2) && (arg[0] == '"'
+			|| arg[0] == '\''))
 	{
 		ft_memmove(arg, arg + 1, arg_len - 1);
 		arg[arg_len - 2] = '\0';
@@ -106,7 +107,7 @@ char	**parse_cmd(char *line, char ***envp)
 				start++;
 			end = find_end(start);
 			get_redirections()->out_file = ft_strncpy(malloc(end - start + 1),
-					start, end - start);
+				start, end - start);
 			get_redirections()->out_file[end - start] = '\0';
 		}
 		else if (ft_strncmp(start, "<<", 2) == 0)

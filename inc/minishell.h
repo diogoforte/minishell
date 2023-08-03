@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 08:55:24 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 01:55:45 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ typedef struct s_redirect
 }			t_redirect;
 
 int			parsing(char *line, char ***envp);
-int			execute(char **cmd, char ***envp);
+void		execute(char **cmd, char ***envp);
 char		*pathfinder(char *cmd, char ***envp);
 void		free_list(char **list);
 char		*triple_strjoin(char *s1, char *s2, char *s3);
-int			builtins(char **cmd, char ***envp);
+void		builtins(char **cmd, char ***envp);
 void		echo(char **cmd);
 void		cd(char **cmd);
 void		pwd(void);
@@ -54,11 +54,11 @@ char		**parse_cmd(char *line, char ***envp);
 char		*get_env(char ***envp, char *cmd);
 char		*assign_variable(char *cmd, char ***envp);
 void		export(char **cmd, char ***envp);
-char		**dup_envp(char **envp);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
 t_redirect	*get_redirections(void);
 int			create_heredoc_file(char *str, char ***envp);
 int			find_delimiter(char *line);
+int			*exit_status(int *value);
 
 #endif

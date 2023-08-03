@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 08:56:13 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 02:01:36 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,15 @@ int	parsing(char *line, char ***envp)
 	cmd = parse_cmd(line, envp);
 	while (cmd[i])
 	{
-		if (builtins(cmd, envp))
+		if ((ft_strncmp(*cmd, "echo", 5) == 0) || (ft_strncmp(*cmd, "cd",
+					3) == 0) || (ft_strncmp(*cmd, "pwd", 4) == 0)
+			|| (ft_strncmp(*cmd, "export", 7) == 0) || (ft_strncmp(*cmd,
+					"unset", 6) == 0) || (ft_strncmp(*cmd, "env", 4) == 0)
+			|| (ft_strncmp(*cmd, "exit", 5) == 0))
+		{
+			builtins(cmd, envp);
 			break ;
+		}
 		else
 		{
 			execute(cmd, envp);
@@ -34,31 +41,45 @@ int	parsing(char *line, char ***envp)
 	return (0);
 }
 
-int	builtins(char **cmd, char ***envp)
+void	builtins(char **cmd, char ***envp)
 {
-	if (ft_strncmp(*cmd, "echo", 4) == 0)
-		echo(cmd + 1);
-	else if (ft_strncmp(*cmd, "cd", 2) == 0)
-		cd(cmd + 1);
-	else if (ft_strncmp(*cmd, "pwd", 3) == 0)
-		pwd();
-	else if (ft_strncmp(*cmd, "export", 6) == 0)
-		export(cmd + 1, envp);
-	else if (ft_strncmp(*cmd, "unset", 5) == 0)
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	status = -1;
+	if (!pid)
 	{
-		if (*(++cmd))
-			env_remove(envp, *cmd);
+		if (ft_strncmp(*cmd, "echo", 5) == 0)
+			echo(cmd + 1);
+		else if (ft_strncmp(*cmd, "cd", 3) == 0)
+			cd(cmd + 1);
+		else if (ft_strncmp(*cmd, "pwd", 4) == 0)
+			pwd();
+		else if (ft_strncmp(*cmd, "export", 7) == 0)
+			export(cmd + 1, envp);
+		else if (ft_strncmp(*cmd, "unset", 6) == 0)
+		{
+			if (*(++cmd))
+				env_remove(envp, *cmd);
+		}
+		else if (ft_strncmp(*cmd, "env", 4) == 0)
+			env(envp);
+		exit(EXIT_FAILURE);
 	}
-	else if (ft_strncmp(*cmd, "env", 3) == 0)
-		env(envp);
-	else if (ft_strncmp(*cmd, "exit", 4) == 0)
+	else if (ft_strncmp(*cmd, "exit", 5) == 0)
 		exit(0);
-	else
-		return (0);
-	return (1);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		status = WEXITSTATUS(status);
+		exit_status(&status);
+		*envp = env_remove(envp, "?");
+		*envp = env_add(envp, ft_strjoin("?=", ft_itoa(status)));
+	}
 }
 
-int	execute(char **cmd, char ***envp)
+void	execute(char **cmd, char ***envp)
 {
 	pid_t	pid;
 	int		status;
@@ -66,10 +87,12 @@ int	execute(char **cmd, char ***envp)
 	int		in_fd;
 	int		out_fd;
 
+	pid = fork();
+	status = -1;
+	path = NULL;
 	in_fd = -1;
 	out_fd = -1;
-	pid = fork();
-	if (pid == 0)
+	if (!pid)
 	{
 		if (get_redirections()->in_redir == 2 && get_redirections()->heredoc)
 		{
@@ -110,11 +133,16 @@ int	execute(char **cmd, char ***envp)
 		{
 			printf("Error: %s\n", strerror(errno));
 			free(path);
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 	}
-	else
-		waitpid(pid, &status, 0);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		status = WEXITSTATUS(status);
+		exit_status(&status);
+		*envp = env_remove(envp, "?");
+		*envp = env_add(envp, ft_strjoin("?=", ft_itoa(status)));
+	}
 	printf("\n");
-	return (0);
 }

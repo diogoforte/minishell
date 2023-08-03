@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 07:16:50 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 02:00:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ t_redirect	*get_redirections(void)
 	static t_redirect	redirections = {0, 0, 0, NULL, NULL};
 
 	return (&redirections);
+}
+
+int	*exit_status(int *value)
+{
+	static int	status;
+
+	status = 0;
+	if (value)
+		status = *value;
+	return (&status);
 }
 
 void	reset_redirections(void)
@@ -47,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	line = 0;
-	new_envp = dup_envp(envp);
+	new_envp = env_add(&envp, NULL);
 	signal(2, handle_sigint);
 	while (1)
 	{

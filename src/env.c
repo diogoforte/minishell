@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 09:21:07 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 02:00:16 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*assign_variable(char *cmd, char ***envp)
 	int		open_quotes;
 	int		apostrophe;
 	char	*tmp;
+	int		status;
 
 	var_start = NULL;
 	var_end = NULL;
@@ -47,6 +48,7 @@ char	*assign_variable(char *cmd, char ***envp)
 	open_quotes = 0;
 	apostrophe = 0;
 	tmp = cmd;
+	status = 0;
 	while (*tmp)
 	{
 		if (*tmp == '\'')
@@ -70,6 +72,11 @@ char	*assign_variable(char *cmd, char ***envp)
 	var_start = ft_strchr(cmd, '$');
 	if (var_start)
 	{
+		if (var_start[0] == '$' && var_start[1] == '?')
+		{
+			status = *exit_status(NULL);
+			return (ft_itoa(status));
+		}
 		var_end = var_start + 1;
 		while (*var_end && (ft_isalnum(*var_end) || *var_end == '_'))
 		{
@@ -84,7 +91,7 @@ char	*assign_variable(char *cmd, char ***envp)
 				var_end - var_start - 1);
 		var_name[var_end - var_start - 1] = '\0';
 		var_value = get_env(envp, var_name);
-		if (var_value == NULL)
+		if (!var_value)
 			var_value = "";
 		new_cmd = malloc(strlen(cmd) - strlen(var_name) - 1 + strlen(var_value)
 				+ 1);
@@ -97,26 +104,6 @@ char	*assign_variable(char *cmd, char ***envp)
 	}
 	free(var_name);
 	return (cmd);
-}
-
-char	**dup_envp(char **envp)
-{
-	int		i;
-	int		j;
-	char	**new_envp;
-
-	i = 0;
-	j = 0;
-	while (envp[i])
-		i++;
-	new_envp = malloc((i + 1) * sizeof(char *));
-	while (j < i)
-	{
-		new_envp[j] = ft_strdup(envp[j]);
-		j++;
-	}
-	new_envp[i] = NULL;
-	return (new_envp);
 }
 
 char	**env_add(char ***envp, char *cmd)
@@ -135,7 +122,8 @@ char	**env_add(char ***envp, char *cmd)
 		new_envp[j] = ft_strdup((*envp)[j]);
 		j++;
 	}
-	new_envp[j] = ft_strdup(cmd);
+	if (cmd)
+		new_envp[j++] = ft_strdup(cmd);
 	new_envp[j + 1] = NULL;
 	return (new_envp);
 }

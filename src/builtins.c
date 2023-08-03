@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:41:10 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/02 09:15:30 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 01:33:31 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	echo(char **cmd)
 	printf("\n");
 	if (!flag)
 		printf("\n");
+	exit(0);
 }
 
 void	cd(char **cmd)
@@ -39,6 +40,7 @@ void	cd(char **cmd)
 		printf("Error: %s\n", strerror(errno));
 	else if (chdir(*cmd))
 		printf("Error: %s\n", strerror(errno));
+	exit(0);
 }
 
 void	pwd(void)
@@ -54,6 +56,7 @@ void	pwd(void)
 		printf("\n");
 		free(pwd);
 	}
+	exit(0);
 }
 
 void	env(char ***envp)
@@ -63,6 +66,7 @@ void	env(char ***envp)
 	i = 0;
 	while ((*envp)[i])
 		printf("%s\n", (*envp)[i++]);
+	exit(0);
 }
 
 void	export(char **cmd, char ***envp)
@@ -77,4 +81,5 @@ void	export(char **cmd, char ***envp)
 		return ;
 	}
 	*envp = env_add(envp, *cmd);
+	exit(0);
 }
