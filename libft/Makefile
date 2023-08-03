@@ -6,7 +6,7 @@
 #    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 17:59:29 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/02 04:19:33 by dinunes-         ###   ########.fr        #
+#    Updated: 2023/08/03 02:13:55 by dinunes-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRC = $(addprefix $(SRC_PATH), ft_atoi.c  ft_lstadd_back.c  ft_memchr.c  ft_spli
                                 ft_isascii.c  ft_lstlast.c  ft_putchar_fd.c  ft_strjoin.c  ft_strtrim.c  \
                                 ft_isdigit.c  ft_lstmap.c  ft_putendl_fd.c  ft_strlcat.c  ft_substr.c  \
                                 ft_isprint.c  ft_lstnew.c  ft_putnbr_fd.c  ft_strlcpy.c  ft_tolower.c  \
-                                ft_itoa.c  ft_lstsize.c  ft_putstr_fd.c  ft_strlen.c  ft_toupper.c )
+                                ft_itoa.c  ft_lstsize.c  ft_putstr_fd.c  ft_strlen.c  ft_toupper.c \
+                                ft_triplejoin.c)
 
 # Objects
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 02:00:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 05:08:52 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ char	*get_env(char ***envp, char *cmd)
 
 	len = ft_strlen(cmd);
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	while ((*envp)[i])
 	{
-		if (ft_strncmp((*envp)[i], cmd, len) == 0 && (*envp)[i][len] == '=')
+		if (!ft_strncmp((*envp)[i], cmd, len) && (*envp)[i][len] == '=')
 			return (&(*envp)[i][len + 1]);
 		i++;
 	}
@@ -100,6 +102,7 @@ char	*assign_variable(char *cmd, char ***envp)
 		ft_strcat(new_cmd, var_value);
 		ft_strcat(new_cmd, var_end);
 		free(var_name);
+		free(cmd);
 		return (assign_variable(new_cmd, envp));
 	}
 	free(var_name);
@@ -123,8 +126,11 @@ char	**env_add(char ***envp, char *cmd)
 		j++;
 	}
 	if (cmd)
+	{
 		new_envp[j++] = ft_strdup(cmd);
-	new_envp[j + 1] = NULL;
+		free_list(*envp);
+	}
+	new_envp[j] = NULL;
 	return (new_envp);
 }
 
@@ -139,23 +145,20 @@ char	**env_remove(char ***envp, char *cmd)
 	k = 0;
 	while ((*envp)[i])
 	{
-		if (ft_strncmp((*envp)[i], cmd, ft_strlen(cmd)) == 0)
+		if (!ft_strncmp((*envp)[i], cmd, ft_strlen(cmd)))
 			k++;
 		i++;
 	}
 	new_envp = malloc((i - k + 1) * sizeof(char *));
-	if (!new_envp)
-		return (NULL);
 	i = 0;
 	j = 0;
 	while ((*envp)[i])
 	{
-		if (ft_strncmp((*envp)[i], cmd, ft_strlen(cmd)) != 0)
+		if (ft_strncmp((*envp)[i], cmd, ft_strlen(cmd)))
 			new_envp[j++] = ft_strdup((*envp)[i]);
-		free((*envp)[i]);
 		i++;
 	}
 	new_envp[j] = NULL;
-	*envp = new_envp;
+	free_list(*envp);
 	return (new_envp);
 }

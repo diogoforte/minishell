@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 02:01:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 05:10:56 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	builtins(char **cmd, char ***envp)
 {
 	pid_t	pid;
 	int		status;
+	char	*statusstr;
+	char	*final;
 
 	pid = fork();
 	status = -1;
@@ -73,9 +75,13 @@ void	builtins(char **cmd, char ***envp)
 	if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
+		statusstr = ft_itoa(status);
+		final = ft_strjoin("?=", statusstr);
 		exit_status(&status);
 		*envp = env_remove(envp, "?");
-		*envp = env_add(envp, ft_strjoin("?=", ft_itoa(status)));
+		*envp = env_add(envp, final);
+		free(statusstr);
+		free(final);
 	}
 }
 
@@ -83,6 +89,8 @@ void	execute(char **cmd, char ***envp)
 {
 	pid_t	pid;
 	int		status;
+	char	*statusstr;
+	char	*final;
 	char	*path;
 	int		in_fd;
 	int		out_fd;
@@ -140,9 +148,13 @@ void	execute(char **cmd, char ***envp)
 	if (WIFEXITED(status))
 	{
 		status = WEXITSTATUS(status);
+		statusstr = ft_itoa(status);
+		final = ft_strjoin("?=", statusstr);
 		exit_status(&status);
 		*envp = env_remove(envp, "?");
-		*envp = env_add(envp, ft_strjoin("?=", ft_itoa(status)));
+		*envp = env_add(envp, final);
+		free(statusstr);
+		free(final);
 	}
 	printf("\n");
 }

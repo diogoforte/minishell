@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_triplejoin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 09:24:17 by dinunes-          #+#    #+#             */
+/*   Created: 2023/08/03 02:13:12 by dinunes-          #+#    #+#             */
 /*   Updated: 2023/08/03 05:10:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/libft.h"
 
-/* 
-Description:
-	Counts the number of nodes in a list.
-Return Value:
-	The length of the list.
-*/
-
-int	ft_lstsize(t_list *lst)
+char	*ft_triplejoin(char *s1, char *s2, char *s3)
 {
-	int	i;
+	char	*res;
+	int		i;
 
-	i = 1;
-	if (!lst)
-		return (0);
-	while (lst->next)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
+	i = 0;
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	res = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	while (*s1)
+		res[i++] = *s1++;
+	while (*s2)
+		res[i++] = *s2++;
+	while (*s3)
+		res[i++] = *s3++;
+	res[i] = 0;
+	return (res);
 }

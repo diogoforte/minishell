@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 02:00:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:16:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	main(int ac, char **av, char **envp)
 		line = readline("minishell~$ ");
 		if (line == NULL)
 			exit(0);
-		parsing(line, &new_envp);
 		reset_redirections();
+		parsing(line, &new_envp);
 		free(line);
 	}
 }
