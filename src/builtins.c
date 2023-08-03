@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:47:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:56:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	echo(char **cmd)
 		if (*cmd)
 			printf(" ");
 	}
-	printf("\n");
 	if (!flag)
 		printf("\n");
 	exit(0);
@@ -36,11 +35,19 @@ void	echo(char **cmd)
 
 void	cd(char **cmd)
 {
-	if (!cmd)
-		printf("Error: %s\n", strerror(errno));
+	int	status;
+
+	status = 0;
+	if (!*cmd)
+		chdir("/home/diogo");
 	else if (chdir(*cmd))
+	{
 		printf("Error: %s\n", strerror(errno));
-	exit(0);
+		status = 1;
+		exit_status(&status);
+		return ;
+	}
+	exit_status(0);
 }
 
 void	pwd(void)
@@ -49,7 +56,10 @@ void	pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
+	{
 		printf("Error: %s\n", strerror(errno));
+		exit(1);
+	}
 	else
 	{
 		printf("%s", pwd);
@@ -72,14 +82,16 @@ void	env(char ***envp)
 void	export(char **cmd, char ***envp)
 {
 	int	i;
+	int	status;
 
 	i = 0;
+	status = 0;
 	if (!*cmd)
 	{
 		while ((*envp)[i])
 			printf("export %s\n", (*envp)[i++]);
-		return ;
+		exit_status(&status);
 	}
 	*envp = env_add(envp, *cmd);
-	exit(0);
+	exit_status(&status);
 }

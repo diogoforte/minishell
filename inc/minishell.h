@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:22:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:32:59 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ void		handle_output_redirection(void);
 char		*execute_command(char **cmd, char ***envp);
 void		handle_exit_status(int *status, char ***envp);
 void		execute_builtin(char **cmd, char ***envp);
+int			execute_builtin_main(char **cmd, char ***envp);
+void		reset_redirections(void);
 
 #endif

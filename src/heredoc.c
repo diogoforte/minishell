@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 10:32:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:53:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,3 @@ int	find_delimiter(char *line)
 		i--;
 	return (i);
 }
-
-
