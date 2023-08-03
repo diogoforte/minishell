@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 13:56:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:01:57 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void	pwd(void)
 	}
 	else
 	{
-		printf("%s", pwd);
-		printf("\n");
+		printf("%s\n", pwd);
 		free(pwd);
 	}
 	exit(0);
