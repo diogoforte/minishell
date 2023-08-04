@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 19:37:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 07:48:50 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	execute_pipeline(char ***cmds, char ***envp)
 {
 	pid_t	pid;
 	int		i;
+	int status;
 
 	i = 0;
 	while (cmds[i])
@@ -32,12 +33,9 @@ void	execute_pipeline(char ***cmds, char ***envp)
 				execute(cmds[i], envp);
 				exit(EXIT_FAILURE);
 			}
-			else
-			{
-				waitpid(pid, NULL, 0);
-				close(get_pipe()->pipe[1]);
-				get_pipe()->infile = get_pipe()->pipe[0];
-			}
+			handle_exit_status(&status, envp);
+			close(get_pipe()->pipe[1]);
+			get_pipe()->infile = get_pipe()->pipe[0];
 		}
 		i++;
 	}
@@ -45,26 +43,14 @@ void	execute_pipeline(char ***cmds, char ***envp)
 
 void	execute(char **cmd, char ***envp)
 {
-	pid_t	pid;
-	int		status;
-
-	status = -1;
-	if (cmd)
-	{
-		pid = fork();
-		if (!pid)
-		{
-			handle_input_redirection();
-			handle_output_redirection();
-			if ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
-				|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit",
-						5)))
-				execute_builtin(cmd, envp);
-			else
-				execute_command(cmd, envp);
-		}
-		handle_exit_status(&status, envp);
-	}
+	handle_input_redirection();
+	handle_output_redirection();
+	if ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
+		|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit",
+				5)))
+		execute_builtin(cmd, envp);
+	else
+		execute_command(cmd, envp);
 }
 
 int	execute_builtin_main(char **cmd, char ***envp)
@@ -85,7 +71,11 @@ int	execute_builtin_main(char **cmd, char ***envp)
 		exit_status(&status);
 	}
 	else if (!ft_strncmp(*cmd, "exit", 4))
+	{
+		if (*(++cmd) && !*(cmd + 1))
+			exit(ft_atoi(*cmd));
 		exit(0);
+	}
 	else
 		return (0);
 	return (1);

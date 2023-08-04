@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 19:24:53 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 07:43:18 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	*exit_status(int *value)
 {
 	static int	status;
 
-	status = 0;
-	if (value)
+	if (value != NULL)
 		status = *value;
 	return (&status);
 }
