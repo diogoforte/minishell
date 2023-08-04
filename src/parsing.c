@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 19:07:51 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 08:21:46 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**resize_cmd(char **cmd, int count)
 	char	**new_cmd;
 
 	new_cmd = malloc((count + 2) * sizeof(char *));
-	if (cmd != NULL)
+	if (cmd)
 	{
 		ft_memcpy(new_cmd, cmd, count * sizeof(char *));
 		free(cmd);

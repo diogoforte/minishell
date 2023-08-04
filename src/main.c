@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 07:47:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 08:13:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int ac, char **av, char **envp)
 		pipe(get_pipe()->pipe);
 		if (cmds)
 			execute_pipeline(cmds, &new_envp);
+		printf("\n");
 		ft_freetensor(cmds);
 		free(line);
 	}

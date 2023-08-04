@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 07:43:18 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 08:09:59 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,4 @@ void	handle_exit_status(int *status, char ***envp)
 		*status = WEXITSTATUS(*status);
 		exit_status(status);
 	}
-	printf("\n");
 }
