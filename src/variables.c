@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_variable.c                                  :+:      :+:    :+:   */
+/*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 09:18:57 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 09:04:59 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,29 @@
 
 char	*assign_variable(char *cmd, char ***envp)
 {
-	char	*var_start;
-	char	*var_end;
-	char	*var_name;
-	char	*var_value;
-	int		status;
+	t_cmd_parser	parser;
+	int				status;
 
+	parser.cmd = &cmd;
+	parser.envp = envp;
 	if (check_quotes(cmd) || check_apostrophe(cmd))
 		return (cmd);
-	var_start = ft_strchr(cmd, '$');
-	if (!var_start)
+	parser.start = ft_strchr(cmd, '$');
+	if (!parser.start)
 		return (cmd);
-	if (var_start[0] == '$' && var_start[1] == '?')
+	if (parser.start[0] == '$' && parser.start[1] == '?')
 	{
 		status = *exit_status(NULL);
 		return (ft_itoa(status));
 	}
-	var_end = find_var_end(var_start);
-	var_name = ft_strncpy(malloc(var_end - var_start), var_start + 1, var_end
-			- var_start - 1);
-	var_name[var_end - var_start - 1] = '\0';
-	var_value = get_env(envp, var_name);
-	if (!var_value)
-		var_value = "";
-	return (assign_variable(create_new_cmd(cmd, var_start, var_end, var_name,
-				var_value), envp));
+	parser.end = find_var_end(parser.start);
+	parser.i = parser.end - parser.start - 1;
+	parser.cmd[0] = ft_strncpy(malloc(parser.i), parser.start + 1, parser.i);
+	parser.cmd[0][parser.i] = '\0';
+	parser.cmd[1] = get_env(envp, parser.cmd[0]);
+	if (!parser.cmd[1])
+		parser.cmd[1] = "";
+	return (assign_variable(create_new_cmd(&parser), envp));
 }
 
 int	check_quotes(char *cmd)
@@ -86,18 +84,17 @@ char	*find_var_end(char *var_start)
 	return (var_end);
 }
 
-char	*create_new_cmd(char *cmd, char *var_start, char *var_end,
-		char *var_name, char *var_value)
+char	*create_new_cmd(t_cmd_parser *parser)
 {
 	char	*new_cmd;
 
-	new_cmd = malloc(strlen(cmd) - strlen(var_name) - 1 + strlen(var_value)
-			+ 1);
-	ft_strncpy(new_cmd, cmd, var_start - cmd);
-	new_cmd[var_start - cmd] = '\0';
-	ft_strcat(new_cmd, var_value);
-	ft_strcat(new_cmd, var_end);
-	free(var_name);
-	free(cmd);
+	new_cmd = malloc(strlen(*parser->cmd) - strlen(parser->cmd[0])
+			+ strlen(parser->cmd[1]));
+	ft_strncpy(new_cmd, *parser->cmd, parser->start - *parser->cmd);
+	new_cmd[parser->start - *parser->cmd] = '\0';
+	ft_strcat(new_cmd, parser->cmd[1]);
+	ft_strcat(new_cmd, parser->end);
+	free(parser->cmd[0]);
+	free(*parser->cmd);
 	return (new_cmd);
 }

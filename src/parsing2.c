@@ -6,78 +6,82 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 17:35:40 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 09:24:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*process_cmd(char *start, char **end, char ***cmd, int *i, char ***envp)
+char	*process_cmd(t_cmd_parser *parser)
 {
-	if (!ft_strncmp(start, ">", 1) || !ft_strncmp(start, ">>", 2))
-		start = process_redirection_out(start, end);
-	else if (ft_strncmp(start, "<<", 2) == 0)
-		start = process_redirection_in_heredoc(start, end, envp);
-	else if (ft_strncmp(start, "<", 1) == 0)
-		start = process_redirection_in(start, end);
+	if (!ft_strncmp(parser->start, ">", 1) || !ft_strncmp(parser->start, ">>",
+			2))
+		parser->start = process_redirection_out(parser);
+	else if (ft_strncmp(parser->start, "<<", 2) == 0)
+		parser->start = process_redirection_in_heredoc(parser);
+	else if (ft_strncmp(parser->start, "<", 1) == 0)
+		parser->start = process_redirection_in(parser);
 	else
-		start = process_regular_cmd(start, end, cmd, i, envp);
-	return (start);
+		parser->start = process_regular_cmd(parser);
+	return (parser->start);
 }
 
-char	*process_redirection_out(char *start, char **end)
+char	*process_redirection_out(t_cmd_parser *parser)
 {
 	t_redirect	*redir;
 
 	redir = get_redirections();
-	if (*start == '>' && *(start + 1) != '>')
+	if (*(parser->start) == '>' && *((parser->start) + 1) != '>')
 	{
 		redir->out_redir = 1;
-		start++;
+		parser->start++;
 	}
 	else
 	{
 		redir->out_redir = 2;
-		start += 2;
+		parser->start += 2;
 	}
-	start = skip_spaces(start);
-	*end = find_end(start);
-	redir->out_file = ft_strncpy(malloc(*end - start + 1), start, *end - start);
-	redir->out_file[*end - start] = '\0';
-	return (start);
+	parser->start = skip_spaces(parser->start);
+	parser->end = find_end(parser->start);
+	redir->out_file = ft_strncpy(malloc(parser->end - parser->start + 1),
+			parser->start, parser->end - parser->start);
+	redir->out_file[parser->end - parser->start] = '\0';
+	return (parser->start);
 }
 
-char	*process_redirection_in(char *start, char **end)
+char	*process_redirection_in(t_cmd_parser *parser)
 {
 	t_redirect	*redir;
 
 	redir = get_redirections();
 	redir->in_redir = 1;
-	start++;
-	start = skip_spaces(start);
-	*end = find_end(start);
-	redir->in_file = ft_strncpy(malloc(*end - start + 1), start, *end - start);
-	redir->in_file[*end - start] = '\0';
-	return (start);
+	parser->start++;
+	parser->start = skip_spaces(parser->start);
+	parser->end = find_end(parser->start);
+	redir->in_file = ft_strncpy(malloc(parser->end - parser->start + 1),
+			parser->start, parser->end - parser->start);
+	redir->in_file[parser->end - parser->start] = '\0';
+	return (parser->start);
 }
 
-char	*process_redirection_in_heredoc(char *start, char **end, char ***envp)
+char	*process_redirection_in_heredoc(t_cmd_parser *parser)
 {
 	get_redirections()->in_redir = 2;
-	start = start + 2;
-	*end = find_end(start);
-	get_redirections()->heredoc = create_heredoc_file(start, envp);
-		return (start);
+	parser->start = parser->start + 2;
+	parser->end = find_end(parser->start);
+	get_redirections()->heredoc = create_heredoc_file(parser->start, parser->envp);
+	return (parser->start);
 }
 
-char	*process_regular_cmd(char *start, char **end, char ***cmd, int *i,
-		char ***envp)
+char	*process_regular_cmd(t_cmd_parser *parser)
 {
-	*cmd = resize_cmd(*cmd, *i);
-	(*cmd)[*i] = ft_strncpy(malloc(*end - start + 1), start, *end - start);
-	(*cmd)[*i][*end - start] = '\0';
-	(*cmd)[*i] = assign_variable((*cmd)[*i], envp);
-	strip_quotes((*cmd)[*i]);
-	(*i)++;
-	return (start);
+	parser->cmd = resize_cmd(parser->cmd, parser->i);
+	(parser->cmd)[parser->i] = ft_strncpy(malloc(parser->end - parser->start
+				+ 1), parser->start, parser->end - parser->start);
+	(parser->cmd)[parser->i][parser->end - parser->start] = '\0';
+	(parser->cmd)[parser->i] = assign_variable((parser->cmd)[parser->i],
+			parser->envp);
+	strip_quotes((parser->cmd)[parser->i]);
+	(parser->i)++;
+	return (parser->start);
 }

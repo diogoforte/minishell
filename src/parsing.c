@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 08:21:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 08:45:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	**resize_cmd(char **cmd, int count)
 	return (new_cmd);
 }
 
-
 void	strip_quotes(char *arg)
 {
 	int	arg_len;
@@ -79,25 +78,19 @@ void	strip_quotes(char *arg)
 
 char	**parse_cmd(char *line, char ***envp)
 {
-	char	**cmd;
-	char	*start;
-	char	*end;
-	int		i;
+	t_cmd_parser	parser;
 
-	cmd = NULL;
-	start = line;
-	end = line;
-	i = 0;
-	while (*end)
+	parser = (t_cmd_parser){NULL, line, line, 0, envp};
+	while (*(parser.end))
 	{
-		start = skip_spaces(start);
-		end = find_end(start);
-		start = process_cmd(start, &end, &cmd, &i, envp);
-		start = end + 1;
+		parser.start = skip_spaces(parser.start);
+		parser.end = find_end(parser.start);
+		parser.start = process_cmd(&parser);
+		parser.start = parser.end + 1;
 	}
-	cmd = resize_cmd(cmd, i);
-	cmd[i] = NULL;
-	return (cmd);
+	parser.cmd = resize_cmd(parser.cmd, parser.i);
+	parser.cmd[parser.i] = NULL;
+	return (parser.cmd);
 }
 
 char	*skip_spaces(char *start)

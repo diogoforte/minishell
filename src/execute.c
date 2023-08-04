@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 08:12:56 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 08:46:24 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execute_pipeline(char ***cmds, char ***envp)
 {
 	pid_t	pid;
 	int		i;
-	int status;
+	int		status;
 
 	i = 0;
 	while (cmds[i])

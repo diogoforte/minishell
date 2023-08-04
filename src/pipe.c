@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 19:14:31 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 08:46:49 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	***parse_pipeline(char *line, char ***envp)
 	ft_freematrix(commands);
 	return (parsed_pipeline);
 }
-
 
 char	*trim_spaces(char *str)
 {

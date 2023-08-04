@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 17:31:57 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/04 09:20:48 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ typedef struct s_pipe
 	int		outfile;
 }			t_pipe;
 
+typedef struct s_cmd_parser
+{
+	char	**cmd;
+	char	*start;
+	char	*end;
+	int		i;
+	char	***envp;
+}			t_cmd_parser;
+
+typedef struct s_heredoc
+{
+	int		fd;
+	char	*str;
+	int		start;
+	int		end;
+	char	***envp;
+}			t_heredoc;
+
 void		echo(char **cmd);
 void		cd(char **cmd);
 void		pwd(void);
@@ -69,22 +87,17 @@ char		*assign_variable(char *cmd, char ***envp);
 int			check_quotes(char *cmd);
 int			check_apostrophe(char *cmd);
 char		*find_var_end(char *var_start);
-char		*create_new_cmd(char *cmd, char *var_start, char *var_end,
-				char *var_name, char *var_value);
-int			write_to_file(int fd, char *str, int start, int end, char ***envp);
+char		*create_new_cmd(t_cmd_parser *parser);
+int			write_to_file(t_heredoc *params);
 char		*skip_spaces(char *start);
-char		*process_cmd(char *start, char **end, char ***cmd, int *i,
-				char ***envp);
-char		*process_redirection_out(char *start, char **end);
-char		*process_redirection_in_heredoc(char *start, char **end,
-				char ***envp);
-char		*process_redirection_in(char *start, char **end);
-char		*process_regular_cmd(char *start, char **end, char ***cmd, int *i,
-				char ***envp);
+char		*process_cmd(t_cmd_parser *parser);
+char		*process_redirection_out(t_cmd_parser *parser);
+char		*process_redirection_in_heredoc(t_cmd_parser *parser);
+char		*process_redirection_in(t_cmd_parser *parser);
+char		*process_regular_cmd(t_cmd_parser *parser);
 void		handle_input_redirection(void);
 void		handle_output_redirection(void);
 void		reset_structs(void);
-
 char		***parse_pipeline(char *line, char ***envp);
 void		execute_pipeline(char ***cmds, char ***envp);
 t_pipe		*get_pipe(void);
