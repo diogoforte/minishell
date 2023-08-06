@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 09:22:21 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/06 12:36:45 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	create_heredoc_file(char *str, char ***envp)
 {
 	t_heredoc	params;
-	int			fd;
 	int			i;
 	int			j;
 
