@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 09:20:48 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:12:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		export(char **cmd, char ***envp);
 void		execute(char **cmd, char ***envp);
 int			execute_builtin_main(char **cmd, char ***envp);
 void		execute_builtin(char **cmd, char ***envp);
-char		*execute_command(char **cmd, char ***envp);
+void		execute_command(char **cmd, char ***envp);
 int			*exit_status(int *value);
 void		handle_exit_status(int *status, char ***envp);
 char		*pathfinder(char *cmd, char ***envp);

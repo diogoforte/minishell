@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/07 09:29:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:20:27 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	execute(char **cmd, char ***envp)
 {
 	handle_input_redirection();
 	handle_output_redirection();
-	if ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
-		|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit",
-				5)))
+	if (*cmd && ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
+			|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit",
+					5))))
 		execute_builtin(cmd, envp);
 	else
 		execute_command(cmd, envp);
@@ -58,11 +58,11 @@ int	execute_builtin_main(char **cmd, char ***envp)
 	int	status;
 
 	status = 0;
-	if (!ft_strncmp(*cmd, "cd", 3))
+	if (*cmd && !ft_strncmp(*cmd, "cd", 3))
 		cd(cmd + 1);
-	else if (!ft_strncmp(*cmd, "export", 7))
+	else if (*cmd && !ft_strncmp(*cmd, "export", 7))
 		export(cmd + 1, envp);
-	else if (!ft_strncmp(*cmd, "unset", 6))
+	else if (*cmd && !ft_strncmp(*cmd, "unset", 6))
 	{
 		if (*(++cmd))
 		{
@@ -70,7 +70,7 @@ int	execute_builtin_main(char **cmd, char ***envp)
 		}
 		exit_status(&status);
 	}
-	else if (!ft_strncmp(*cmd, "exit", 4))
+	else if (*cmd && !ft_strncmp(*cmd, "exit", 4))
 	{
 		if (*(++cmd) && !*(cmd + 1))
 			exit(ft_atoi(*cmd));
@@ -83,21 +83,23 @@ int	execute_builtin_main(char **cmd, char ***envp)
 
 void	execute_builtin(char **cmd, char ***envp)
 {
-	if (!ft_strncmp(*cmd, "echo", 5))
+	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
 		echo(cmd + 1);
-	else if (!ft_strncmp(*cmd, "pwd", 4))
+	else if (*cmd && !ft_strncmp(*cmd, "pwd", 4))
 		pwd();
-	else if (!ft_strncmp(*cmd, "env", 4))
+	else if (*cmd && !ft_strncmp(*cmd, "env", 4))
 		env(envp);
 	printf("Command not found: %s\n", *cmd);
 }
 
-char	*execute_command(char **cmd, char ***envp)
+void	execute_command(char **cmd, char ***envp)
 {
 	char	*path;
 
 	path = pathfinder(cmd[0], envp);
-	if (path == NULL)
+	if (!*cmd)
+		return ;
+	if (!path)
 	{
 		printf("Command not found: %s\n", *cmd);
 		exit(0);
@@ -108,5 +110,4 @@ char	*execute_command(char **cmd, char ***envp)
 		free(path);
 		exit(EXIT_FAILURE);
 	}
-	return (path);
 }

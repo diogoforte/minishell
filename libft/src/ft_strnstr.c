@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 07:34:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 05:10:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:21:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	i = -1;
 	size = ft_strlen(little);
 	if (ft_strlen(big) >= size && len >= size)
-	{	
+	{
 		while (++i <= len - size)
 		{
 			if (!ft_strncmp(&big[i], little, size))
