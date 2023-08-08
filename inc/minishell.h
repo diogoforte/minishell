@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 16:16:08 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:19:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
@@ -25,7 +26,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
 
 typedef struct s_redirect
 {
@@ -61,6 +61,14 @@ typedef struct s_heredoc
 	char	***envp;
 }			t_heredoc;
 
+typedef struct s_variables
+{
+	char	*start;
+	char	*end;
+	char	*name;
+	char	*value;
+}			t_variables;
+
 void		echo(char **cmd);
 void		cd(char **cmd);
 void		pwd(void);
@@ -92,7 +100,7 @@ char		*assign_variable(char *cmd, char ***envp);
 int			check_quotes(char *cmd);
 int			check_apostrophe(char *cmd);
 char		*find_var_end(char *var_start);
-char		*create_new_cmd(t_cmd_parser *parser);
+char		*create_new_cmd(t_variables *var, char *cmd);
 void		write_all_to_file(t_heredoc *params);
 void		write_to_file(t_heredoc *params);
 char		*skip_spaces(char *start);
