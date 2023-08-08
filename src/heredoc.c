@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 14:44:06 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:57:06 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	write_all_to_file(t_heredoc *params)
 	content_start = params->str + params->start + 1;
 	content_end = ft_strnstr(content_start, delimiter, params->end
 			- (content_start - params->str));
-	if (content_end)
+	if (content_end && (!content_end[ft_strlen(delimiter)]
+			|| content_end[ft_strlen(delimiter)] == '\n'))
 	{
 		*content_end = 0;
 		write(params->fd, content_start, ft_strlen(content_start));
@@ -68,7 +69,8 @@ void	write_to_file(t_heredoc *params)
 		line = readline("heredoc> ");
 		if (!line)
 			break ;
-		if (!ft_strncmp(line, delimiter, ft_strlen(delimiter)))
+		if (strlen(line) == strlen(delimiter) && !ft_strncmp(line, delimiter,
+				ft_strlen(delimiter)))
 		{
 			free(line);
 			break ;
