@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 14:57:06 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:22:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	create_heredoc_file(char *str, char ***envp)
 	int			i;
 	char		*delimiter;
 
+	if (!*str)
+		return (0);
 	params.fd = open("/tmp/heredoc_file", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (params.fd == -1)
 		return (0);

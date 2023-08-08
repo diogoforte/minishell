@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 12:41:28 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:54:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	line = NULL;
 	new_envp = env_add(&envp, NULL);
-	signal(2, handle_sigint);
 	while (1)
 	{
+		signals(0);
 		line = readline("minishell~$ ");
 		if (!line) 
 		{
@@ -36,6 +36,7 @@ int	main(int ac, char **av, char **envp)
 		reset_structs(1);
 		cmds = parse_pipeline(line, &new_envp);
 		pipe(get_pipe()->pipe);
+		signals(1);
 		execute_pipeline(cmds, &new_envp);
 		printf("\n");
 		ft_freetensor(cmds);
