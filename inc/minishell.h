@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/07 12:12:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:41:18 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char		*process_redirection_in(t_cmd_parser *parser);
 char		*process_regular_cmd(t_cmd_parser *parser);
 void		handle_input_redirection(void);
 void		handle_output_redirection(void);
-void		reset_structs(void);
+void		reset_structs(int n);
 char		***parse_pipeline(char *line, char ***envp);
 void		execute_pipeline(char ***cmds, char ***envp);
 t_pipe		*get_pipe(void);

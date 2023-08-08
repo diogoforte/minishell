@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 08:46:49 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:40:18 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-void	reset_structs(void)
+void	reset_structs(int n)
 {
-	if (get_redirections()->in_redir || get_redirections()->out_redir)
+	if ((get_redirections()->in_redir || get_redirections()->out_redir))
 	{
 		get_redirections()->in_redir = -1;
 		get_redirections()->out_redir = -1;
@@ -77,7 +77,7 @@ void	reset_structs(void)
 		}
 		get_redirections()->heredoc = 0;
 	}
-	if (get_pipe()->infile || get_pipe()->outfile)
+	if (n == 1 && (get_pipe()->infile || get_pipe()->outfile))
 	{
 		get_pipe()->infile = -1;
 		get_pipe()->outfile = -1;

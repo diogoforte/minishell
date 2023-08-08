@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/07 12:20:27 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:41:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	execute_pipeline(char ***cmds, char ***envp)
 			get_pipe()->infile = get_pipe()->pipe[0];
 		}
 		i++;
+		reset_structs(0);
 	}
 }
 
