@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 17:21:28 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:27:31 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*process_regular_cmd(t_cmd_parser *parser)
 				+ 1), parser->start, parser->end - parser->start);
 	(parser->cmd)[parser->i][parser->end - parser->start] = '\0';
 	(parser->cmd)[parser->i] = assign_variable((parser->cmd)[parser->i],
-			parser->envp);
+			parser->envp, 1);
 	strip_quotes((parser->cmd)[parser->i]);
 	(parser->i)++;
 	return (parser->start);

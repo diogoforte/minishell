@@ -6,16 +6,17 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 18:19:52 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:25:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*assign_variable(char *cmd, char ***envp)
+char	*assign_variable(char *cmd, char ***envp, int flag)
 {
 	t_variables	var;
 	int			status;
+	char		*new_cmd;
 
 	if (check_quotes(cmd) || check_apostrophe(cmd))
 		return (cmd);
@@ -34,7 +35,10 @@ char	*assign_variable(char *cmd, char ***envp)
 	var.value = get_env(envp, var.name);
 	if (!var.value)
 		var.value = "";
-	return (assign_variable(create_new_cmd(&var, cmd), envp));
+	new_cmd = create_new_cmd(&var, cmd);
+	if (flag)
+		free(cmd);
+	return (new_cmd);
 }
 
 int	check_quotes(char *cmd)
@@ -93,6 +97,5 @@ char	*create_new_cmd(t_variables *var, char *cmd)
 	ft_strcat(new_cmd, var->value);
 	ft_strcat(new_cmd, var->end);
 	free(var->name);
-	free(cmd);
 	return (new_cmd);
 }

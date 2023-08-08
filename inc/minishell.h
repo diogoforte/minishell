@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 18:19:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:26:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char		**parse_cmd(char *line, char ***envp);
 t_redirect	*get_redirections(void);
 int			create_heredoc_file(char *str, char ***envp);
 int			find_delimiter(char *line);
-char		*assign_variable(char *cmd, char ***envp);
+char		*assign_variable(char *cmd, char ***envp, int flag);
 int			check_quotes(char *cmd);
 int			check_apostrophe(char *cmd);
 char		*find_var_end(char *var_start);
