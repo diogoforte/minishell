@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 12:41:18 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:43:52 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int			check_quotes(char *cmd);
 int			check_apostrophe(char *cmd);
 char		*find_var_end(char *var_start);
 char		*create_new_cmd(t_cmd_parser *parser);
-int			write_to_file(t_heredoc *params);
+void		write_all_to_file(t_heredoc *params);
+void		write_to_file(t_heredoc *params);
 char		*skip_spaces(char *start);
 char		*process_cmd(t_cmd_parser *parser);
 char		*process_redirection_out(t_cmd_parser *parser);
