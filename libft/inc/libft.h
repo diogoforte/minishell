@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 16:46:51 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:54:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ char				*ft_strcat(char *dest, const char *src);
 char				*ft_triplejoin(char *s1, char *s2, char *s3);
 void				ft_freematrix(char **list);
 void				ft_freetensor(char ***tensor);
-
+char				*ft_strpbrk(char *str, char *set);
 #endif

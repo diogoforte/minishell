@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 22:34:28 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:00:15 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,27 @@ char	**resize_cmd(char **cmd, int count)
 
 void	strip_quotes(char *arg)
 {
-	int	arg_len;
-	int	quote_count1;
-	int	quote_count2;
-	int	i;
+	char	*pos;
+	char	*prev_char;
+	char	*next_char;
 
-	arg_len = ft_strlen(arg);
-	quote_count1 = 0;
-	quote_count2 = 0;
-	i = 0;
-	while (arg[i])
+	pos = ft_strpbrk(arg, "\"'");
+	while (pos)
 	{
-		if (arg[i] == '\'')
-			quote_count1++;
-		if (arg[i] == '"')
-			quote_count2++;
-		i++;
-	}
-	if ((quote_count1 == 2 || quote_count2 == 2) && (arg[0] == '"'
-			|| arg[0] == '\''))
-	{
-		ft_memmove(arg, arg + 1, arg_len - 1);
-		arg[arg_len - 2] = '\0';
+		if (pos > arg)
+			prev_char = pos - 1;
+		else
+			prev_char = NULL;
+		if (pos < (arg + ft_strlen(arg) - 1))
+			next_char = pos + 1;
+		else
+			next_char = NULL;
+		if ((prev_char && *prev_char != *pos) || (next_char
+				&& *next_char != *pos))
+			ft_memmove(pos, pos + 1, ft_strlen(pos));
+		else
+			break ;
+		pos = ft_strpbrk(arg, "\"'");
 	}
 }
 
