@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 13:30:42 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:38:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_redirect
 	int		heredoc;
 	char	*in_file;
 	char	*out_file;
+	char	*command_to_redirect;
 }			t_redirect;
 
 typedef struct s_pipe
@@ -121,7 +122,9 @@ char		*process_redirection_in(t_cmd_parser *parser);
 char		*process_regular_cmd(t_cmd_parser *parser);
 void		handle_input_redirection(void);
 void		handle_output_redirection(void);
-void		reset_structs(int n);
+void		reset_structs(void);
+void		reset_redirections(void);
+void		reset_pipe(void);
 char		***parse_pipeline(char *line, char ***envp);
 void		execute_pipeline(char ***cmds, char ***envp);
 t_pipe		*get_pipe(void);

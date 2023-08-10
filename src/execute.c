@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 13:50:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:21:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	execute_pipeline(char ***cmds, char ***envp)
 			handle_parent(index);
 		}
 		index++;
-		reset_structs(0);
 	}
 	handle_exit_status(&status, envp);
 }
 
 void	execute(char **cmd, char ***envp)
 {
+	if (get_redirections()->command_to_redirect == *cmd)
+		handle_output_redirection();
 	handle_input_redirection();
-	handle_output_redirection();
 	if (*cmd && ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
 			|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit", 5))))
 		execute_builtin(cmd, envp);

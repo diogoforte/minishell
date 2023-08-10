@@ -6,18 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 13:50:25 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:19:07 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-t_pipe	*get_pipe(void)
-{
-	static t_pipe	pipe = {{0, 1}, -1, -1};
-
-	return (&pipe);
-}
 
 char	***parse_pipeline(char *line, char ***envp)
 {
