@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 01:19:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:50:54 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,23 @@
 void	execute_pipeline(char ***cmds, char ***envp)
 {
 	pid_t	pid;
-	int		i;
 	int		status;
+	int		index;
 
-	i = 0;
-	while (cmds[i])
+	index = 0;
+	while (cmds[index])
 	{
-		if (!execute_builtin_main(cmds[i], envp))
+		if (!execute_builtin_main(cmds[index], envp))
 		{
 			pid = fork();
 			if (!pid)
-			{
-				dup2(get_pipe()->infile, 0);
-				if (cmds[i + 1])
-					dup2(get_pipe()->pipe[1], 1);
-				close(get_pipe()->pipe[0]);
-				execute(cmds[i], envp);
-				exit(EXIT_FAILURE);
-			}
-			handle_exit_status(&status, envp);
-			close(get_pipe()->pipe[1]);
-			get_pipe()->infile = get_pipe()->pipe[0];
+				handle_child(cmds, index, envp);
+			handle_parent(index);
 		}
-		i++;
+		index++;
 		reset_structs(0);
 	}
+	handle_exit_status(&status, envp);
 }
 
 void	execute(char **cmd, char ***envp)
@@ -47,8 +39,7 @@ void	execute(char **cmd, char ***envp)
 	handle_input_redirection();
 	handle_output_redirection();
 	if (*cmd && ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
-			|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit",
-					5))))
+			|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit", 5))))
 		execute_builtin(cmd, envp);
 	else
 		execute_command(cmd, envp);

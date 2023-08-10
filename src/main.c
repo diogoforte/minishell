@@ -6,13 +6,13 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 01:20:49 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:13:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	print_terminal(void)
+void	print_prompt(void)
 {
 	char	*pwd;
 
@@ -37,10 +37,11 @@ int	main(int ac, char **av, char **envp)
 	{
 		get_envp(&new_envp);
 		signals(0);
-		print_terminal();
+		print_prompt();
 		line = readline("└─\033[1;34m$\033[0m ");
 		if (!line)
 		{
+			ft_freematrix(new_envp);
 			rl_clear_history();
 			exit(0);
 		}
@@ -55,5 +56,4 @@ int	main(int ac, char **av, char **envp)
 		ft_freetensor(cmds);
 		free(line);
 	}
-	free(new_envp);
 }

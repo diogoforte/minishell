@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 01:40:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 11:48:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	if (var.start[0] == '$' && var.start[1] == '?')
 	{
 		status = *exit_status(NULL);
+		free(cmd);
 		return (ft_itoa(status));
 	}
 	var.end = find_var_end(var.start);

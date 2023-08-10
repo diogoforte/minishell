@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 12:40:18 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:50:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	***parse_pipeline(char *line, char ***envp)
 	}
 	parsed_pipeline[i] = NULL;
 	ft_freematrix(commands);
+	i = 0;
 	return (parsed_pipeline);
 }
 
@@ -59,27 +60,29 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-void	reset_structs(int n)
+void	handle_child(char ***cmds, int index, char ***envp)
 {
-	if ((get_redirections()->in_redir || get_redirections()->out_redir))
+	if (index)
 	{
-		get_redirections()->in_redir = -1;
-		get_redirections()->out_redir = -1;
-		if (get_redirections()->in_file)
-		{
-			free(get_redirections()->in_file);
-			get_redirections()->in_file = NULL;
-		}
-		if (get_redirections()->out_file)
-		{
-			free(get_redirections()->out_file);
-			get_redirections()->out_file = NULL;
-		}
-		get_redirections()->heredoc = 0;
+		dup2(get_pipe()->infile, 0);
+		close(get_pipe()->infile);
 	}
-	if (n == 1 && (get_pipe()->infile || get_pipe()->outfile))
+	if (cmds[index + 1])
 	{
-		get_pipe()->infile = -1;
-		get_pipe()->outfile = -1;
+		dup2(get_pipe()->pipe[1], 1);
+		close(get_pipe()->pipe[1]);
 	}
+	close(get_pipe()->pipe[0]);
+	execute(cmds[index], envp);
+	exit(EXIT_FAILURE);
+}
+
+void	handle_parent(int index)
+{
+	close(get_pipe()->pipe[1]);
+	if (index)
+		close(get_pipe()->infile);
+	get_pipe()->infile = get_pipe()->pipe[0];
+	if (index + 1)
+		pipe(get_pipe()->pipe);
 }

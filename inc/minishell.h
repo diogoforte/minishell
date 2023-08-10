@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 01:21:21 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:30:42 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_variables
 	char	*value;
 }			t_variables;
 
-void		print_terminal(void);
+void		print_prompt(void);
 void		echo(char **cmd);
 void		cd(char **cmd);
 void		pwd(void);
@@ -125,6 +125,8 @@ void		reset_structs(int n);
 char		***parse_pipeline(char *line, char ***envp);
 void		execute_pipeline(char ***cmds, char ***envp);
 t_pipe		*get_pipe(void);
+void		handle_child(char ***cmds, int index, char ***envp);
+void		handle_parent(int index);
 char		*trim_spaces(char *str);
 
 #endif

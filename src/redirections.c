@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 17:07:56 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:51:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,30 @@ void	handle_output_redirection(void)
 			perror("Error opening output file");
 		dup2(out_fd, STDOUT_FILENO);
 		close(out_fd);
+	}
+}
+
+void	reset_structs(int n)
+{
+	if ((get_redirections()->in_redir || get_redirections()->out_redir))
+	{
+		get_redirections()->in_redir = -1;
+		get_redirections()->out_redir = -1;
+		if (get_redirections()->in_file)
+		{
+			free(get_redirections()->in_file);
+			get_redirections()->in_file = NULL;
+		}
+		if (get_redirections()->out_file)
+		{
+			free(get_redirections()->out_file);
+			get_redirections()->out_file = NULL;
+		}
+		get_redirections()->heredoc = 0;
+	}
+	if (n == 1 && (get_pipe()->infile || get_pipe()->outfile))
+	{
+		get_pipe()->infile = -1;
+		get_pipe()->outfile = -1;
 	}
 }
