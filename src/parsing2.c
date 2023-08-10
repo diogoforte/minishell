@@ -6,18 +6,18 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 17:13:12 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:00:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 char	*process_cmd(t_cmd_parser *parser)
-{
+{	
 	if (!ft_strncmp(parser->start, ">", 1) || !ft_strncmp(parser->start, ">>",
 			2))
 	{
-		get_redirections()->command_to_redirect = *parser->cmd;
+		get_redirections()->command = *parser->cmd;
 		parser->start = process_redirection_out(parser);
 	}
 	else if (ft_strncmp(parser->start, "<<", 2) == 0)

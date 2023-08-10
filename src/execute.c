@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 17:21:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:41:57 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute_pipeline(char ***cmds, char ***envp)
 
 void	execute(char **cmd, char ***envp)
 {
-	if (get_redirections()->command_to_redirect == *cmd)
+	if (get_redirections()->command && !ft_strncmp(get_redirections()->command, *cmd, ft_strlen(*cmd)))
 		handle_output_redirection();
 	handle_input_redirection();
 	if (*cmd && ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
@@ -51,7 +51,7 @@ int	execute_builtin_main(char **cmd, char ***envp)
 
 	status = 1;
 	if (*cmd && !ft_strncmp(*cmd, "cd", 3))
-		cd(cmd + 1);
+		cd(cmd + 1, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "export", 7))
 		export(cmd + 1, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "unset", 6))

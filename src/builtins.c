@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 00:53:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:26:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,30 @@ void	echo(char **cmd)
 	exit(0);
 }
 
-void	cd(char **cmd)
+void	cd(char **cmd, char ***envp)
 {
-	int	status;
+	int			status;
+	char		*current_pwd;
+	static char	*old_pwd;
 
+	status = 0;
+	current_pwd = getcwd(NULL, 0);
+	old_pwd = search_env(envp, "OLDPWD");
 	if (!*cmd || !ft_strncmp(*cmd, "~", 2))
-	{
-		chdir(search_env(get_envp(NULL), "HOME"));
-		exit_status(0);
-		return ;
-	}
+		chdir(search_env(envp, "HOME"));
+	else if (!ft_strncmp(*cmd, "-", 2) && old_pwd)
+		chdir(old_pwd);
 	else if (chdir(*cmd))
 	{
 		printf("Error: %s\n", strerror(errno));
 		status = 1;
-		exit_status(&status);
-		return ;
 	}
-	exit_status(0);
+	old_pwd = ft_strjoin("OLDPWD=", current_pwd);
+	*envp = env_remove(envp, "OLDPWD");
+	*envp = env_add(envp, old_pwd);
+	free(current_pwd);
+	free(old_pwd);
+	exit_status(&status);
 }
 
 void	pwd(void)

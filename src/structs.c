@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 17:15:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:44:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	reset_redirections(void)
 		get_redirections()->out_file = NULL;
 	}
 	get_redirections()->heredoc = 0;
-	get_redirections()->command_to_redirect = NULL;
+	get_redirections()->command = NULL;
 }
 
 void	reset_pipe(void)

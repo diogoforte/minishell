@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 16:38:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:44:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_redirect
 	int		heredoc;
 	char	*in_file;
 	char	*out_file;
-	char	*command_to_redirect;
+	char	*command;
 }			t_redirect;
 
 typedef struct s_pipe
@@ -80,7 +80,7 @@ typedef struct s_variables
 
 void		print_prompt(void);
 void		echo(char **cmd);
-void		cd(char **cmd);
+void		cd(char **cmd, char ***envp);
 void		pwd(void);
 void		env(char ***envp);
 char		***get_envp(char ***new_envp);
