@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 22:26:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 01:52:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,32 @@ int	create_heredoc_file(char *str, char ***envp)
 void	write_all_to_file(t_heredoc *heredoc)
 {
 	char	*delimiter;
-	char	*content_start;
-	char	*content_end;
+	char	*content_current;
 	char	*processed_line;
+	char	*newline;
+	char	*tmp;
+	size_t	content_length;
 
 	delimiter = ft_substr(heredoc->str, 0, heredoc->start);
-	content_start = heredoc->str + heredoc->start + 1;
-	processed_line = assign_variable(content_start, heredoc->envp, 0);
-	content_end = ft_strnstr(processed_line, delimiter, heredoc->end
-			- (content_start - processed_line));
-	*content_end = '\0';
-	if (content_end && (!content_end[ft_strlen(delimiter)]
-			|| content_end[ft_strlen(delimiter)] == '\n'))
-		write(heredoc->fd, processed_line, ft_strlen(processed_line));
-	free(delimiter);
-	if (processed_line != content_start)
+	content_current = heredoc->str + heredoc->start + 1;
+	newline = ft_strchr(content_current, '\n');
+	while (newline)
+	{
+		content_length = newline - content_current;
+		processed_line = ft_substr(content_current, 0, content_length);
+		tmp = assign_variable(processed_line, heredoc->envp, 0);
+		strip_quotes(tmp);
+		if (!ft_strncmp(tmp, delimiter, content_length)
+			&& content_length == ft_strlen(delimiter))
+			break ;
+		write(heredoc->fd, tmp, ft_strlen(tmp));
+		write(heredoc->fd, "\n", 1);
+		content_current = newline + 1;
 		free(processed_line);
+		free(tmp);
+		newline = ft_strchr(content_current, '\n');
+	}
+	free(delimiter);
 }
 
 void	write_to_file(t_heredoc *heredoc)
@@ -74,6 +84,7 @@ void	write_to_file(t_heredoc *heredoc)
 		if (!line)
 			break ;
 		processed_line = assign_variable(line, heredoc->envp, 0);
+		strip_quotes(processed_line);
 		if (processed_line != line)
 			line = processed_line;
 		if (ft_strlen(line) == ft_strlen(delimiter) && !ft_strncmp(line,
