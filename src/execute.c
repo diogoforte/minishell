@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 12:41:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 01:19:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	execute_builtin_main(char **cmd, char ***envp)
 {
 	int	status;
 
-	status = 0;
+	status = 1;
 	if (*cmd && !ft_strncmp(*cmd, "cd", 3))
 		cd(cmd + 1);
 	else if (*cmd && !ft_strncmp(*cmd, "export", 7))
@@ -67,7 +67,8 @@ int	execute_builtin_main(char **cmd, char ***envp)
 	{
 		if (*(++cmd))
 		{
-			env_remove(envp, *cmd);
+			*envp = env_remove(envp, *cmd);
+			status = 0;
 		}
 		exit_status(&status);
 	}

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/04 07:43:52 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 00:53:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ void	cd(char **cmd)
 {
 	int	status;
 
-	if (!*cmd)
-		chdir("/home");
+	if (!*cmd || !ft_strncmp(*cmd, "~", 2))
+	{
+		chdir(search_env(get_envp(NULL), "HOME"));
+		exit_status(0);
+		return ;
+	}
 	else if (chdir(*cmd))
 	{
 		printf("Error: %s\n", strerror(errno));

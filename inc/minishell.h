@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 22:26:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 01:21:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# define GREEN "\033[32m"
+# define BOLD_GREEN "\033[1;32m"
+# define BLUE "\033[34m"
+# define BOLD_BLUE "\033[1;34m"
+# define RESET "\033[0m"
+# define WHITE "\033[37m"
+# define BOLD_WHITE "\033[1;37m"
 
 typedef struct s_redirect
 {
@@ -69,11 +77,13 @@ typedef struct s_variables
 	char	*value;
 }			t_variables;
 
+void		print_terminal(void);
 void		echo(char **cmd);
 void		cd(char **cmd);
 void		pwd(void);
 void		env(char ***envp);
-char		*get_env(char ***envp, char *cmd);
+char		***get_envp(char ***new_envp);
+char		*search_env(char ***envp, char *cmd);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
 void		export(char **cmd, char ***envp);

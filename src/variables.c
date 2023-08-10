@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 22:25:44 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 00:50:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	var.name = ft_strncpy(malloc(var.end - var.start), var.start + 1, var.end
 			- var.start - 1);
 	var.name[var.end - var.start - 1] = '\0';
-	var.value = get_env(envp, var.name);
+	var.value = search_env(envp, var.name);
 	if (!var.value)
 		var.value = "";
 	new_cmd = create_new_cmd(&var, cmd);

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:01:51 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 16:21:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:52:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	handle_sigint(int sig)
 	(void)sig;
 	rl_replace_line("", 0);
 	rl_redisplay();
-	printf("\nminishell~$ ");
+	printf("\n\n");
+	print_terminal();
+	printf("└─\033[1;34m$\033[0m ");
 }
 
 void	handle_sigquit(int sig)

@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 06:39:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 01:21:16 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*get_env(char ***envp, char *cmd)
+char	***get_envp(char ***new_envp)
+{
+	static char	**envp;
+
+	if (new_envp)
+		envp = *new_envp;
+	return (&envp);
+}
+
+char	*search_env(char ***envp, char *cmd)
 {
 	int	i;
 	int	len;

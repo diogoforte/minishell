@@ -6,11 +6,22 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/08 20:14:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/10 01:20:49 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	print_terminal(void)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	printf("%s┌──(%s%s㉿minishell%s%s)-[%s%s%s%s]\n", GREEN, BOLD_BLUE,
+		search_env(get_envp(NULL), "USER"), RESET, GREEN, BOLD_WHITE,
+		pwd, RESET, GREEN);
+	free(pwd);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -24,14 +35,16 @@ int	main(int ac, char **av, char **envp)
 	new_envp = env_add(&envp, NULL);
 	while (1)
 	{
+		get_envp(&new_envp);
 		signals(0);
-		line = readline("minishell~$ ");
-		if (!line) 
+		print_terminal();
+		line = readline("└─\033[1;34m$\033[0m ");
+		if (!line)
 		{
 			rl_clear_history();
 			exit(0);
 		}
-		if (line && *line) 
+		if (line && *line)
 			add_history(line);
 		reset_structs(1);
 		cmds = parse_pipeline(line, &new_envp);
@@ -42,4 +55,5 @@ int	main(int ac, char **av, char **envp)
 		ft_freetensor(cmds);
 		free(line);
 	}
+	free(new_envp);
 }
