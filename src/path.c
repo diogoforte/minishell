@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/03 12:20:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:58:12 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,24 @@ char	*pathfinder(char *cmd, char ***envp)
 	char	**paths;
 	char	*str;
 
-	if (!cmd || !access(cmd, F_OK))
+	if (cmd && !access(cmd, F_OK))
 		return (cmd);
 	i = 0;
-	while (ft_strncmp((*envp)[i], "PATH", 4))
+	while ((*envp)[i] && ft_strncmp((*envp)[i], "PATH", 4))
 		i++;
+	if (!(*envp)[i])
+		return (NULL);
 	paths = ft_split((*envp)[i] + 5, ':');
+	if (!paths || !paths[0])
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
-		str = ft_triplejoin(paths[i++], "/", cmd);
-		if (!access(str, F_OK))
+		str = ft_triplejoin(paths[i], "/", cmd);
+		if (str && !access(str, F_OK))
 			break ;
 		free(str);
-		str = NULL;
+		i++;
 	}
 	ft_freematrix(paths);
 	return (str);

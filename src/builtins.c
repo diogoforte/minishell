@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/11 00:26:39 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:30:31 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,37 @@ void	echo(char **cmd)
 	exit(0);
 }
 
+void call_chdir(char *cmd, int *status)
+{
+	if (chdir(cmd))
+	{
+		printf("Error: %s\n", strerror(errno));
+		*status = 1;
+	}
+}
+
 void	cd(char **cmd, char ***envp)
 {
 	int			status;
 	char		*current_pwd;
 	static char	*old_pwd;
+	char		*tmp;
 
 	status = 0;
 	current_pwd = getcwd(NULL, 0);
 	old_pwd = search_env(envp, "OLDPWD");
 	if (!*cmd || !ft_strncmp(*cmd, "~", 2))
-		chdir(search_env(envp, "HOME"));
-	else if (!ft_strncmp(*cmd, "-", 2) && old_pwd)
-		chdir(old_pwd);
-	else if (chdir(*cmd))
+		call_chdir((search_env(envp, "HOME")), &status);
+	else if (!ft_strncmp(*cmd, "~/", 2))
 	{
-		printf("Error: %s\n", strerror(errno));
-		status = 1;
+		tmp = ft_strjoin(search_env(envp, "HOME"), *cmd + 1);
+		call_chdir(tmp, &status);
+		free(tmp);
 	}
+	else if (!ft_strncmp(*cmd, "-", 2) && old_pwd)
+		call_chdir(old_pwd, &status);
+	else
+		call_chdir(*cmd, &status);
 	old_pwd = ft_strjoin("OLDPWD=", current_pwd);
 	*envp = env_remove(envp, "OLDPWD");
 	*envp = env_add(envp, old_pwd);
