@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 19:00:29 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:32:20 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ char	*process_redirection_out(t_cmd_parser *parser)
 	}
 	parser->start = skip_spaces(parser->start);
 	parser->end = find_end(parser->start);
-	get_redirections()->out_file = ft_strncpy(malloc(parser->end - parser->start + 1),
-			parser->start, parser->end - parser->start);
+	get_redirections()->out_file = ft_strncpy(malloc(parser->end - parser->start + 1), parser->start, parser->end - parser->start);
 	get_redirections()->out_file[parser->end - parser->start] = '\0';
 	return (parser->start);
 }

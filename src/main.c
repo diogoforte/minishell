@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 23:43:48 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:13:34 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,36 @@ void	print_prompt(void)
 	free(pwd);
 }
 
+char	*read_line(char **envp)
+{
+	char	*line;
+
+	line = NULL;
+	line = readline("└─\033[1;34m$\033[0m ");
+	if (!line)
+	{
+		ft_freematrix(envp);
+		rl_clear_history();
+		exit(0);
+	}
+	return (line);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	char	**new_envp;
 	char	***cmds;
 
-	(void)ac;
-	(void)av;
-	line = NULL;
+	(void) ac;
+	(void) av;
 	new_envp = env_add(&envp, NULL);
 	while (1)
 	{
 		get_envp(&new_envp);
 		signals(0);
 		print_prompt();
-		line = readline("└─\033[1;34m$\033[0m ");
-		if (!line)
-		{
-			ft_freematrix(new_envp);
-			rl_clear_history();
-			exit(0);
-		}
+		line = read_line(new_envp);
 		if (line && *line)
 			add_history(line);
 		reset_structs();
