@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/13 17:32:20 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/13 20:47:41 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*process_cmd(t_cmd_parser *parser)
 
 char	*process_redirection_out(t_cmd_parser *parser)
 {
+	char	*word;
+	
 	if (*(parser->start) == '>' && *((parser->start) + 1) != '>')
 	{
 		get_redirections()->out_redir = 1;
@@ -43,19 +45,22 @@ char	*process_redirection_out(t_cmd_parser *parser)
 	}
 	parser->start = skip_spaces(parser->start);
 	parser->end = find_end(parser->start);
-	get_redirections()->out_file = ft_strncpy(malloc(parser->end - parser->start + 1), parser->start, parser->end - parser->start);
+	word = ft_calloc(parser->end - parser->start + 1, sizeof(char));
+	get_redirections()->out_file = ft_strncpy(word, parser->start, parser->end - parser->start);
 	get_redirections()->out_file[parser->end - parser->start] = '\0';
 	return (parser->start);
 }
 
 char	*process_redirection_in(t_cmd_parser *parser)
 {
+	char	*word;
+	
 	get_redirections()->in_redir = 1;
 	parser->start++;
 	parser->start = skip_spaces(parser->start);
 	parser->end = find_end(parser->start);
-	get_redirections()->in_file = ft_strncpy(malloc(parser->end - parser->start + 1),
-			parser->start, parser->end - parser->start);
+	word = ft_calloc(parser->end - parser->start + 1, sizeof(char));
+	get_redirections()->in_file = ft_strncpy(word, parser->start, parser->end - parser->start);
 	get_redirections()->in_file[parser->end - parser->start] = '\0';
 	return (parser->start);
 }

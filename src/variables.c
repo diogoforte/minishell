@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 11:48:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:18:37 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 		return (ft_itoa(status));
 	}
 	var.end = find_var_end(var.start);
-	var.name = ft_strncpy(malloc(var.end - var.start), var.start + 1, var.end
-			- var.start - 1);
-	var.name[var.end - var.start - 1] = '\0';
+	var.name = ft_strncpy(ft_calloc(var.end - var.start, sizeof(char)),
+			var.start + 1, var.end - var.start - 1);
 	var.value = search_env(envp, var.name);
 	if (!var.value)
 		var.value = "";

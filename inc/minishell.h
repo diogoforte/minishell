@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/13 19:22:29 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:50:30 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,5 @@ t_pipe		*get_pipe(void);
 void		handle_child(char ***cmds, int index, char ***envp);
 void		handle_parent(int index);
 char		*trim_spaces(char *str);
-int	ft_isspace(int c);
 
 #endif

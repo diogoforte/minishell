@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/11 12:30:31 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:31:33 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	echo(char **cmd)
 	exit(0);
 }
 
-void call_chdir(char *cmd, int *status)
+void	call_chdir(char *cmd, int *status)
 {
 	if (chdir(cmd))
 	{
@@ -69,50 +69,5 @@ void	cd(char **cmd, char ***envp)
 	*envp = env_add(envp, old_pwd);
 	free(current_pwd);
 	free(old_pwd);
-	exit_status(&status);
-}
-
-void	pwd(void)
-{
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-	{
-		printf("Error: %s\n", strerror(errno));
-		exit(1);
-	}
-	else
-	{
-		printf("%s\n", pwd);
-		free(pwd);
-	}
-	exit(0);
-}
-
-void	env(char ***envp)
-{
-	int	i;
-
-	i = 0;
-	while ((*envp)[i])
-		printf("%s\n", (*envp)[i++]);
-	exit(0);
-}
-
-void	export(char **cmd, char ***envp)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	status = 0;
-	if (!*cmd)
-	{
-		while ((*envp)[i])
-			printf("export %s\n", (*envp)[i++]);
-		exit_status(&status);
-	}
-	*envp = env_add(envp, *cmd);
 	exit_status(&status);
 }

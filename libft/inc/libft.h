@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/09 15:54:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:50:57 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ char				*ft_triplejoin(char *s1, char *s2, char *s3);
 void				ft_freematrix(char **list);
 void				ft_freetensor(char ***tensor);
 char				*ft_strpbrk(char *str, char *set);
+int					ft_isspace(int c);
 #endif

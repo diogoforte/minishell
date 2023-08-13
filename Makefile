@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/10 05:13:54 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/10 14:10:31 by dinunes-         ###   ########.fr        #
+#    Updated: 2023/08/13 21:30:24 by bcastelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJ_PATH = obj/
 
 # Sources
 SRC = $(addprefix $(SRC_PATH),	environment.c heredoc.c parsing2.c path.c signals.c variables.c\
-								execute.c main.c parsing.c redirections.c pipe.c builtins.c\
+								execute.c main.c parsing.c redirections.c pipe.c builtins.c builtins_2.c\
 								exit.c structs.c)
 
 # Objects

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 23:41:57 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:26:26 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	execute_pipeline(char ***cmds, char ***envp)
 
 void	execute(char **cmd, char ***envp)
 {
-	if (get_redirections()->command && !ft_strncmp(get_redirections()->command, *cmd, ft_strlen(*cmd)))
+	if (get_redirections()->command
+		&& !ft_strncmp(get_redirections()->command, *cmd, ft_strlen(*cmd)))
 		handle_output_redirection();
 	handle_input_redirection();
 	if (*cmd && ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
