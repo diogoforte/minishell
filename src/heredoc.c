@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 01:52:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/14 22:47:53 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+#define DELIMITER 0
+#define NL 1
+
+void	free_strings(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
+}
 
 int	create_heredoc_file(char *str, char ***envp)
 {
@@ -42,33 +51,31 @@ int	create_heredoc_file(char *str, char ***envp)
 
 void	write_all_to_file(t_heredoc *heredoc)
 {
-	char	*delimiter;
+	char	*spechr[2];
 	char	*content_current;
 	char	*processed_line;
-	char	*newline;
 	char	*tmp;
 	size_t	content_length;
 
-	delimiter = ft_substr(heredoc->str, 0, heredoc->start);
+	spechr[DELIMITER] = ft_substr(heredoc->str, 0, heredoc->start);
 	content_current = heredoc->str + heredoc->start + 1;
-	newline = ft_strchr(content_current, '\n');
-	while (newline)
+	spechr[NL] = ft_strchr(content_current, '\n');
+	while (spechr[NL])
 	{
-		content_length = newline - content_current;
+		content_length = spechr[NL] - content_current;
 		processed_line = ft_substr(content_current, 0, content_length);
 		tmp = assign_variable(processed_line, heredoc->envp, 0);
 		strip_quotes(tmp);
-		if (!ft_strncmp(tmp, delimiter, content_length)
-			&& content_length == ft_strlen(delimiter))
+		if (!ft_strncmp(tmp, spechr[DELIMITER], content_length)
+			&& content_length == ft_strlen(spechr[DELIMITER]))
 			break ;
 		write(heredoc->fd, tmp, ft_strlen(tmp));
 		write(heredoc->fd, "\n", 1);
-		content_current = newline + 1;
-		free(processed_line);
-		free(tmp);
-		newline = ft_strchr(content_current, '\n');
+		content_current = spechr[NL] + 1;
+		free_strings(processed_line, tmp);
+		spechr[NL] = ft_strchr(content_current, '\n');
 	}
-	free(delimiter);
+	free(spechr[DELIMITER]);
 }
 
 void	write_to_file(t_heredoc *heredoc)

@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/13 21:31:33 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/14 22:53:00 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	cd(char **cmd, char ***envp)
 	old_pwd = ft_strjoin("OLDPWD=", current_pwd);
 	*envp = env_remove(envp, "OLDPWD");
 	*envp = env_add(envp, old_pwd);
-	free(current_pwd);
-	free(old_pwd);
+	free_strings(current_pwd, old_pwd);
 	exit_status(&status);
 }
