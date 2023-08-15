@@ -13,7 +13,7 @@
 #include "../inc/minishell.h"
 
 char	*process_cmd(t_cmd_parser *parser)
-{	
+{
 	if (!ft_strncmp(parser->start, ">", 1) || !ft_strncmp(parser->start, ">>",
 			2))
 	{
