@@ -77,7 +77,8 @@ char	*process_redirection_in_heredoc(t_cmd_parser *parser)
 
 	redir = get_redirections();
 	redir->in_redir = 2;
-	parser->start = parser->start + 2;
+	while (*parser->start == '<' || *parser->start == ' ')
+		parser->start++;
 	parser->end = find_end(parser->start);
 	redir->heredoc = create_heredoc_file(parser->start, parser->envp);
 	return (parser->start);

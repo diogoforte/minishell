@@ -60,7 +60,6 @@ int	main(int ac, char **av, char **envp)
 		pipe(get_pipe()->pipe);
 		signals(1);
 		execute_pipeline(cmds, &new_envp);
-		printf("\n");
 		ft_freetensor(cmds);
 		free(line);
 	}
