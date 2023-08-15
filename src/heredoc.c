@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/14 22:47:53 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/15 02:27:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	write_all_to_file(t_heredoc *heredoc)
 		write(heredoc->fd, tmp, ft_strlen(tmp));
 		write(heredoc->fd, "\n", 1);
 		content_current = spechr[NL] + 1;
-		free_strings(processed_line, tmp);
+		free(processed_line);
 		spechr[NL] = ft_strchr(content_current, '\n');
 	}
 	free(spechr[DELIMITER]);
