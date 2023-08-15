@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:01:51 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 11:57:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/15 15:45:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ void	handle_sigquit2(int sig)
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	rl_replace_line("", 0);
 	rl_redisplay();
-	printf("\n\n");
+	rl_replace_line("", 0);
+	printf("\n");
 	print_prompt();
-	printf("└─\033[1;34m$\033[0m ");
 }
 
 void	handle_sigquit(int sig)

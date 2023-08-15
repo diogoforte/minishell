@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/13 18:13:34 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:08:46 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 void	print_prompt(void)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	printf("%s┌──(%s%s㉿minishell%s%s)-[%s%s%s%s]\n", GREEN, BOLD_BLUE,
-		search_env(get_envp(NULL), "USER"), RESET, GREEN, BOLD_WHITE,
-		pwd, RESET, GREEN);
-	free(pwd);
+	printf("%s@minishell", search_env(get_envp(NULL), "USER"));
 }
 
 char	*read_line(char **envp)
@@ -28,7 +22,7 @@ char	*read_line(char **envp)
 	char	*line;
 
 	line = NULL;
-	line = readline("└─\033[1;34m$\033[0m ");
+	line = readline("$> ");
 	if (!line)
 	{
 		ft_freematrix(envp);
@@ -44,8 +38,8 @@ int	main(int ac, char **av, char **envp)
 	char	**new_envp;
 	char	***cmds;
 
-	(void) ac;
-	(void) av;
+	(void)ac;
+	(void)av;
 	new_envp = env_add(&envp, NULL);
 	while (1)
 	{
