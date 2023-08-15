@@ -6,23 +6,18 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 17:08:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:12:48 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	print_prompt(void)
-{
-	printf("%s@minishell", search_env(get_envp(NULL), "USER"));
-}
 
 char	*read_line(char **envp)
 {
 	char	*line;
 
 	line = NULL;
-	line = readline("$> ");
+	line = readline("minishell$> ");
 	if (!line)
 	{
 		ft_freematrix(envp);
@@ -43,9 +38,7 @@ int	main(int ac, char **av, char **envp)
 	new_envp = env_add(&envp, NULL);
 	while (1)
 	{
-		get_envp(&new_envp);
 		signals(0);
-		print_prompt();
 		line = read_line(new_envp);
 		if (line && *line)
 			add_history(line);

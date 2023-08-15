@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/13 21:46:50 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:12:45 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-char	***get_envp(char ***new_envp)
-{
-	static char	**envp;
-
-	if (new_envp)
-		envp = *new_envp;
-	return (&envp);
-}
 
 char	*search_env(char ***envp, char *cmd)
 {

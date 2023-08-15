@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:01:51 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 15:45:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:12:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 	rl_replace_line("", 0);
 	printf("\n");
-	print_prompt();
 }
 
 void	handle_sigquit(int sig)
