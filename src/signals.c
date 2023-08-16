@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:01:51 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 17:12:35 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 02:17:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,44 @@ void	signals(int n)
 
 void	handle_sigint2(int sig)
 {
+	int	exit;
+
 	(void)sig;
+	exit = 130;
+	exit_status(&exit);
 }
 
 void	handle_sigquit2(int sig)
 {
-	printf("\nquit (core dumped)");
+	int	exit;
+
 	(void)sig;
+	exit = 131;
+	exit_status(&exit);
+	printf("Quit\n");
 }
 
 void	handle_sigint(int sig)
 {
+	int	exit;
+
 	(void)sig;
-	rl_redisplay();
-	rl_replace_line("", 0);
+	exit = 130;
 	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	exit_status(&exit);
 }
 
 void	handle_sigquit(int sig)
 {
+	int	exit;
+
+	(void)sig;
+	exit = 130;
+	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	(void)sig;
+	exit_status(&exit);
 }

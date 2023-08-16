@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 20:24:57 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/16 01:58:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-# define GREEN "\033[32m"
-# define BOLD_GREEN "\033[1;32m"
-# define BLUE "\033[34m"
-# define BOLD_BLUE "\033[1;34m"
-# define RESET "\033[0m"
-# define WHITE "\033[37m"
-# define BOLD_WHITE "\033[1;37m"
 
 typedef struct s_redirect
 {
@@ -82,7 +74,6 @@ void		echo(char **cmd);
 void		cd(char **cmd, char ***envp);
 void		pwd(void);
 void		env(char ***envp);
-char		***get_envp(char ***new_envp);
 char		*search_env(char ***envp, char *cmd);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
@@ -92,7 +83,7 @@ int			execute_builtin_main(char **cmd, char ***envp);
 void		execute_builtin(char **cmd, char ***envp);
 void		execute_command(char **cmd, char ***envp);
 int			*exit_status(int *value);
-void		handle_exit_status(int *status, char ***envp);
+void		handle_exit_status(int *status);
 char		*pathfinder(char *cmd, char ***envp);
 void		signals(int n);
 void		handle_sigint(int sig);

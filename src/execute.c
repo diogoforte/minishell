@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 00:33:56 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/16 02:00:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execute_pipeline(char ***cmds, char ***envp)
 		}
 		index++;
 	}
-	handle_exit_status(&status, envp);
+	handle_exit_status(&status);
 }
 
 void	execute(char **cmd, char ***envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:18:07 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/15 20:28:00 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/16 02:19:07 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static int	pipec(char const *s, char c)
 			while (*s && (*s != c || !state.inside))
 			{
 				if (*s == '"' || *s == '\'')
-            		swap_quote_state(&state, *s);
+					swap_quote_state(&state, *s);
 				s++;
-			}	
+			}
 		}
 	}
 	return (i);
@@ -64,7 +64,7 @@ static size_t	cmd_size(const char *str, int n, char c)
 
 	i = 0;
 	while (str[++n] && str[n] != c)
-		i ++;
+		i++;
 	return (i);
 }
 
@@ -85,11 +85,11 @@ char	**split_pipes(const char *str, char c)
 	while (++j < size)
 	{
 		while (str[i] && str[i] == c)
-			i ++;
+			i++;
 		if (str[i] && str[i] != c)
 			ret[j] = ft_substr(str, i, cmd_size(str, i - 1, c));
 		while (str[i] && str[i] != c)
-			i ++;
+			i++;
 	}
 	return (ret);
 }

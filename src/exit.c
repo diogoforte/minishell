@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 12:45:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 02:00:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int	*exit_status(int *value)
 	return (&status);
 }
 
-void	handle_exit_status(int *status, char ***envp)
+void	handle_exit_status(int *status)
 {
-	(void)envp;
 	while (wait(status) > 0)
 	{
 		waitpid(-1, status, 0);

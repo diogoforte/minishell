@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/15 16:58:01 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 02:18:48 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	env(char ***envp)
 
 void	export(char **cmd, char ***envp)
 {
-	int	i;
-	int	status;
-	char **tmp;
+	int		i;
+	int		status;
+	char	**tmp;
 
 	i = 0;
 	status = 0;
@@ -57,7 +57,7 @@ void	export(char **cmd, char ***envp)
 	}
 	tmp = ft_split(*cmd, '=');
 	if (search_env(envp, tmp[0]))
-			*envp = env_remove(envp, tmp[0]);
+		*envp = env_remove(envp, tmp[0]);
 	ft_freematrix(tmp);
 	*envp = env_add(envp, *cmd);
 	exit_status(&status);
