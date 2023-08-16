@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 20:22:10 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:38:53 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ char	***parse_pipeline(char *line, char ***envp)
 	char	***parsed_pipeline;
 	char	*trimmed_command;
 	char	**commands;
-	char	**tests;
 
-	commands = ft_split(line, '|');
-	tests = split_pipes(line, '|');
-	ft_freematrix(tests);
+	commands = split_pipes(line, '|');
 	i = 0;
 	num_commands = 0;
 	while (commands[num_commands])
