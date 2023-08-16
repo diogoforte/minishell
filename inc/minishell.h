@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 01:58:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:43:47 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		handle_sigquit2(int sig);
 void		handle_sigquit(int sig);
 char		*find_end(char *start);
 char		**resize_cmd(char **cmd, int count);
-void		strip_quotes(char *arg);
+char		*strip_quotes(char *arg);
 char		**parse_cmd(char *line, char ***envp);
 t_redirect	*get_redirections(void);
 int			create_heredoc_file(char *str, char ***envp);

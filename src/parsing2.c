@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/14 22:16:24 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:45:03 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*process_regular_cmd(t_cmd_parser *parser)
 	(parser->cmd)[parser->i][parser->end - parser->start] = '\0';
 	(parser->cmd)[parser->i] = assign_variable((parser->cmd)[parser->i],
 			parser->envp, 1);
-	strip_quotes((parser->cmd)[parser->i]);
+	(parser->cmd)[parser->i] = strip_quotes((parser->cmd)[parser->i]);
 	(parser->i)++;
 	return (parser->start);
 }

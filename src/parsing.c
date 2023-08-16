@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/09 16:00:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:56:11 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,24 @@ char	**resize_cmd(char **cmd, int count)
 	return (new_cmd);
 }
 
-void	strip_quotes(char *arg)
+char	*strip_quotes(char *arg)
 {
-	char	*pos;
-	char	*prev_char;
-	char	*next_char;
+	char	*clean;
 
-	pos = ft_strpbrk(arg, "\"'");
-	while (pos)
+	if (arg[0] == '"')
 	{
-		if (pos > arg)
-			prev_char = pos - 1;
-		else
-			prev_char = NULL;
-		if (pos < (arg + ft_strlen(arg) - 1))
-			next_char = pos + 1;
-		else
-			next_char = NULL;
-		if ((prev_char && *prev_char != *pos) || (next_char
-				&& *next_char != *pos))
-			ft_memmove(pos, pos + 1, ft_strlen(pos));
-		else
-			break ;
-		pos = ft_strpbrk(arg, "\"'");
+		clean = ft_strtrim(arg, "\"");
+		free(arg);
+		return (clean);
 	}
+	else if (arg[0] == '\'')
+	{
+		clean = ft_strtrim(arg, "'");
+		free(arg);
+		return (clean);
+	}
+	else
+		return (arg);
 }
 
 char	**parse_cmd(char *line, char ***envp)
