@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 22:09:52 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:04:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	write_all_to_file(t_heredoc *heredoc)
 		content_length = spechr[NL] - content_current;
 		processed_line = ft_substr(content_current, 0, content_length);
 		tmp = assign_variable(processed_line, heredoc->envp, 0);
-		strip_quotes(tmp);
+		tmp = strip_quotes(tmp);
 		if (!ft_strncmp(tmp, spechr[DELIMITER], content_length)
 			&& content_length == ft_strlen(spechr[DELIMITER]))
 			break ;
@@ -87,11 +87,11 @@ void	write_to_file(t_heredoc *heredoc)
 	delimiter = ft_substr(heredoc->str, 0, heredoc->start);
 	while (1)
 	{
-		line = readline("heredoc> ");
+		line = readline("> ");
 		if (!line)
 			break ;
 		processed_line = assign_variable(line, heredoc->envp, 0);
-		strip_quotes(processed_line);
+		processed_line = strip_quotes(processed_line);
 		if (processed_line != line)
 			line = processed_line;
 		if (ft_strlen(line) == ft_strlen(delimiter) && !ft_strncmp(line,

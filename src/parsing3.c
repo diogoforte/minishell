@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freetensor.c                                    :+:      :+:    :+:   */
+/*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/03 15:02:09 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 23:57:35 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/16 23:54:22 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/16 23:59:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "../inc/minishell.h"
 
-void	ft_freetensor(char ***tensor)
+char	*insert_space(char *line)
 {
-	int	i;
-	int	j;
+	char	*new_line;
+	char	*tmp;
 
-	i = 0;
-	j = 0;
-	if (tensor)
+	new_line = malloc(strlen(line) + 2);
+	tmp = new_line;
+	while (*line)
 	{
-		while (tensor[i] != NULL)
-		{
-			j = 0;
-			while (tensor[i][j] != NULL)
-			{
-				free(tensor[i][j]);
-				j++;
-			}
-			free(tensor[i]);
-			i++;
-		}
-		free(tensor);
+		if (*line == '>' && *(line - 1) != ' ')
+			*tmp++ = ' ';
+		*tmp++ = *line++;
 	}
+	*tmp = '\0';
+	return (new_line);
 }

@@ -6,11 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 08:11:50 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/10 23:59:23 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:57:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 /* 
 Description:

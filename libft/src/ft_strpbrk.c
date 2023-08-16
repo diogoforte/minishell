@@ -6,11 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:45:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/09 15:54:09 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:57:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 char	*ft_strpbrk(char *str, char *set)
 {

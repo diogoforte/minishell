@@ -1,37 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 06:50:57 by dinunes-          #+#    #+#             */
+/*   Created: 2023/08/16 23:08:10 by dinunes-          #+#    #+#             */
 /*   Updated: 2023/08/16 23:57:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* 
-Description:
-	compares str1 and str2, (max n bytes).
-Return Value:
-	0 if strings are equal.
-	(> 0) if str1 > str2 (values not size).
-	(< 0) if str1 < str2 (values not size).
-*/
-
-int	ft_strncmp(const char *str1, const char *str2, size_t n)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	size_t	i;
+	char	*original_dest;
 
-	i = 0;
-	while (n--)
-	{
-		if (str1[i] == str2[i] && str1[i] && str2[i])
-			i++;
-		else
-			return (((unsigned char *) str1)[i] - ((unsigned char *) str2)[i]);
-	}
-	return (0);
+	original_dest = dest;
+	while (*src)
+		*dest++ = *src++;
+	*dest = '\0';
+	return (original_dest);
 }
