@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 00:10:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 02:03:21 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 char	*find_end(char *start)
 {
 	char	*end;
-	char	quote;
+	t_in_quote	state;
 
+	init_quote_state(&state);
 	end = start;
 	if (*start == '"' || *start == '\'')
 	{
-		quote = *start;
-		end++;
-		while (*end && *end != quote)
-			end++;
-		if (*end)
-			end++;
+		swap_quote_state(&state, *end++);
+		while (*end && (*end != ' ' || state.inside))
+			swap_quote_state(&state, *end++);
 	}
 	else
 	{
@@ -55,13 +53,13 @@ char	*strip_quotes(char *arg)
 
 	if (arg[0] == '"')
 	{
-		clean = ft_strtrim(arg, "\"");
+		clean = remove_char(arg, '"');
 		free(arg);
 		return (clean);
 	}
 	else if (arg[0] == '\'')
 	{
-		clean = ft_strtrim(arg, "'");
+		clean = remove_char(arg, '\'');
 		free(arg);
 		return (clean);
 	}

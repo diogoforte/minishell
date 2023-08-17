@@ -3,30 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 00:10:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:34:47 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*process_cmd(t_cmd_parser *parser)
+char    *process_cmd(t_cmd_parser *parser)
 {
-	if (!ft_strncmp(parser->start, ">", 1) || !ft_strncmp(parser->start, ">>",
-			2))
-	{
-		get_redirections()->command = *parser->cmd;
-		parser->start = process_redirection_out(parser);
-	}
-	else if (ft_strncmp(parser->start, "<<", 2) == 0)
-		parser->start = process_redirection_in_heredoc(parser);
-	else if (ft_strncmp(parser->start, "<", 1) == 0)
-		parser->start = process_redirection_in(parser);
-	else
-		parser->start = process_regular_cmd(parser);
-	return (parser->start);
+    if (!ft_strncmp(parser->start, ">", 1) || !ft_strncmp(parser->start, ">>",
+            2))
+    {
+        if (!get_redirections()->command)
+        {
+            get_redirections()->command = *parser->cmd;
+            parser->start = process_redirection_out(parser);
+        }
+    }
+    else if (ft_strncmp(parser->start, "<<", 2) == 0)
+        parser->start = process_redirection_in_heredoc(parser);
+    else if (ft_strncmp(parser->start, "<", 1) == 0)
+        parser->start = process_redirection_in(parser);
+    else
+        parser->start = process_regular_cmd(parser);
+    return (parser->start);
 }
 
 char	*process_redirection_out(t_cmd_parser *parser)

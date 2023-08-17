@@ -6,18 +6,11 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:18:07 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/16 18:46:41 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 01:50:19 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-typedef struct s_in_quote
-{
-	int			doub;
-	int			sing;
-	int			inside;
-}				t_in_quote;
 
 void	init_quote_state(t_in_quote *state)
 {

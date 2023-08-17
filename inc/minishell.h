@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 00:10:21 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 01:52:51 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ typedef struct s_variables
 	char	*value;
 }			t_variables;
 
+typedef struct s_in_quote
+{
+	int		doub;
+	int		sing;
+	int		inside;
+}			t_in_quote;
+
 void		echo(char **cmd);
 void		cd(char **cmd, char ***envp);
 void		pwd(void);
@@ -124,5 +131,8 @@ char		*trim_spaces(char *str);
 void		free_strings(char *s1, char *s2);
 char		**split_pipes(const char *str, char c);
 char		*insert_space(char *line);
+char		*remove_char(char *str, char c);
+void		init_quote_state(t_in_quote *state);
+void		swap_quote_state(t_in_quote *state, char q);
 
 #endif
