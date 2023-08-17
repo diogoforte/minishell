@@ -6,18 +6,18 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 21:25:42 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:00:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void execute_pipeline(t_redirect *cmds_head, char ***envp)
+void	execute_pipeline(t_redirect *cmds_head, char ***envp)
 {
-	pid_t pid;
-	int status;
-	t_redirect *current;
-	int index;
+	pid_t		pid;
+	int			status;
+	t_redirect	*current;
+	int			index;
 
 	current = cmds_head;
 	index = 0;
@@ -26,12 +26,10 @@ void execute_pipeline(t_redirect *cmds_head, char ***envp)
 		if (current->cmd && !execute_builtin_main(current->cmd, envp))
 		{
 			pid = fork();
-			if (!pid)  // Child
+			if (!pid)
 				handle_child(current, index, envp);
-			else       // Parent
-			{
+			else
 				handle_parent(current, index);
-			}
 		}
 		index++;
 		current = current->next;

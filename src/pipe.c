@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 21:25:35 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:01:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 	char		**commands;
 	t_redirect	*head;
 	t_redirect	*current;
-	t_redirect	*newNode;
+	t_redirect	*newnode;
 
 	head = NULL;
 	current = NULL;
@@ -26,16 +26,16 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 	i = 0;
 	while (commands[i])
 	{
-		newNode = parse_cmd(commands[i], envp);
+		newnode = parse_cmd(commands[i], envp);
 		if (!head)
 		{
-			head = newNode;
+			head = newnode;
 			current = head;
 		}
 		else
 		{
-			current->next = newNode;
-			current = newNode;
+			current->next = newnode;
+			current = newnode;
 		}
 		i++;
 	}
@@ -58,52 +58,48 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-void handle_child(t_redirect *head, int index, char ***envp)
+void	handle_child(t_redirect *head, int index, char ***envp)
 {
-	t_redirect *current;
-	int i;
+	t_redirect	*current;
+	int			i;
 
 	current = head;
 	i = 0;
-	while (i < index && current)
+	while (i < index && current && current->next)
 	{
 		current = current->next;
 		i++;
 	}
 	if (!current)
-		exit(EXIT_FAILURE);  // No command to run, exit child process
-
+		exit(EXIT_FAILURE);
 	if (index != 0)
 	{
 		dup2(get_pipe()->infile, 0);
 		close(get_pipe()->infile);
 	}
-	if (current->next)
-	{
+	if (current && current->next)
 		dup2(get_pipe()->pipe[1], 1);
-		close(get_pipe()->pipe[1]);
-	}
-	close(get_pipe()->pipe[0]);  // Always close the read end in the child
+	close(get_pipe()->pipe[0]);
+	close(get_pipe()->pipe[1]);
 	execute(current, envp);
 	exit(EXIT_FAILURE);
 }
 
-void handle_parent(t_redirect *head, int index)
+void	handle_parent(t_redirect *head, int index)
 {
-	t_redirect *current;
-	int i;
+	t_redirect	*current;
+	int			i;
 
 	current = head;
 	i = 0;
-	while (i < index && current)
+	while (i < index && current && current->next)
 	{
 		current = current->next;
 		i++;
 	}
-	close(get_pipe()->pipe[1]);  // Always close the write end in the parent
+	close(get_pipe()->pipe[1]);
 	if (index != 0)
 		close(get_pipe()->infile);
-
 	get_pipe()->infile = get_pipe()->pipe[0];
 	if (current && current->next)
 		pipe(get_pipe()->pipe);
