@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 22:01:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:02:36 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 	while (commands[i])
 	{
 		newnode = parse_cmd(commands[i], envp);
+		if (!newnode)
+		{
+			i++;
+			continue ;
+		}
 		if (!head)
 		{
 			head = newnode;
@@ -64,7 +69,7 @@ void	handle_child(t_redirect *head, int index, char ***envp)
 	int			i;
 
 	current = head;
-	i = 0;
+	i = 1;
 	while (i < index && current && current->next)
 	{
 		current = current->next;
@@ -91,7 +96,7 @@ void	handle_parent(t_redirect *head, int index)
 	int			i;
 
 	current = head;
-	i = 0;
+	i = 1;
 	while (i < index && current && current->next)
 	{
 		current = current->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 22:00:09 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:01:57 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	execute_pipeline(t_redirect *cmds_head, char ***envp)
 			pid = fork();
 			if (!pid)
 				handle_child(current, index, envp);
-			else
-				handle_parent(current, index);
+			handle_parent(current, index);
 		}
 		index++;
 		current = current->next;
