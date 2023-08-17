@@ -3,38 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 18:38:53 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:25:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	***parse_pipeline(char *line, char ***envp)
+t_redirect	*parse_pipeline(char *line, char ***envp)
 {
-	int		i;
-	int		num_commands;
-	char	***parsed_pipeline;
-	char	*trimmed_command;
-	char	**commands;
+	int			i;
+	char		**commands;
+	t_redirect	*head;
+	t_redirect	*current;
+	t_redirect	*newNode;
 
+	head = NULL;
+	current = NULL;
 	commands = split_pipes(line, '|');
 	i = 0;
-	num_commands = 0;
-	while (commands[num_commands])
-		num_commands++;
-	parsed_pipeline = malloc((num_commands + 1) * sizeof(char **));
 	while (commands[i])
 	{
-		trimmed_command = trim_spaces(commands[i]);
-		parsed_pipeline[i] = parse_cmd(trimmed_command, envp);
+		newNode = parse_cmd(commands[i], envp);
+		if (!head)
+		{
+			head = newNode;
+			current = head;
+		}
+		else
+		{
+			current->next = newNode;
+			current = newNode;
+		}
 		i++;
 	}
-	parsed_pipeline[i] = NULL;
 	ft_freematrix(commands);
-	return (parsed_pipeline);
+	return (head);
 }
 
 char	*trim_spaces(char *str)
@@ -52,29 +58,53 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-void	handle_child(char ***cmds, int index, char ***envp)
+void handle_child(t_redirect *head, int index, char ***envp)
 {
-	if (index)
+	t_redirect *current;
+	int i;
+
+	current = head;
+	i = 0;
+	while (i < index && current)
+	{
+		current = current->next;
+		i++;
+	}
+	if (!current)
+		exit(EXIT_FAILURE);  // No command to run, exit child process
+
+	if (index != 0)
 	{
 		dup2(get_pipe()->infile, 0);
 		close(get_pipe()->infile);
 	}
-	if (cmds[index + 1])
+	if (current->next)
 	{
 		dup2(get_pipe()->pipe[1], 1);
 		close(get_pipe()->pipe[1]);
 	}
-	close(get_pipe()->pipe[0]);
-	execute(cmds[index], envp);
+	close(get_pipe()->pipe[0]);  // Always close the read end in the child
+	execute(current, envp);
 	exit(EXIT_FAILURE);
 }
 
-void	handle_parent(int index)
+void handle_parent(t_redirect *head, int index)
 {
-	close(get_pipe()->pipe[1]);
-	if (index)
+	t_redirect *current;
+	int i;
+
+	current = head;
+	i = 0;
+	while (i < index && current)
+	{
+		current = current->next;
+		i++;
+	}
+	close(get_pipe()->pipe[1]);  // Always close the write end in the parent
+	if (index != 0)
 		close(get_pipe()->infile);
+
 	get_pipe()->infile = get_pipe()->pipe[0];
-	if (index + 1)
+	if (current && current->next)
 		pipe(get_pipe()->pipe);
 }

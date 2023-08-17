@@ -3,51 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 02:23:40 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:25:42 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	execute_pipeline(char ***cmds, char ***envp)
+void execute_pipeline(t_redirect *cmds_head, char ***envp)
 {
-	pid_t	pid;
-	int		status;
-	int		index;
-	int		flag;
+	pid_t pid;
+	int status;
+	t_redirect *current;
+	int index;
 
+	current = cmds_head;
 	index = 0;
-	flag = 0;
-	while (cmds[index] && !flag)
+	while (current)
 	{
-		if (get_redirections()->command)
-			flag = 1;
-		if (!execute_builtin_main(cmds[index], envp))
+		if (current->cmd && !execute_builtin_main(current->cmd, envp))
 		{
 			pid = fork();
-			if (!pid)
-				handle_child(cmds, index, envp);
-			handle_parent(index);
+			if (!pid)  // Child
+				handle_child(current, index, envp);
+			else       // Parent
+			{
+				handle_parent(current, index);
+			}
 		}
 		index++;
+		current = current->next;
 	}
 	handle_exit_status(&status);
 }
 
-void	execute(char **cmd, char ***envp)
+void	execute(t_redirect *current_cmd, char ***envp)
 {
-	if (get_redirections()->command
-		&& !ft_strncmp(get_redirections()->command, *cmd, ft_strlen(*cmd)))
-		handle_output_redirection();
-	handle_input_redirection();
-	if (*cmd && ((!ft_strncmp(*cmd, "echo", 5)) || (!ft_strncmp(*cmd, "pwd", 4))
-			|| (!ft_strncmp(*cmd, "env", 4)) || (!ft_strncmp(*cmd, "exit", 5))))
-		execute_builtin(cmd, envp);
+	handle_output_redirection(current_cmd);
+	handle_input_redirection(current_cmd);
+	if (current_cmd->cmd[0] && (!ft_strncmp(current_cmd->cmd[0], "echo", 5)
+			|| !ft_strncmp(current_cmd->cmd[0], "pwd", 4)
+			|| !ft_strncmp(current_cmd->cmd[0], "env", 4)
+			|| !ft_strncmp(current_cmd->cmd[0], "exit", 5)))
+		execute_builtin(current_cmd->cmd, envp);
 	else
-		execute_command(cmd, envp);
+		execute_command(current_cmd->cmd, envp);
 }
 
 int	execute_builtin_main(char **cmd, char ***envp)

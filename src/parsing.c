@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 02:16:08 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:10:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,27 +67,54 @@ char	*strip_quotes(char *arg)
 		return (arg);
 }
 
-char	**parse_cmd(char *line, char ***envp)
+int is_redirection(char *start) {
+    if (!ft_strncmp(start, ">", 1) || !ft_strncmp(start, ">>", 2) || ft_strncmp(start, "<<", 2) == 0 || ft_strncmp(start, "<", 1) == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+t_redirect	*parse_cmd(char *line, char ***envp)
 {
 	t_cmd_parser	parser;
 	char			*tmp;
+	t_redirect		*head;
+	t_redirect		*current;
 
+	head = NULL;
+	current = NULL;
 	tmp = line;
 	if ((ft_strchr(line, '>') || ft_strchr(line, '<')) && !ft_strchr(line, ' '))
 		line = insert_space(line);
 	parser = (t_cmd_parser){NULL, line, line, 0, envp};
 	while (*(parser.end))
+{
+	parser.start = skip_spaces(parser.start);
+	if (*parser.start == '\0')
+			break;
+	parser.end = find_end(parser.start);
+	if (is_redirection(parser.start))
 	{
-		parser.start = skip_spaces(parser.start);
-		parser.end = find_end(parser.start);
-		parser.start = process_cmd(&parser);
-		parser.start = parser.end + 1;
+		if (!current)
+		{
+			current = init_redirect();
+			head = current;
+		}
 	}
-	parser.cmd = resize_cmd(parser.cmd, parser.i);
-	parser.cmd[parser.i] = NULL;
+	else
+	{
+		if (!current)
+		{
+			current = init_redirect();
+			head = current;
+		}
+	}
+	process_cmd(&parser, &current);
+	parser.start = parser.end + 1;
+}
 	if ((ft_strchr(tmp, '>') || ft_strchr(tmp, '<')) && !ft_strchr(tmp, ' '))
 		free(line);
-	return (parser.cmd);
+	return (head);
 }
 
 char	*skip_spaces(char *start)

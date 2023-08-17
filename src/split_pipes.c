@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:18:07 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/17 01:50:19 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:24:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
