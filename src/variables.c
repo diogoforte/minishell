@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/13 21:18:37 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 04:05:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	if (check_quotes(cmd) || check_apostrophe(cmd))
 		return (cmd);
 	var.start = ft_strchr(cmd, '$');
-	if (!var.start)
+	if (!var.start || (!ft_isalnum(*(var.start + 1)) && *(var.start + 1) != '?'))
 		return (cmd);
 	if (var.start[0] == '$' && var.start[1] == '?')
 	{
