@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 02:03:21 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 02:16:08 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*find_end(char *start)
 {
-	char	*end;
+	char		*end;
 	t_in_quote	state;
 
 	init_quote_state(&state);

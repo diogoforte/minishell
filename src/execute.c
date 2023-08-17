@@ -6,35 +6,35 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 00:32:54 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 02:23:40 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void    execute_pipeline(char ***cmds, char ***envp)
+void	execute_pipeline(char ***cmds, char ***envp)
 {
-    pid_t    pid;
-    int        status;
-    int        index;
-    int        flag;
+	pid_t	pid;
+	int		status;
+	int		index;
+	int		flag;
 
-    index = 0;
-    flag = 0;
-    while (cmds[index] && !flag)
-    {
-        if (get_redirections()->command)
-            flag = 1;
-        if (!execute_builtin_main(cmds[index], envp))
-        {
-            pid = fork();
-            if (!pid)
-                handle_child(cmds, index, envp);
-            handle_parent(index);
-        }
-        index++;
-    }
-    handle_exit_status(&status);
+	index = 0;
+	flag = 0;
+	while (cmds[index] && !flag)
+	{
+		if (get_redirections()->command)
+			flag = 1;
+		if (!execute_builtin_main(cmds[index], envp))
+		{
+			pid = fork();
+			if (!pid)
+				handle_child(cmds, index, envp);
+			handle_parent(index);
+		}
+		index++;
+	}
+	handle_exit_status(&status);
 }
 
 void	execute(char **cmd, char ***envp)
