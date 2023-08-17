@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 00:09:52 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 02:45:22 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	create_heredoc_file(char *str, char ***envp)
 	if (heredoc.fd == -1)
 		return (0);
 	i = 0;
-	while (str[i] && str[i] != '\n')
+	while (str[i] && str[i] != ' ')
 		i++;
 	heredoc.str = str;
 	heredoc.envp = envp;
