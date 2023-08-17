@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 19:55:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:59:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*process_redirection_out(t_cmd_parser *parser, t_redirect **redir)
 	parser->end = find_end(parser->start);
 	word = ft_calloc(parser->end - parser->start + 1, sizeof(char));
 	(*redir)->out_file = ft_strncpy(word, parser->start, parser->end
-		- parser->start);
+			- parser->start);
 	(*redir)->out_file[parser->end - parser->start] = '\0';
 	return (parser->start);
 }
@@ -59,7 +59,7 @@ char	*process_redirection_in(t_cmd_parser *parser, t_redirect **redir)
 	parser->end = find_end(parser->start);
 	word = ft_calloc(parser->end - parser->start + 1, sizeof(char));
 	(*redir)->in_file = ft_strncpy(word, parser->start, parser->end
-		- parser->start);
+			- parser->start);
 	(*redir)->in_file[parser->end - parser->start] = '\0';
 	return (parser->start);
 }
@@ -79,10 +79,10 @@ char	*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir)
 {
 	parser->cmd = resize_cmd(parser->cmd, parser->i);
 	(parser->cmd)[parser->i] = ft_strncpy(malloc(parser->end - parser->start
-			+ 1), parser->start, parser->end - parser->start);
+				+ 1), parser->start, parser->end - parser->start);
 	(parser->cmd)[parser->i][parser->end - parser->start] = '\0';
 	(parser->cmd)[parser->i] = assign_variable((parser->cmd)[parser->i],
-		parser->envp, 1);
+			parser->envp, 1);
 	(parser->cmd)[parser->i] = strip_quotes((parser->cmd)[parser->i]);
 	parser->i++;
 	(*redir)->cmd = parser->cmd;

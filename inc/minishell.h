@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 20:36:42 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:07:21 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ char						*process_redirection_out(t_cmd_parser *parser,
 								t_redirect **redir);
 char						*process_redirection_in(t_cmd_parser *parser,
 								t_redirect **redir);
-char						*process_redirection_in_heredoc(t_cmd_parser *parser,
-								t_redirect **redir);
+char						*process_redirection_in_heredoc(
+								t_cmd_parser *parser, t_redirect **redir);
 char						*process_regular_cmd(t_cmd_parser *parser,
 								t_redirect **redir);
 void						handle_input_redirection(t_redirect *redir);
@@ -145,7 +145,5 @@ char						*remove_char(char *str, char c);
 void						init_quote_state(t_in_quote *state);
 void						swap_quote_state(t_in_quote *state, char q);
 t_redirect					*init_redirect(void);
-
-void						print_redirect_params(const t_redirect *redir);
 
 #endif

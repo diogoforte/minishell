@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 20:00:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 21:58:40 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@ char	*read_line(char **envp)
 
 void	print_redirect_params(const t_redirect *redir)
 {
-	for (int i = 0; redir->cmd[i]; i++)
-		printf("cmd[%d]%s \n",i , redir->cmd[i]);
+	int	i;
+
+	i = 0;
+	while (redir->cmd[i])
+	{
+		printf("cmd[%d]%s \n", i, redir->cmd[i]);
+		i++;
+	}
 	printf("in_redir: %d\n", redir->in_redir);
 	printf("out_redir: %d\n", redir->out_redir);
 	printf("heredoc: %d\n", redir->heredoc);
-	printf("in_file: %s\n", redir->in_file ? redir->in_file : "NULL");
-	printf("out_file: %s\n", redir->out_file ? redir->out_file : "NULL");
+	printf("in_file: %s\n", redir->in_file);
+	printf("out_file: %s\n", redir->out_file);
 	if (redir->next)
 	{
 		printf("\n---> Next Redirect Structure: \n");
@@ -60,7 +66,6 @@ int	main(int ac, char **av, char **envp)
 		if (line && *line)
 			add_history(line);
 		cmds_head = parse_pipeline(line, &new_envp);
-		print_redirect_params(cmds_head);
 		pipe(get_pipe()->pipe);
 		signals(1);
 		execute_pipeline(cmds_head, &new_envp);
