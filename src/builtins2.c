@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/18 16:42:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:21:05 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	export(char **cmd, char ***envp)
 	exit_status(&status);
 }
 
-void unset(char **cmd, char ***envp)
+void	unset(char **cmd, char ***envp)
 {
 	int		i;
 	int		status;
