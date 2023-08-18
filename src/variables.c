@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 21:59:53 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 23:57:37 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*assign_variable(char *cmd, char ***envp, int flag)
 {
 	t_variables	var;
-	int			status;
 	char		*new_cmd;
 
 	if (check_quotes(cmd) || check_apostrophe(cmd))
@@ -26,9 +25,8 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 		return (cmd);
 	if (var.start[0] == '$' && var.start[1] == '?')
 	{
-		status = *exit_status(NULL);
 		free(cmd);
-		return (ft_itoa(status));
+		return (ft_itoa(*exit_status(NULL)));
 	}
 	var.end = find_var_end(var.start);
 	var.name = ft_strncpy(ft_calloc(var.end - var.start, sizeof(char)),

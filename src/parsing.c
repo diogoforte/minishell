@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 22:00:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/17 23:39:37 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,10 @@ t_redirect	*parse_cmd(char *line, char ***envp)
 		if (*parser.start == '\0')
 			break ;
 		parser.end = find_end(parser.start);
-		if (is_redirection(parser.start))
+		if (!current)
 		{
-			if (!current)
-			{
-				current = init_redirect();
-				head = current;
-			}
-		}
-		else
-		{
-			if (!current)
-			{
-				current = init_redirect();
-				head = current;
-			}
+			current = init_redirect();
+			head = current;
 		}
 		process_cmd(&parser, &current);
 		parser.start = parser.end + 1;
@@ -118,11 +107,4 @@ t_redirect	*parse_cmd(char *line, char ***envp)
 	if ((ft_strchr(tmp, '>') || ft_strchr(tmp, '<')) && !ft_strchr(tmp, ' '))
 		free(line);
 	return (head);
-}
-
-char	*skip_spaces(char *start)
-{
-	while (*start && *start == ' ')
-		start++;
-	return (start);
 }

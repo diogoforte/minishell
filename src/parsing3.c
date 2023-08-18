@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:54:22 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 02:24:51 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/17 23:30:01 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,11 @@ char	*remove_char(char *str, char c)
 		i++;
 	}	
 	return (new);
+}
+
+char	*skip_spaces(char *start)
+{
+	while (*start && *start == ' ')
+		start++;
+	return (start);
 }
