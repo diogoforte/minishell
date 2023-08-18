@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 20:29:20 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 22:53:15 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,5 +148,9 @@ void						swap_quote_state(t_in_quote *state, char q);
 t_redirect					*init_redirect(void);
 char						*preprocess_line(char *line);
 t_redirect					*parse_redirections(char *line, char ***envp);
+char						**get_pipes(char *line);
+int							check_syntax_errors(char **commands);
+int							pipec(char const *s, char c);
+size_t						cmd_size(const char *str, int n, char c);
 
 #endif

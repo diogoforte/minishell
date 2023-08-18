@@ -6,12 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 22:07:13 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 22:53:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
 
 t_redirect	*parse_pipeline(char *line, char ***envp)
 {
@@ -23,7 +22,9 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 
 	head = NULL;
 	current = NULL;
-	commands = split_pipes(line, '|');
+	commands = get_pipes(line);
+	if (!commands)
+		return (NULL);
 	i = 0;
 	while (commands[i])
 	{

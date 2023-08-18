@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_pipes.c                                      :+:      :+:    :+:   */
+/*   pipe2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:18:07 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/17 18:24:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 22:52:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	swap_quote_state(t_in_quote *state, char q)
 	state->inside = state->doub + state->sing;
 }
 
-static int	pipec(char const *s, char c)
+int	pipec(char const *s, char c)
 {
 	int			i;
 	t_in_quote	state;
@@ -53,7 +53,7 @@ static int	pipec(char const *s, char c)
 	return (i);
 }
 
-static size_t	cmd_size(const char *str, int n, char c)
+size_t	cmd_size(const char *str, int n, char c)
 {
 	size_t		i;
 	t_in_quote	state;
