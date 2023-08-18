@@ -6,11 +6,18 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 23:45:32 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 21:54:19 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	check_syntax(char **commands, char *line)
+{
+	if (line[0] == '|' || line[ft_strlen(line) -1] == '|')
+		return (0);
+	
+}
 
 t_redirect	*parse_pipeline(char *line, char ***envp)
 {

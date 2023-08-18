@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/18 17:21:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 21:34:11 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	check_env(char *var)
+{
+	if (!ft_isalpha(var[0]))
+		return (0);
+	while (*var && *var != '=')
+	{
+		if (!ft_isalnum(*var))
+			return (0);
+		var++;
+	}
+	return (1);	
+}
 
 void	pwd(void)
 {
@@ -58,6 +71,11 @@ void	export(char **cmd, char ***envp)
 	i = 0;
 	while (cmd[i])
 	{
+		if (!check_env(cmd[i]))
+		{
+			i++;
+			continue ;
+		}
 		tmp = ft_split(cmd[i], '=');
 		if (search_env(envp, tmp[0]))
 			*envp = env_remove(envp, tmp[0]);
