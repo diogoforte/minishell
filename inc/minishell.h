@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 17:22:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 20:29:20 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char						*trim_spaces(char *str);
 void						free_strings(char *s1, char *s2);
 char						**split_pipes(const char *str, char c);
 char						*insert_space(char *line);
-char						*remove_char(char *str, char c);
+char						*remove_char(char *str, char *clean, char c);
 void						init_quote_state(t_in_quote *state);
 void						swap_quote_state(t_in_quote *state, char q);
 t_redirect					*init_redirect(void);

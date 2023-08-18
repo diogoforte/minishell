@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:54:22 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 16:16:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 20:29:46 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,21 @@ char	*insert_space(char *line)
 	return (new_line);
 }
 
-char	*remove_char(char *str, char c)
+char	*remove_char(char *str, char *clean, char c)
 {
-	char	*new;
 	size_t	i;
-	size_t	j;
 
-	i = 0;
-	j = 0;
-	while (str[i])
-		if (str[i++] == c)
-			j++;
-	new = ft_calloc(ft_strlen(str) - j + 1, sizeof(char));
-	if (!new)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
+	i = ft_strlen(clean);
+	while (*str == c)
+		str++;
+	while (*str && *str != c)
 	{
-		if (str[i] != c)
-			new[j++] = str[i];
-		i++;
-	}	
-	return (new);
+		clean[i++] = *str;
+		str++;
+	}
+	while (*str == c)
+		str++;
+	return (str);
 }
 
 char	*skip_spaces(char *start)

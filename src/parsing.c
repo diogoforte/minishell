@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 19:53:31 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 20:52:20 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,48 +51,25 @@ char	*strip_quotes(char *arg)
 {
 	char	*clean;
 	int		i;
-
-	i = 0;
-	while (arg[i] && arg[i] != '"' && arg[i] != '\'')
-		i++;
-	if (arg[i] == '"')
-	{
-		clean = remove_char(arg, '"');
-		free(arg);
-		return (clean);
-	}
-	else if (arg[i] == '\'')
-	{
-		clean = remove_char(arg, '\'');
-		free(arg);
-		return (clean);
-	}
-	else
+	char	*start;
+	
+	start = arg;
+	clean = ft_calloc(ft_strlen(arg) + 1, sizeof(char));
+	if (!clean)
 		return (arg);
-}
-
-char	*strip_quotes2(char *arg)
-{
-	char	*clean;
-	int		i;
-
-	i = 0;
-	while (arg[i] && arg[i] != '"' && arg[i] != '\'')
-		i++;
-	if (arg[i] == '"')
+	while (*arg)
 	{
-		clean = remove_char(arg, '"');
-		free(arg);
-		return (clean);
+		if (*arg ==  '"' || *arg ==  '\'')
+			arg = remove_char(arg, clean, *arg);
+		else
+		{
+			i = ft_strlen(clean);
+			clean[i] = *arg;
+			arg++;
+		}
 	}
-	else if (arg[i] == '\'')
-	{
-		clean = remove_char(arg, '\'');
-		free(arg);
-		return (clean);
-	}
-	else
-		return (arg);
+	free(start);
+	return (clean);
 }
 
 t_redirect	*parse_cmd(char *line, char ***envp)
