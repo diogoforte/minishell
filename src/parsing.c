@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 00:46:17 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:16:01 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,6 @@ char	*strip_quotes(char *arg)
 		return (arg);
 }
 
-int	is_redirection(char *start)
-{
-	if (!ft_strncmp(start, ">", 1) || !ft_strncmp(start, ">>", 2)
-		|| ft_strncmp(start, "<<", 2) == 0 || ft_strncmp(start, "<", 1) == 0)
-	{
-		return (1);
-	}
-	return (0);
-}
-
 t_redirect	*parse_cmd(char *line, char ***envp)
 {
 	char		*tmp;
@@ -87,5 +77,31 @@ t_redirect	*parse_cmd(char *line, char ***envp)
 	head = parse_redirections(line, envp);
 	if ((ft_strchr(tmp, '>') || ft_strchr(tmp, '<')) && !ft_strchr(tmp, ' '))
 		free(line);
+	return (head);
+}
+
+t_redirect	*parse_redirections(char *line, char ***envp)
+{
+	t_cmd_parser	parser;
+	t_redirect		*head;
+	t_redirect		*current;
+
+	head = NULL;
+	current = NULL;
+	parser = (t_cmd_parser){NULL, line, line, 0, envp};
+	while (*(parser.end))
+	{
+		parser.start = skip_spaces(parser.start);
+		if (*parser.start == '\0')
+			break ;
+		parser.end = find_end(parser.start);
+		if (!current)
+		{
+			current = init_redirect();
+			head = current;
+		}
+		process_cmd(&parser, &current);
+		parser.start = parser.end + 1;
+	}
 	return (head);
 }

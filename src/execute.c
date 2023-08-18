@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 22:01:57 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:36:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,12 @@ void	execute(t_redirect *current_cmd, char ***envp)
 
 int	execute_builtin_main(char **cmd, char ***envp)
 {
-	int	status;
-
-	status = 1;
 	if (*cmd && !ft_strncmp(*cmd, "cd", 3))
 		cd(cmd + 1, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "export", 7))
 		export(cmd + 1, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "unset", 6))
-	{
-		if (*(++cmd))
-		{
-			*envp = env_remove(envp, *cmd);
-			status = 0;
-		}
-		exit_status(&status);
-	}
+		unset(cmd + 1, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "exit", 4))
 	{
 		if (*(++cmd) && !*(cmd + 1))

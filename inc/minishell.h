@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 00:39:42 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:35:18 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include "../libft/inc/libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <string.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -89,6 +89,7 @@ char						*search_env(char ***envp, char *cmd);
 char						**env_add(char ***envp, char *cmd);
 char						**env_remove(char ***envp, char *cmd);
 void						export(char **cmd, char ***envp);
+void						unset(char **cmd, char ***envp);
 void						execute(t_redirect *current_cmd, char ***envp);
 int							execute_builtin_main(char **cmd, char ***envp);
 void						execute_builtin(char **cmd, char ***envp);
@@ -121,8 +122,8 @@ char						*process_redirection_out(t_cmd_parser *parser,
 								t_redirect **redir);
 char						*process_redirection_in(t_cmd_parser *parser,
 								t_redirect **redir);
-char						*process_redirection_in_heredoc(
-								t_cmd_parser *parser, t_redirect **redir);
+char						*process_redirection_in_heredoc(t_cmd_parser *parser,
+								t_redirect **redir);
 char						*process_regular_cmd(t_cmd_parser *parser,
 								t_redirect **redir);
 void						handle_input_redirection(t_redirect *redir);

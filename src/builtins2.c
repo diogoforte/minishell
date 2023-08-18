@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/16 02:18:48 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:42:46 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,35 @@ void	export(char **cmd, char ***envp)
 		exit_status(&status);
 		return ;
 	}
-	tmp = ft_split(*cmd, '=');
-	if (search_env(envp, tmp[0]))
-		*envp = env_remove(envp, tmp[0]);
-	ft_freematrix(tmp);
-	*envp = env_add(envp, *cmd);
+	i = 0;
+	while (cmd[i])
+	{
+		tmp = ft_split(cmd[i], '=');
+		if (search_env(envp, tmp[0]))
+			*envp = env_remove(envp, tmp[0]);
+		ft_freematrix(tmp);
+		*envp = env_add(envp, cmd[i]);
+		i++;
+	}
+	exit_status(&status);
+}
+
+void unset(char **cmd, char ***envp)
+{
+	int		i;
+	int		status;
+
+	i = 0;
+	status = 0;
+	if (!*cmd)
+	{
+		exit_status(&status);
+		return ;
+	}
+	while (cmd[i])
+	{
+		*envp = env_remove(envp, cmd[i]);
+		i++;
+	}
 	exit_status(&status);
 }

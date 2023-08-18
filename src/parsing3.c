@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:54:22 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 00:43:54 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 16:16:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,4 @@ char	*preprocess_line(char *line)
 	if ((ft_strchr(line, '>') || ft_strchr(line, '<')) && !ft_strchr(line, ' '))
 		return (insert_space(line));
 	return (line);
-}
-
-t_redirect	*parse_redirections(char *line, char ***envp)
-{
-	t_cmd_parser	parser;
-	t_redirect		*head;
-	t_redirect		*current;
-
-	head = NULL;
-	current = NULL;
-	parser = (t_cmd_parser){NULL, line, line, 0, envp};
-	while (*(parser.end))
-	{
-		parser.start = skip_spaces(parser.start);
-		if (*parser.start == '\0')
-			break ;
-		parser.end = find_end(parser.start);
-		if (!current)
-		{
-			current = init_redirect();
-			head = current;
-		}
-		process_cmd(&parser, &current);
-		parser.start = parser.end + 1;
-	}
-	return (head);
 }
