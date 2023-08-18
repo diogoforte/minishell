@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 21:07:21 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 00:39:42 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,5 +145,7 @@ char						*remove_char(char *str, char c);
 void						init_quote_state(t_in_quote *state);
 void						swap_quote_state(t_in_quote *state, char q);
 t_redirect					*init_redirect(void);
+char						*preprocess_line(char *line);
+t_redirect					*parse_redirections(char *line, char ***envp);
 
 #endif

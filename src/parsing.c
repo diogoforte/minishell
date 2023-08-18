@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 23:39:37 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 00:46:17 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,31 +79,12 @@ int	is_redirection(char *start)
 
 t_redirect	*parse_cmd(char *line, char ***envp)
 {
-	t_cmd_parser	parser;
-	char			*tmp;
-	t_redirect		*head;
-	t_redirect		*current;
+	char		*tmp;
+	t_redirect	*head;
 
-	head = NULL;
-	current = NULL;
 	tmp = line;
-	if ((ft_strchr(line, '>') || ft_strchr(line, '<')) && !ft_strchr(line, ' '))
-		line = insert_space(line);
-	parser = (t_cmd_parser){NULL, line, line, 0, envp};
-	while (*(parser.end))
-	{
-		parser.start = skip_spaces(parser.start);
-		if (*parser.start == '\0')
-			break ;
-		parser.end = find_end(parser.start);
-		if (!current)
-		{
-			current = init_redirect();
-			head = current;
-		}
-		process_cmd(&parser, &current);
-		parser.start = parser.end + 1;
-	}
+	line = preprocess_line(line);
+	head = parse_redirections(line, envp);
 	if ((ft_strchr(tmp, '>') || ft_strchr(tmp, '<')) && !ft_strchr(tmp, ' '))
 		free(line);
 	return (head);
