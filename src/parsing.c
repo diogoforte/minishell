@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 16:16:01 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/18 19:53:31 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,42 @@ char	**resize_cmd(char **cmd, int count)
 char	*strip_quotes(char *arg)
 {
 	char	*clean;
+	int		i;
 
-	if (arg[0] == '"')
+	i = 0;
+	while (arg[i] && arg[i] != '"' && arg[i] != '\'')
+		i++;
+	if (arg[i] == '"')
 	{
 		clean = remove_char(arg, '"');
 		free(arg);
 		return (clean);
 	}
-	else if (arg[0] == '\'')
+	else if (arg[i] == '\'')
+	{
+		clean = remove_char(arg, '\'');
+		free(arg);
+		return (clean);
+	}
+	else
+		return (arg);
+}
+
+char	*strip_quotes2(char *arg)
+{
+	char	*clean;
+	int		i;
+
+	i = 0;
+	while (arg[i] && arg[i] != '"' && arg[i] != '\'')
+		i++;
+	if (arg[i] == '"')
+	{
+		clean = remove_char(arg, '"');
+		free(arg);
+		return (clean);
+	}
+	else if (arg[i] == '\'')
 	{
 		clean = remove_char(arg, '\'');
 		free(arg);
