@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 16:36:35 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/19 08:56:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	execute(t_redirect *current_cmd, char ***envp)
 	handle_input_redirection(current_cmd);
 	if (current_cmd->cmd[0] && (!ft_strncmp(current_cmd->cmd[0], "echo", 5)
 			|| !ft_strncmp(current_cmd->cmd[0], "pwd", 4)
-			|| !ft_strncmp(current_cmd->cmd[0], "env", 4)
-			|| !ft_strncmp(current_cmd->cmd[0], "exit", 5)))
+			|| !ft_strncmp(current_cmd->cmd[0], "env", 4)))
 		execute_builtin(current_cmd->cmd, envp);
 	else
 		execute_command(current_cmd->cmd, envp);
@@ -57,12 +56,8 @@ int	execute_builtin_main(char **cmd, char ***envp)
 		export(cmd + 1, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "unset", 6))
 		unset(cmd + 1, envp);
-	else if (*cmd && !ft_strncmp(*cmd, "exit", 4))
-	{
-		if (*(++cmd) && !*(cmd + 1))
-			exit(ft_atoi(*cmd));
-		exit(0);
-	}
+	else if (*cmd && !ft_strncmp(*cmd, "exit", 5))
+		builtin_exit(cmd);
 	else
 		return (0);
 	return (1);

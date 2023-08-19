@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 22:50:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 22:54:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/19 08:32:22 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	**get_pipes(char *line)
 {
 	char	**commands;
 
+	if (!*line)
+		return (NULL);
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 	{
 		printf("syntax error near unexpected token `|'\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 22:54:40 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/19 08:56:49 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,29 @@ void	cd(char **cmd, char ***envp)
 	*envp = env_add(envp, old_pwd);
 	free_strings(current_pwd, old_pwd);
 	exit_status(&status);
+}
+
+void	builtin_exit(char **cmd)
+{
+	int	j;
+
+	j = 0;
+	if (!cmd[1])
+		exit(0);
+	while (cmd[1][j])
+	{
+		if (!ft_isdigit(cmd[1][j]))
+		{
+			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
+			exit(2);
+		}
+		j++;
+	}
+	if (cmd[1] && cmd[2])
+	{
+		printf("minishell: exit: too many arguments\n");
+		exit(1);
+	}
+	else
+		exit(ft_atoi(cmd[1]));
 }
