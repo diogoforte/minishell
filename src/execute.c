@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/19 08:56:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/19 23:26:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	execute_pipeline(t_redirect *cmds_head, char ***envp)
 
 	current = cmds_head;
 	index = 0;
-	while (current)
+	while (current && current->cmd)
 	{
-		if (current->cmd && !execute_builtin_main(current->cmd, envp))
+		if (!index && !current->next && execute_builtin_main(current,
+				envp) == 0)
+			break ;
+		else
 		{
 			pid = fork();
 			if (!pid)
@@ -48,18 +51,24 @@ void	execute(t_redirect *current_cmd, char ***envp)
 		execute_command(current_cmd->cmd, envp);
 }
 
-int	execute_builtin_main(char **cmd, char ***envp)
+int	execute_builtin_main(t_redirect *current_cmd, char ***envp)
 {
-	if (*cmd && !ft_strncmp(*cmd, "cd", 3))
-		cd(cmd + 1, envp);
-	else if (*cmd && !ft_strncmp(*cmd, "export", 7))
-		export(cmd + 1, envp);
-	else if (*cmd && !ft_strncmp(*cmd, "unset", 6))
-		unset(cmd + 1, envp);
-	else if (*cmd && !ft_strncmp(*cmd, "exit", 5))
-		builtin_exit(cmd);
-	else
+	if (*current_cmd->cmd)
+	{
+		if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "cd", 3))
+			cd(current_cmd->cmd + 1, envp);
+		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export",
+				7))
+			export(current_cmd->cmd + 1, envp);
+		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "unset",
+				6))
+			unset(current_cmd->cmd + 1, envp);
+		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "exit", 5))
+			builtin_exit(current_cmd->cmd);
+		else
+			return (1);
 		return (0);
+	}
 	return (1);
 }
 
@@ -80,6 +89,9 @@ void	execute_command(char **cmd, char ***envp)
 
 	path = pathfinder(cmd[0], envp);
 	if (!*cmd)
+		return ;
+	if (*cmd && (!ft_strncmp(*cmd, "cd", 3) || !ft_strncmp(*cmd, "export", 7)
+			|| !ft_strncmp(*cmd, "unset", 6) || !ft_strncmp(*cmd, "exit", 5)))
 		return ;
 	if (!path)
 	{
