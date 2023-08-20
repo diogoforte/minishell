@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 17:16:19 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 11:01:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	new_cmd = create_new_cmd(&var, cmd);
 	if (flag)
 		free(cmd);
+	new_cmd = assign_variable(new_cmd, envp, 1);
 	return (new_cmd);
 }
 

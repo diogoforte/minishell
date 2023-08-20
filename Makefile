@@ -6,7 +6,7 @@
 #    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/10 05:13:54 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/20 05:22:36 by dinunes-         ###   ########.fr        #
+#    Updated: 2023/08/20 11:01:37 by dinunes-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 # Compiler
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 
 # Libft
 LIBFT_PATH	= libft/
