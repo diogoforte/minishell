@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 12:45:50 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:36:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char		*process_redirection_in_heredoc(t_cmd_parser *parser,
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
 void		handle_input_redirection(t_redirect *redir);
 void		handle_output_redirection(t_redirect *redir);
-void		reset_lists(t_redirect *redirect, t_pipe *pipe);
+void		reset(t_redirect *redirect, t_pipe *pipe, char *line);
 void		reset_redirections(t_redirect *head);
 void		reset_pipes(t_pipe *head);
 t_redirect	*parse_pipeline(char *line, char ***envp);
@@ -104,5 +104,6 @@ int			validate_pipes(char *line);
 int			validate_redirections(char *line);
 char		*read_line(char **envp);
 int			check_input(char *line);
+char		**env_sort(char ***envp);
 
 #endif

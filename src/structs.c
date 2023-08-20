@@ -6,16 +6,17 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 11:05:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:35:50 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	reset_lists(t_redirect *redirect, t_pipe *pipe)
+void	reset(t_redirect *redirect, t_pipe *pipe, char *line)
 {
 	reset_redirections(redirect);
 	reset_pipes(pipe);
+	free(line);
 }
 
 void	reset_redirections(t_redirect *head)

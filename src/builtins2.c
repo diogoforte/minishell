@@ -6,30 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/18 22:13:10 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 13:02:57 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	check_env(char *var)
-{
-	if (!ft_isalpha(var[0]))
-	{
-		printf("export: `%s': not a valid identifier\n", var);
-		return (0);
-	}
-	while (*var && *var != '=')
-	{
-		if (!ft_isalnum(*var))
-		{
-			printf("export: `%s': not a valid identifier\n", var);
-			return (0);
-		}
-		var++;
-	}
-	return (1);
-}
 
 void	pwd(void)
 {
@@ -51,12 +32,37 @@ void	pwd(void)
 
 void	env(char ***envp)
 {
-	int	i;
+	int		i;
+	char	*ptr;
 
 	i = 0;
 	while ((*envp)[i])
-		printf("%s\n", (*envp)[i++]);
+	{
+		ptr = ft_strchr((*envp)[i], '=');
+		if (ptr)
+			printf("%s\n", (*envp)[i]);
+		i++;
+	}
 	exit(0);
+}
+
+int	check_env(char *var)
+{
+	if (!ft_isalpha(var[0]))
+	{
+		printf("export: `%s': not a valid identifier\n", var);
+		return (0);
+	}
+	while (*var && *var != '=')
+	{
+		if (!ft_isalnum(*var))
+		{
+			printf("export: `%s': not a valid identifier\n", var);
+			return (0);
+		}
+		var++;
+	}
+	return (1);
 }
 
 void	export(char **cmd, char ***envp)
@@ -70,7 +76,7 @@ void	export(char **cmd, char ***envp)
 	if (!*cmd)
 	{
 		while ((*envp)[i])
-			printf("export %s\n", (*envp)[i++]);
+			printf("declare -x %s\n", (*envp)[i++]);
 		exit_status(&status);
 		return ;
 	}

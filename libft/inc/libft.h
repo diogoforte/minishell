@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 23:15:31 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:44:02 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-int					ft_atoi(char const *str);
+int					ft_atoi(const char *str);
 int					ft_isalnum(int a);
 int					ft_isalpha(int a);
 int					ft_isascii(int a);
@@ -79,5 +79,6 @@ void				ft_freetensor(char ***tensor);
 char				*ft_strpbrk(char *str, char *set);
 int					ft_isspace(int c);
 char				*ft_strcpy(char *dest, const char *src);
+int					ft_strcmp(const char *s1, const char *s2);
 
 #endif
