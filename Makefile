@@ -6,7 +6,7 @@
 #    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/10 05:13:54 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/20 01:57:57 by dinunes-         ###   ########.fr        #
+#    Updated: 2023/08/20 05:22:36 by dinunes-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 
 # Compiler
 CC = cc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g
 
 # Libft
 LIBFT_PATH	= libft/
@@ -32,7 +32,7 @@ OBJ_PATH = obj/
 # Sources
 SRC = $(addprefix $(SRC_PATH),	environment.c heredoc.c parsing2.c path.c signals.c variables.c\
 								execute.c main.c parsing.c redirections.c pipe.c builtins.c builtins2.c\
-								exit.c structs.c pipe2.c pipe3.c parsing3.c pipe4.c)
+								exit.c structs.c pipe2.c pipe3.c parsing3.c input.c)
 
 # Objects
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)

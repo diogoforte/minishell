@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 03:44:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 05:08:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 
 	head = NULL;
 	current = NULL;
-	commands = get_pipes(line);
+	commands = split_pipes(line, '|');
 	if (!commands)
 		return (NULL);
 	i = 0;

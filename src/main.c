@@ -6,26 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 03:42:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 05:10:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-char	*read_line(char **envp)
-{
-	char	*line;
-
-	line = NULL;
-	line = readline("minishell$> ");
-	if (!line)
-	{
-		ft_freematrix(envp);
-		rl_clear_history();
-		exit(0);
-	}
-	return (line);
-}
 
 void	print_redirect_params(const t_redirect *redir)
 {
@@ -67,6 +52,8 @@ int	main(int ac, char **av, char **envp)
 		line = read_line(new_envp);
 		if (line && *line)
 			add_history(line);
+		if (!check_input(line))
+			continue ;
 		cmds_head = parse_pipeline(line, &new_envp);
 		signals(1);
 		pipes_head = initialize_pipeline(count_commands(cmds_head));

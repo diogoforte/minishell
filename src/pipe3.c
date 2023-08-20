@@ -1,59 +1,90 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe3.c                                            :+:      :+:    :+:   */
+/*   pipe4.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/18 22:50:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/19 08:32:22 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/20 01:29:07 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/20 03:44:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_syntax_errors(char **commands)
+t_pipe	*initialize_pipeline(int n)
 {
-	int	i;
-	int	j;
-	int	check;
+	t_pipe	*head;
+	int		i;
 
 	i = 0;
-	while (commands[i])
+	head = NULL;
+	while (i < n)
 	{
-		j = 0;
-		check = 0;
-		while (commands[i][j])
-		{
-			if (!ft_isspace(commands[i][j++]))
-				check = 1;
-		}
-		if (!check)
-		{
-			printf("syntax error near unexpected token `|'\n");
-			ft_freematrix(commands);
-			return (0);
-		}
+		head = add_pipe(head);
 		i++;
 	}
-	return (1);
+	return (head);
 }
 
-char	**get_pipes(char *line)
+t_pipe	*add_pipe(t_pipe *head)
 {
-	char	**commands;
+	t_pipe	*new_node;
+	t_pipe	*current;
 
-	if (!*line)
+	new_node = init_pipe();
+	if (!new_node)
 		return (NULL);
-	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
+	if (!head)
 	{
-		printf("syntax error near unexpected token `|'\n");
-		return (NULL);
+		return (new_node);
 	}
-	commands = split_pipes(line, '|');
-	if (!commands)
+	current = head;
+	while (current->next)
+	{
+		current = current->next;
+	}
+	current->next = new_node;
+	return (head);
+}
+
+t_pipe	*init_pipe(void)
+{
+	t_pipe	*new_node;
+
+	new_node = malloc(sizeof(t_pipe));
+	if (!new_node)
 		return (NULL);
-	if (!check_syntax_errors(commands))
-		return (NULL);
-	return (commands);
+	new_node->pipe[0] = -1;
+	new_node->pipe[1] = -1;
+	new_node->infile = -1;
+	new_node->outfile = -1;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+t_pipe	*get_pipe(t_pipe *head, int n)
+{
+	int	i;
+
+	i = 0;
+	while (head && i < n)
+	{
+		head = head->next;
+		i++;
+	}
+	return (head);
+}
+
+int	count_commands(t_redirect *cmds_head)
+{
+	int	i;
+
+	i = 0;
+	while (cmds_head)
+	{
+		i++;
+		cmds_head = cmds_head->next;
+	}
+	return (i);
 }

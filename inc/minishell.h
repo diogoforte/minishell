@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 03:45:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 05:11:40 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,9 @@ t_pipe		*init_pipe(void);
 t_pipe		*get_pipe(t_pipe *head, int n);
 t_pipe		*initialize_pipeline(int n);
 int			count_commands(t_redirect *cmds_head);
+int			validate_pipes(char *line);
+int			validate_redirections(char *line);
+char		*read_line(char **envp);
+int			check_input(char *line);
 
 #endif
