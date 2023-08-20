@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 07:58:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 21:32:14 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int	check_input(char *line)
 {
 	int	status;
 
+	if (!ft_strlen(line))
+	{
+		free(line);
+		return (0);
+	}
 	status = 2;
 	if (!validate_redirections(line) || !validate_pipes(line))
 	{
