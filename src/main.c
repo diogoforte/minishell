@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 05:10:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 12:46:12 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 		signals(1);
 		pipes_head = initialize_pipeline(count_commands(cmds_head));
 		execute_pipeline(cmds_head, pipes_head, &new_envp);
-		reset_structs(cmds_head, pipes_head);
+		reset_lists(cmds_head, pipes_head);
 		free(line);
 	}
 }

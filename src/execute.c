@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 03:42:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 12:46:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ void	execute(t_redirect *current_cmd, char ***envp)
 {
 	handle_output_redirection(current_cmd);
 	handle_input_redirection(current_cmd);
-	if (current_cmd->cmd[0] && (!ft_strncmp(current_cmd->cmd[0], "echo", 5)
-			|| !ft_strncmp(current_cmd->cmd[0], "pwd", 4)
-			|| !ft_strncmp(current_cmd->cmd[0], "env", 4)))
-		execute_builtin(current_cmd->cmd, envp);
-	else
+	if (!execute_builtin(current_cmd->cmd, envp))
 		execute_command(current_cmd->cmd, envp);
 }
 
@@ -74,7 +70,7 @@ int	execute_builtin_main(t_redirect *current_cmd, char ***envp)
 	return (1);
 }
 
-void	execute_builtin(char **cmd, char ***envp)
+int	execute_builtin(char **cmd, char ***envp)
 {
 	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
 		echo(cmd + 1);
@@ -82,6 +78,7 @@ void	execute_builtin(char **cmd, char ***envp)
 		pwd();
 	else if (*cmd && !ft_strncmp(*cmd, "env", 4))
 		env(envp);
+	return (0);
 }
 
 void	execute_command(char **cmd, char ***envp)
@@ -97,7 +94,7 @@ void	execute_command(char **cmd, char ***envp)
 	if (!path)
 	{
 		printf("Command not found: %s\n", *cmd);
-		exit(0);
+		exit(127);
 	}
 	if (execve(path, cmd, *envp) == -1)
 	{
