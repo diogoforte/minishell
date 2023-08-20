@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 21:58:40 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 03:42:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,15 @@ void	print_redirect_params(const t_redirect *redir)
 
 int	main(int ac, char **av, char **envp)
 {
+	t_redirect	*cmds_head;
+	t_pipe		*pipes_head;
 	char		*line;
 	char		**new_envp;
-	t_redirect	*cmds_head;
 
 	(void)ac;
 	(void)av;
 	cmds_head = NULL;
+	pipes_head = NULL;
 	new_envp = env_add(&envp, NULL);
 	while (1)
 	{
@@ -66,10 +68,10 @@ int	main(int ac, char **av, char **envp)
 		if (line && *line)
 			add_history(line);
 		cmds_head = parse_pipeline(line, &new_envp);
-		pipe(get_pipe()->pipe);
 		signals(1);
-		execute_pipeline(cmds_head, &new_envp);
-		reset_structs(cmds_head);
+		pipes_head = initialize_pipeline(count_commands(cmds_head));
+		execute_pipeline(cmds_head, pipes_head, &new_envp);
+		reset_structs(cmds_head, pipes_head);
 		free(line);
 	}
 }

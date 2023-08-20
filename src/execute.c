@@ -6,21 +6,23 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/19 23:26:30 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 03:42:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	execute_pipeline(t_redirect *cmds_head, char ***envp)
+void	execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
+		char ***envp)
 {
 	pid_t		pid;
-	int			status;
 	t_redirect	*current;
+	int			status;
 	int			index;
 
 	current = cmds_head;
 	index = 0;
+	pipe(pipes_head->pipe);
 	while (current && current->cmd)
 	{
 		if (!index && !current->next && execute_builtin_main(current,
@@ -30,8 +32,8 @@ void	execute_pipeline(t_redirect *cmds_head, char ***envp)
 		{
 			pid = fork();
 			if (!pid)
-				handle_child(current, index, envp);
-			handle_parent(current, index);
+				handle_child(current, pipes_head, index, envp);
+			handle_parent(current, pipes_head, index);
 		}
 		index++;
 		current = current->next;
@@ -80,7 +82,6 @@ void	execute_builtin(char **cmd, char ***envp)
 		pwd();
 	else if (*cmd && !ft_strncmp(*cmd, "env", 4))
 		env(envp);
-	printf("Command not found: %s\n", *cmd);
 }
 
 void	execute_command(char **cmd, char ***envp)

@@ -6,23 +6,16 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 22:36:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 03:44:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_pipe	*get_pipe(void)
+void	reset_structs(t_redirect *redirect, t_pipe *pipe)
 {
-	static t_pipe	pipe = {{0, 1}, -1, -1};
-
-	return (&pipe);
-}
-
-void	reset_structs(t_redirect *head)
-{
-	reset_redirections(head);
-	reset_pipe();
+	reset_redirections(redirect);
+	reset_pipes(pipe);
 }
 
 void	reset_redirections(t_redirect *head)
@@ -40,10 +33,20 @@ void	reset_redirections(t_redirect *head)
 	}
 }
 
-void	reset_pipe(void)
+void	reset_pipes(t_pipe *head)
 {
-	get_pipe()->infile = -1;
-	get_pipe()->outfile = -1;
+	t_pipe	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		if (head->pipe[0] != -1)
+			close(head->pipe[0]);
+		if (head->pipe[1] != -1)
+			close(head->pipe[1]);
+		free(head);
+		head = tmp;
+	}
 }
 
 t_redirect	*init_redirect(void)
