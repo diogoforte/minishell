@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 21:32:14 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:39:01 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	check_input(char *line)
 {
 	int	status;
 
-	if (!ft_strlen(line))
+	if (!*line)
 	{
 		free(line);
 		return (0);
