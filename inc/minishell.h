@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 17:51:35 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:16:17 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ char		*process_redirection_in(t_cmd_parser *parser, t_redirect **redir);
 char		*process_redirection_in_heredoc(t_cmd_parser *parser,
 				t_redirect **redir);
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
-void		handle_input_redirection(t_redirect *redir);
-void		handle_output_redirection(t_redirect *redir);
+int			handle_input_redirection(t_redirect *redir);
+int			handle_output_redirection(t_redirect *redir);
 void		reset(t_redirect *redirect, t_pipe *pipe, char *line);
 void		reset_redirections(t_redirect *head);
 void		reset_pipes(t_pipe *head);
@@ -90,9 +90,6 @@ void		swap_quote_state(t_in_quote *state, char q);
 t_redirect	*init_redirect(void);
 char		*preprocess_line(char *line);
 t_redirect	*parse_redirections(char *line, char ***envp);
-char		**get_pipes(char *line);
-int			check_syntax_errors(char **commands);
-int			pipec(char const *s, char c);
 size_t		cmd_size(const char *str, int n, char c);
 void		builtin_exit(char **cmd);
 t_pipe		*add_pipe(t_pipe *head);

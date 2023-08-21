@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 17:51:46 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:17:11 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,16 @@ void	execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 
 void	execute(t_redirect *current_cmd, char ***envp)
 {
-	handle_output_redirection(current_cmd);
-	handle_input_redirection(current_cmd);
+	if (current_cmd->out_redir)
+	{
+		dup2(current_cmd->out_fd, STDOUT_FILENO);
+		close(current_cmd->out_fd);
+	}
+	if (current_cmd->in_redir)
+	{
+		dup2(current_cmd->in_fd, STDIN_FILENO);
+		close(current_cmd->in_fd);
+	}
 	if (!execute_builtin(current_cmd->cmd, envp))
 		execute_command(current_cmd->cmd, envp);
 }

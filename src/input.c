@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 17:39:01 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:16:52 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	check_input(char *line)
 		return (0);
 	}
 	status = 2;
+	if (!*line)
+		return (0);
 	if (!validate_redirections(line) || !validate_pipes(line))
 	{
 		printf("minishell: syntax error\n");
