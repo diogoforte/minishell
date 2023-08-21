@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 02:01:14 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 03:45:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:34:01 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ struct						s_redirect
 	int						heredoc;
 	char					*in_file;
 	char					*out_file;
+	int						in_fd;
+	int						out_fd;
 	t_redirect				*next;
 };
 

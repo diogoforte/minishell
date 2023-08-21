@@ -6,13 +6,13 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 17:50:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:32:58 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	handle_input_redirection(t_redirect *redir)
+int	handle_input_redirection(t_redirect *redir)
 {
 	int	in_fd;
 
@@ -36,12 +36,11 @@ void	handle_input_redirection(t_redirect *redir)
 			perror("Error opening input file");
 			exit(0);
 		}
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
 	}
+	return (in_fd);
 }
 
-void	handle_output_redirection(t_redirect *redir)
+int	handle_output_redirection(t_redirect *redir)
 {
 	int	out_fd;
 
@@ -57,7 +56,6 @@ void	handle_output_redirection(t_redirect *redir)
 			perror("Error opening output file");
 			exit(0);
 		}
-		dup2(out_fd, STDOUT_FILENO);
-		close(out_fd);
 	}
+	return (out_fd);
 }

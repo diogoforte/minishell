@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 18:35:50 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:35:12 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ t_redirect	*init_redirect(void)
 	new_redirect->in_file = NULL;
 	new_redirect->out_file = NULL;
 	new_redirect->next = NULL;
+	new_redirect->in_fd = -1;
+	new_redirect->out_fd = -1;
 	return (new_redirect);
 }
