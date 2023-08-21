@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 02:01:14 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 12:34:01 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/21 21:50:52 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef struct s_redirect	t_redirect;
 typedef struct s_pipe		t_pipe;
+typedef struct s_head		t_head;
 
 struct						s_redirect
 {
@@ -36,6 +37,12 @@ struct						s_pipe
 	int						infile;
 	int						outfile;
 	t_pipe					*next;
+};
+
+struct						s_head
+{
+	t_redirect				redirects;
+	t_pipe					pipes;
 };
 
 typedef struct s_cmd_parser

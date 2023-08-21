@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 17:51:18 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:53:38 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,42 @@ void	cd(char **cmd, char ***envp)
 	exit_status(&status);
 }
 
-void	builtin_exit(char **cmd)
+void	builtin_exit(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
+{
+	ft_freematrix(*envp);
+	if (!cmd[1])
+	{
+		reset(cmds_head, pipes_head, NULL);
+		exit(0);
+	}
+	check_digits(cmd, cmds_head, pipes_head);
+	if (cmd[1] && cmd[2])
+	{
+		printf("minishell: exit: too many arguments\n");
+		reset(cmds_head, pipes_head, NULL);
+		exit(1);
+	}
+	else
+	{
+		reset(cmds_head, pipes_head, NULL);
+		exit(ft_atoi(cmd[1]));
+	}
+}
+
+void	check_digits(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head)
 {
 	int	j;
 
 	j = 0;
-	if (!cmd[1])
-		exit(0);
 	while (cmd[1][j])
 	{
 		if (!ft_isdigit(cmd[1][j]))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
+			reset(cmds_head, pipes_head, NULL);
 			exit(2);
 		}
 		j++;
 	}
-	if (cmd[1] && cmd[2])
-	{
-		printf("minishell: exit: too many arguments\n");
-		exit(1);
-	}
-	else
-		exit(ft_atoi(cmd[1]));
 }

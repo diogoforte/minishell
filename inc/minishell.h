@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 20:16:17 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:55:40 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char		**env_remove(char ***envp, char *cmd);
 void		export(char **cmd, char ***envp);
 void		unset(char **cmd, char ***envp);
 void		execute(t_redirect *current_cmd, char ***envp);
-int			execute_builtin_main(t_redirect *current_cmd, char ***envp);
+int			execute_builtin_main(t_redirect *current_cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 int			execute_builtin(char **cmd, char ***envp);
 void		execute_command(char **cmd, char ***envp);
 int			*exit_status(int *value);
@@ -91,7 +92,9 @@ t_redirect	*init_redirect(void);
 char		*preprocess_line(char *line);
 t_redirect	*parse_redirections(char *line, char ***envp);
 size_t		cmd_size(const char *str, int n, char c);
-void		builtin_exit(char **cmd);
+void		builtin_exit(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
+void		check_digits(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head);
 t_pipe		*add_pipe(t_pipe *head);
 t_pipe		*init_pipe(void);
 t_pipe		*get_pipe(t_pipe *head, int n);

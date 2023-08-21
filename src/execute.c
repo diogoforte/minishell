@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 20:17:11 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:45:05 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 	while (current && current->cmd)
 	{
 		if (!index && !current->next && execute_builtin_main(current,
-				envp) == 0)
+				cmds_head, pipes_head, envp) == 0)
 			break ;
 		else
 		{
@@ -57,7 +57,8 @@ void	execute(t_redirect *current_cmd, char ***envp)
 		execute_command(current_cmd->cmd, envp);
 }
 
-int	execute_builtin_main(t_redirect *current_cmd, char ***envp)
+int	execute_builtin_main(t_redirect *current_cmd,
+		t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
 	if (*current_cmd->cmd)
 	{
@@ -70,7 +71,7 @@ int	execute_builtin_main(t_redirect *current_cmd, char ***envp)
 				6))
 			unset(current_cmd->cmd + 1, envp);
 		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "exit", 5))
-			builtin_exit(current_cmd->cmd);
+			builtin_exit(current_cmd->cmd, cmds_head, pipes_head, envp);
 		else
 			return (1);
 		return (0);
