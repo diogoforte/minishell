@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 22:14:46 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:23:39 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	reset_redirections(t_redirect *head)
 		ft_freematrix(tmp->cmd);
 		free(tmp->in_file);
 		free(tmp->out_file);
+		if (tmp->in_fd != -1)
+			close(tmp->in_fd);
+		if (tmp->out_fd != -1)
+			close(tmp->out_fd);
 		free(tmp);
 	}
 }

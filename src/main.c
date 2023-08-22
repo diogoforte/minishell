@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 21:23:16 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:12:17 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	print_redirect_params(const t_redirect *redir)
 	printf("heredoc: %d\n", redir->heredoc);
 	printf("in_file: %s\n", redir->in_file);
 	printf("out_file: %s\n", redir->out_file);
+	printf("in_fd: %d\n", redir->in_fd);
+	printf("out_fd: %d\n", redir->out_fd);
 	if (redir->next)
 	{
 		printf("\n---> Next Redirect Structure: \n");
