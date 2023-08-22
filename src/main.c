@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/22 12:12:17 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:26:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **envp)
 		signals(1);
 		pipes_head = initialize_pipeline(count_commands(cmds_head));
 		execute_pipeline(cmds_head, pipes_head, &new_envp);
-		new_envp = env_sort(&new_envp);
 		reset(cmds_head, pipes_head, line);
+		new_envp = env_sort(&new_envp);
 	}
 }

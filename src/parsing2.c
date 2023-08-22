@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 20:21:37 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:26:57 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ char	*process_redirection_in_heredoc(t_cmd_parser *parser,
 {
 	(*redir)->in_redir = 2;
 	while (*parser->start == '<' || *parser->start == ' ')
-			parser->start++;
+		parser->start++;
 	parser->end = find_end(parser->start);
 	(*redir)->heredoc = create_heredoc_file(parser->start, parser->envp);
+	(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);
 }
 

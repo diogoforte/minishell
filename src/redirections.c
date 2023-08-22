@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 12:32:58 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:21:50 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,16 @@ int	handle_input_redirection(t_redirect *redir)
 	in_fd = -1;
 	if (redir->in_redir == 2 && redir->heredoc)
 	{
+		printf("heredoc\n");
 		in_fd = open("/tmp/heredoc_file", O_RDONLY);
 		if (in_fd < 0)
-		{
 			perror("Error opening heredoc file");
-			exit(0);
-		}
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
 	}
 	else if (redir->in_redir && redir->in_file)
 	{
 		in_fd = open(redir->in_file, O_RDONLY);
 		if (in_fd < 0)
-		{
 			perror("Error opening input file");
-			exit(0);
-		}
 	}
 	return (in_fd);
 }
@@ -52,10 +45,7 @@ int	handle_output_redirection(t_redirect *redir)
 		else if (redir->out_redir == 2)
 			out_fd = open(redir->out_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (out_fd < 0)
-		{
 			perror("Error opening output file");
-			exit(0);
-		}
 	}
 	return (out_fd);
 }
