@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 22:45:05 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/21 23:10:54 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	execute(t_redirect *current_cmd, char ***envp)
 		dup2(current_cmd->out_fd, STDOUT_FILENO);
 		close(current_cmd->out_fd);
 	}
-	if (current_cmd->in_redir)
+	if (current_cmd->in_redir == 1)
 	{
 		dup2(current_cmd->in_fd, STDIN_FILENO);
 		close(current_cmd->in_fd);
