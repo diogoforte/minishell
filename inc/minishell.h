@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 22:55:40 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/22 11:04:43 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
 void		export(char **cmd, char ***envp);
 void		unset(char **cmd, char ***envp);
-void		execute(t_redirect *current_cmd, char ***envp);
+void		execute(t_redirect *current_cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 int			execute_builtin_main(t_redirect *current_cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			execute_builtin(char **cmd, char ***envp);
-void		execute_command(char **cmd, char ***envp);
+void		execute_command(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 int			*exit_status(int *value);
 void		handle_exit_status(int *status);
 char		*pathfinder(char *cmd, char ***envp);
@@ -78,8 +80,8 @@ void		reset_pipes(t_pipe *head);
 t_redirect	*parse_pipeline(char *line, char ***envp);
 void		execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 				char ***envp);
-void		handle_child(t_redirect *head, t_pipe *pipes_head, int index,
-				char ***envp);
+void		handle_child(t_redirect **head, t_pipe *pipes_head,
+				int index, char ***envp);
 void		handle_parent(t_redirect *head, t_pipe *pipes_head, int index);
 char		*trim_spaces(char *str);
 void		free_strings(char *s1, char *s2);

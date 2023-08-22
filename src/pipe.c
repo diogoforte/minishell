@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 22:58:11 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/22 11:05:03 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-void	handle_child(t_redirect *head, t_pipe *pipes_head, int index,
-		char ***envp)
+void	handle_child(t_redirect **head, t_pipe *pipes_head,
+			int index, char ***envp)
 {
 	t_redirect	*current;
+	t_redirect	*cmds_head;
 	t_pipe		*current_pipe;
 
-	current = head;
+	current = head[0];
+	cmds_head = head[1];
 	current_pipe = get_pipe(pipes_head, index);
 	if (index != 0)
 	{
@@ -75,7 +77,7 @@ void	handle_child(t_redirect *head, t_pipe *pipes_head, int index,
 		close(current_pipe->pipe[0]);
 		close(current_pipe->pipe[1]);
 	}
-	execute(current, envp);
+	execute(current, cmds_head, pipes_head, envp);
 }
 
 void	handle_parent(t_redirect *head, t_pipe *pipes_head, int index)
