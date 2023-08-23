@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/22 17:21:50 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/23 23:50:15 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	handle_input_redirection(t_redirect *redir)
 	in_fd = -1;
 	if (redir->in_redir == 2 && redir->heredoc)
 	{
-		printf("heredoc\n");
 		in_fd = open("/tmp/heredoc_file", O_RDONLY);
 		if (in_fd < 0)
 			perror("Error opening heredoc file");
