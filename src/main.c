@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/23 21:22:08 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/23 23:25:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	print_redirect_params(const t_redirect *redir)
-{
-	int	i;
-
-	i = 0;
-	while (redir->cmd[i])
-	{
-		printf("cmd[%d]%s \n", i, redir->cmd[i]);
-		i++;
-	}
-	printf("in_redir: %d\n", redir->in_redir);
-	printf("out_redir: %d\n", redir->out_redir);
-	printf("heredoc: %d\n", redir->heredoc);
-	printf("in_file: %s\n", redir->in_file);
-	printf("out_file: %s\n", redir->out_file);
-	printf("in_fd: %d\n", redir->in_fd);
-	printf("out_fd: %d\n", redir->out_fd);
-	if (redir->next)
-	{
-		printf("\n---> Next Redirect Structure: \n");
-		print_redirect_params(redir->next);
-	}
-}
 
 int	main(int ac, char **av, char **envp)
 {
