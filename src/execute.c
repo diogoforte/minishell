@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/23 21:12:04 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/23 22:06:56 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 	pipe(pipes_head->pipe);
 	while (heads[0] && heads[0]->cmd)
 	{
-		if (execute_builtin_main(heads[0], cmds_head, pipes_head, envp))
-		{
-			pid = fork();
-			if (!pid)
-				handle_child(heads, pipes_head, index, envp);
-			handle_parent(heads[0], pipes_head, index);
-		}
+		if (!index && !heads[0]->next && execute_builtin_main(heads[0],
+				cmds_head, pipes_head, envp) == 0)
+			break ;
+		pid = fork();
+		if (!pid)
+			handle_child(heads, pipes_head, index, envp);
+		handle_parent(heads[0], pipes_head, index);
 		index++;
 		heads[0] = heads[0]->next;
 	}
@@ -52,7 +52,8 @@ void	execute(t_redirect *current_cmd, t_redirect *cmds_head,
 		dup2(current_cmd->in_fd, STDIN_FILENO);
 		close(current_cmd->in_fd);
 	}
-	if (!execute_builtin(current_cmd->cmd, cmds_head, pipes_head, envp))
+	if (!execute_builtin(current_cmd->cmd, cmds_head, pipes_head, envp)
+		&& execute_builtin_main(current_cmd, cmds_head, pipes_head, envp))
 		execute_command(current_cmd->cmd, cmds_head, pipes_head, envp);
 }
 
