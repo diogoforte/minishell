@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/22 11:04:43 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:31:09 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-void		echo(char **cmd);
+void		echo(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 void		cd(char **cmd, char ***envp);
-void		pwd(void);
-void		env(char ***envp);
+void		pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
+void		env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 char		*search_env(char ***envp, char *cmd);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
@@ -41,7 +42,8 @@ void		execute(t_redirect *current_cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			execute_builtin_main(t_redirect *current_cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
-int			execute_builtin(char **cmd, char ***envp);
+int			execute_builtin(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 void		execute_command(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			*exit_status(int *value);

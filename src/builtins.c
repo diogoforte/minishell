@@ -6,13 +6,14 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 22:53:38 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:35:54 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	echo(char **cmd)
+void	echo(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
 	int	flag;
 
@@ -30,6 +31,8 @@ void	echo(char **cmd)
 	}
 	if (!flag)
 		printf("\n");
+	ft_freematrix(*envp);
+	reset(cmds_head, pipes_head, NULL);
 	exit(0);
 }
 

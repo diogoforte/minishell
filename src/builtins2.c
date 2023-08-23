@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/20 13:02:57 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:35:02 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	pwd(void)
+void	pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
 	char	*pwd;
 
+	ft_freematrix(*envp);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
 		printf("Error: %s\n", strerror(errno));
+		reset(cmds_head, pipes_head, NULL);
 		exit(1);
 	}
 	else
@@ -27,10 +29,11 @@ void	pwd(void)
 		printf("%s\n", pwd);
 		free(pwd);
 	}
+	reset(cmds_head, pipes_head, NULL);
 	exit(0);
 }
 
-void	env(char ***envp)
+void	env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
 	int		i;
 	char	*ptr;
@@ -43,6 +46,8 @@ void	env(char ***envp)
 			printf("%s\n", (*envp)[i]);
 		i++;
 	}
+	ft_freematrix(*envp);
+	reset(cmds_head, pipes_head, NULL);
 	exit(0);
 }
 

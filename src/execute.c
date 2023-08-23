@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/22 17:27:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/23 21:12:04 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 	pipe(pipes_head->pipe);
 	while (heads[0] && heads[0]->cmd)
 	{
-		if (!index && !heads[0]->next && execute_builtin_main(heads[0],
-				cmds_head, pipes_head, envp) == 0)
-			break ;
-		else
+		if (execute_builtin_main(heads[0], cmds_head, pipes_head, envp))
 		{
 			pid = fork();
 			if (!pid)
@@ -55,7 +52,7 @@ void	execute(t_redirect *current_cmd, t_redirect *cmds_head,
 		dup2(current_cmd->in_fd, STDIN_FILENO);
 		close(current_cmd->in_fd);
 	}
-	if (!execute_builtin(current_cmd->cmd, envp))
+	if (!execute_builtin(current_cmd->cmd, cmds_head, pipes_head, envp))
 		execute_command(current_cmd->cmd, cmds_head, pipes_head, envp);
 }
 
@@ -81,14 +78,15 @@ int	execute_builtin_main(t_redirect *current_cmd,
 	return (1);
 }
 
-int	execute_builtin(char **cmd, char ***envp)
+int	execute_builtin(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
 	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
-		echo(cmd + 1);
+		echo(cmd + 1, cmds_head, pipes_head, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "pwd", 4))
-		pwd();
+		pwd(cmds_head, pipes_head, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "env", 4))
-		env(envp);
+		env(cmds_head, pipes_head, envp);
 	return (0);
 }
 
