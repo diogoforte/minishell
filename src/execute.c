@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/23 22:06:56 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:33:15 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ int	execute_builtin_main(t_redirect *current_cmd,
 	if (*current_cmd->cmd)
 	{
 		if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "cd", 3))
-			cd(current_cmd->cmd + 1, envp);
+			cd(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
 		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export",
 				7))
-			export(current_cmd->cmd + 1, envp);
+			export(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
 		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "unset",
 				6))
-			unset(current_cmd->cmd + 1, envp);
+			unset(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
 		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "exit", 5))
 			builtin_exit(current_cmd->cmd, cmds_head, pipes_head, envp);
 		else

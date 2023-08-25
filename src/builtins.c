@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/23 20:35:54 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:27:07 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,18 @@ void	call_chdir(char *cmd, int *status)
 		printf("Error: %s\n", strerror(errno));
 		*status = 1;
 	}
+	else
+		*status = 0;
 }
 
-void	cd(char **cmd, char ***envp)
+void	cd(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
 	int			status;
 	char		*current_pwd;
 	static char	*old_pwd;
 	char		*tmp;
 
-	status = 0;
 	current_pwd = getcwd(NULL, 0);
 	old_pwd = search_env(envp, "OLDPWD");
 	if (!*cmd || !ft_strncmp(*cmd, "~", 2))
@@ -72,6 +74,7 @@ void	cd(char **cmd, char ***envp)
 	*envp = env_add(envp, old_pwd);
 	free_strings(current_pwd, old_pwd);
 	exit_status(&status);
+	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }
 
 void	builtin_exit(char **cmd, t_redirect *cmds_head,

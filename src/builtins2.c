@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/23 20:35:02 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/25 22:05:16 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,11 @@ void	env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 	exit(0);
 }
 
-int	check_env(char *var)
-{
-	if (!ft_isalpha(var[0]))
-	{
-		printf("export: `%s': not a valid identifier\n", var);
-		return (0);
-	}
-	while (*var && *var != '=')
-	{
-		if (!ft_isalnum(*var))
-		{
-			printf("export: `%s': not a valid identifier\n", var);
-			return (0);
-		}
-		var++;
-	}
-	return (1);
-}
-
-void	export(char **cmd, char ***envp)
+void	export(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
 	int		i;
 	int		status;
-	char	**tmp;
 
 	i = 0;
 	status = 0;
@@ -82,24 +63,15 @@ void	export(char **cmd, char ***envp)
 	{
 		while ((*envp)[i])
 			printf("declare -x %s\n", (*envp)[i++]);
-		exit_status(&status);
-		return ;
 	}
-	i = -1;
-	while (cmd[++i])
-	{
-		if (!check_env(cmd[i]))
-			continue ;
-		tmp = ft_split(cmd[i], '=');
-		if (search_env(envp, tmp[0]))
-			*envp = env_remove(envp, tmp[0]);
-		ft_freematrix(tmp);
-		*envp = env_add(envp, cmd[i]);
-	}
+	else
+		export_value(cmd, envp);
 	exit_status(&status);
+	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }
 
-void	unset(char **cmd, char ***envp)
+void	unset(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
 	int	i;
 	int	status;
@@ -117,4 +89,5 @@ void	unset(char **cmd, char ***envp)
 		i++;
 	}
 	exit_status(&status);
+	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }

@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/23 20:31:09 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:58:56 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@
 
 void		echo(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
-void		cd(char **cmd, char ***envp);
+void		cd(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 void		pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 void		env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 char		*search_env(char ***envp, char *cmd);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
-void		export(char **cmd, char ***envp);
-void		unset(char **cmd, char ***envp);
+void		export(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
+void		export_value(char **cmd, char ***envp);
+void		unset(char **cmd, t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
+void		exit_builtin_main(t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp, int status);
 void		execute(t_redirect *current_cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			execute_builtin_main(t_redirect *current_cmd, t_redirect *cmds_head,
