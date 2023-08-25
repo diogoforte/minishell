@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/25 21:27:07 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/25 22:51:11 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	cd(char **cmd, t_redirect *cmds_head,
 void	builtin_exit(char **cmd, t_redirect *cmds_head,
 			t_pipe *pipes_head, char ***envp)
 {
+	int	status;
+
 	ft_freematrix(*envp);
 	if (!cmd[1])
 	{
@@ -95,8 +97,9 @@ void	builtin_exit(char **cmd, t_redirect *cmds_head,
 	}
 	else
 	{
+		status = ft_atoi(cmd[1]);
 		reset(cmds_head, pipes_head, NULL);
-		exit(ft_atoi(cmd[1]));
+		exit(status);
 	}
 }
 
