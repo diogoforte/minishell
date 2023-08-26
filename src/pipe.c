@@ -6,17 +6,44 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 21:54:19 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/18 22:37:54 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_syntax(char **commands, char *line)
+char	**get_pipes(char *line)
 {
-	if (line[0] == '|' || line[ft_strlen(line) -1] == '|')
-		return (0);
+	char	**commands;
+	int		i;
+	int		j;
+	int		check;
 	
+	if (line[0] == '|' || line[ft_strlen(line) -1] == '|')
+	{
+		printf("syntax error near unexpected token `|'\n");
+		return (NULL);
+	}
+	commands = split_pipes(line, '|');
+	i = 0;
+	while (commands[i])
+	{
+		j = 0;
+		check = 0;
+		while (commands[i][j])
+		{
+			if (!ft_isspace(commands[i][j++]))
+				check = 1;
+		}
+		if (!check)
+		{
+			printf("syntax error near unexpected token `|'\n");
+			ft_freematrix(commands);
+			return (NULL);
+		}
+		i++;
+	}
+	return (commands);
 }
 
 t_redirect	*parse_pipeline(char *line, char ***envp)
@@ -29,7 +56,9 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 
 	head = NULL;
 	current = NULL;
-	commands = split_pipes(line, '|');
+	commands = get_pipes(line);
+	if (!commands)
+		return (NULL);
 	i = 0;
 	while (commands[i])
 	{
