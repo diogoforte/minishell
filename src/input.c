@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 19:50:12 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:09:50 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,57 +47,42 @@ int	check_input(char *line)
 	return (1);
 }
 
-int	validate_pipes(char *line)
+int	validate_redirections(char *line)
 {
-	int	i;
+	int			i;
+	t_in_quote	state;
 
+	init_quote_state(&state);
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] && line[i] == ' ')
-			i++;
-		if (line[i] == '|')
+		swap_quote_state(&state, line[i]);
+		if ((line[i] == '>' || line[i] == '<') && !state.inside)
 		{
-			if (i == 0)
-				return (0);
-			if (!line[i + 1] || line[i + 1] == '|')
-				return (0);
-			i++;
-			while (line[i] && line[i] == ' ')
-				i++;
-			if (line[i] == '|')
+			if (!validate_red_2(line, i))
 				return (0);
 		}
-		else
-			while (line[i] && line[i] != '|' && line[i] != ' ')
-				i++;
+		i++;
 	}
 	return (1);
 }
 
-int	validate_redirections(char *line)
+int	validate_pipes(char *line)
 {
-	int		i;
-	char	current_redirection;
+	int			i;
+	t_in_quote	state;
 
+	init_quote_state(&state);
 	i = 0;
 	while (line[i])
 	{
-		while (line[i] && line[i] != '>' && line[i] != '<')
-			i++;
-		if (line[i] == '>' || line[i] == '<')
+		swap_quote_state(&state, line[i]);
+		if (line[i] == '|' && !state.inside)
 		{
-			current_redirection = line[i];
-			if (i != 0 && line[i - 1] == current_redirection)
-				return (0);
-			if (line[i + 1] == current_redirection)
-				i++;
-			i++;
-			while (line[i] && line[i] == ' ')
-				i++;
-			if (line[i] == '>' || line[i] == '<' || !line[i])
+			if (!validate_pipes_2(line, i))
 				return (0);
 		}
+		i++;
 	}
 	return (1);
 }
