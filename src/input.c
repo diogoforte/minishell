@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 20:16:52 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 19:50:12 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	check_input(char *line)
 		return (0);
 	}
 	status = 2;
-	if (!*line)
-		return (0);
 	if (!validate_redirections(line) || !validate_pipes(line))
 	{
 		printf("minishell: syntax error\n");
@@ -90,8 +88,7 @@ int	validate_redirections(char *line)
 		if (line[i] == '>' || line[i] == '<')
 		{
 			current_redirection = line[i];
-			if (i != 0 && line[i - 1] != ' ' && line[i
-					- 1] != current_redirection && line[i - 1] != '|')
+			if (i != 0 && line[i - 1] == current_redirection)
 				return (0);
 			if (line[i + 1] == current_redirection)
 				i++;

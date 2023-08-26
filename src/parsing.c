@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 11:15:49 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 19:45:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_redirect	*parse_cmd(char *line, char ***envp)
 	char		*tmp;
 	t_redirect	*head;
 
+	line = skip_spaces(line);
 	tmp = line;
 	line = preprocess_line(line);
 	head = parse_redirections(line, envp);
