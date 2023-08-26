@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 22:38:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 23:14:02 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,8 @@ void	execute(t_redirect *current_cmd, t_redirect *cmds_head,
 int	execute_builtin_main(t_redirect *current_cmd,
 		t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
-	int status;
-
-	status = 1;
 	if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "cd", 3))
-	{
 		cd(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
-	}
 	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export",
 			7))
 		export(current_cmd->cmd + 1, cmds_head, pipes_head, envp);

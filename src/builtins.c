@@ -6,35 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 22:26:19 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 23:13:22 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	echo(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp)
-{
-	int	flag;
-
-	flag = 0;
-	if (*cmd && ft_strncmp(*cmd, "-n", 2) == 0)
-	{
-		cmd++;
-		flag = 1;
-	}
-	while (*cmd)
-	{
-		printf("%s", *cmd++);
-		if (*cmd)
-			printf(" ");
-	}
-	if (!flag)
-		printf("\n");
-	ft_freematrix(*envp);
-	reset(cmds_head, pipes_head, NULL);
-	exit(0);
-}
 
 void	call_chdir(char *cmd, int *status)
 {
@@ -47,12 +23,12 @@ void	call_chdir(char *cmd, int *status)
 		*status = 0;
 }
 
-int	cd_check(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp)
+int	cd_check(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+		char ***envp)
 {
-	int status;
-	int i;
-	
+	int	status;
+	int	i;
+
 	status = 1;
 	i = 0;
 	while (cmd[i])
@@ -66,8 +42,7 @@ int	cd_check(char **cmd, t_redirect *cmds_head,
 	return (0);
 }
 
-void	cd(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp)
+void	cd(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
 	int			status;
 	char		*current_pwd;
@@ -96,8 +71,8 @@ void	cd(char **cmd, t_redirect *cmds_head,
 	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }
 
-void	builtin_exit(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp)
+void	builtin_exit(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+		char ***envp)
 {
 	int	status;
 

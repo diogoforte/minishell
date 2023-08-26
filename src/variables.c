@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 21:03:20 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 23:14:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 		return (cmd);
 	var.end = find_var_end(var.start);
 	var.name = ft_strncpy(ft_calloc(var.end - var.start, sizeof(char)),
-							var.start + 1,
-							var.end - var.start - 1);
+			var.start + 1,
+			var.end - var.start - 1);
 	var.value = search_env(envp, var.name);
 	if (!var.value)
 		var.value = "";
