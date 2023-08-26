@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/25 22:05:16 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:23:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	export(char **cmd, t_redirect *cmds_head,
 	{
 		while ((*envp)[i])
 			printf("declare -x %s\n", (*envp)[i++]);
+		exit_status(&status);
 	}
 	else
 		export_value(cmd, envp);
-	exit_status(&status);
 	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 00:32:53 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:41:45 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*pathfinder(char *cmd, char ***envp)
 	i = 0;
 	while ((*envp)[i] && ft_strncmp((*envp)[i], "PATH", 4))
 		i++;
-	if (!(*envp)[i])
+	if (!(*envp)[i] || !*cmd)
 		return (NULL);
 	paths = ft_split((*envp)[i] + 5, ':');
 	if (!paths || !paths[0])

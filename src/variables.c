@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 11:01:25 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 21:03:20 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,16 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	if (!var.start || (!ft_isalnum(*(var.start + 1)) && *(var.start
 				+ 1) != '?'))
 		return (cmd);
-	if (var.start[0] == '$' && var.start[1] == '?')
-	{
-		free(cmd);
-		return (ft_itoa(*exit_status(NULL)));
-	}
 	var.end = find_var_end(var.start);
 	var.name = ft_strncpy(ft_calloc(var.end - var.start, sizeof(char)),
-			var.start + 1, var.end - var.start - 1);
+							var.start + 1,
+							var.end - var.start - 1);
 	var.value = search_env(envp, var.name);
 	if (!var.value)
 		var.value = "";
 	new_cmd = create_new_cmd(&var, cmd);
+	if (*(var.start + 1) == '?')
+		free(var.value);
 	if (flag)
 		free(cmd);
 	new_cmd = assign_variable(new_cmd, envp, 1);
@@ -81,6 +79,8 @@ char	*find_var_end(char *var_start)
 	char	*var_end;
 
 	var_end = var_start + 1;
+	if (*var_end == '?')
+		return (var_end + 1);
 	while (*var_end && (ft_isalnum(*var_end) || *var_end == '_'))
 		var_end++;
 	return (var_end);

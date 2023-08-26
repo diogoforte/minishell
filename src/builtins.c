@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/25 22:51:11 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:26:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,30 @@ void	call_chdir(char *cmd, int *status)
 {
 	if (chdir(cmd))
 	{
-		printf("Error: %s\n", strerror(errno));
+		printf("cd: %s: No such file or directory\n", cmd);
 		*status = 1;
 	}
 	else
 		*status = 0;
+}
+
+int	cd_check(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
+{
+	int status;
+	int i;
+	
+	status = 1;
+	i = 0;
+	while (cmd[i])
+		i++;
+	if (i > 1)
+	{
+		exit_status(&status);
+		exit_builtin_main(cmds_head, pipes_head, envp, status);
+		return (1);
+	}
+	return (0);
 }
 
 void	cd(char **cmd, t_redirect *cmds_head,
@@ -55,6 +74,8 @@ void	cd(char **cmd, t_redirect *cmds_head,
 	static char	*old_pwd;
 	char		*tmp;
 
+	if (cd_check(cmd, cmds_head, pipes_head, envp))
+		return ;
 	current_pwd = getcwd(NULL, 0);
 	old_pwd = search_env(envp, "OLDPWD");
 	if (!*cmd || !ft_strncmp(*cmd, "~", 2))
@@ -65,8 +86,6 @@ void	cd(char **cmd, t_redirect *cmds_head,
 		call_chdir(tmp, &status);
 		free(tmp);
 	}
-	else if (!ft_strncmp(*cmd, "-", 2) && old_pwd)
-		call_chdir(old_pwd, &status);
 	else
 		call_chdir(*cmd, &status);
 	old_pwd = ft_strjoin("OLDPWD=", current_pwd);
@@ -110,7 +129,7 @@ void	check_digits(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head)
 	j = 0;
 	while (cmd[1][j])
 	{
-		if (!ft_isdigit(cmd[1][j]))
+		if (!ft_isdigit(cmd[1][j]) && cmd[1][j] != '-' && cmd[1][j] != '+')
 		{
 			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
 			reset(cmds_head, pipes_head, NULL);

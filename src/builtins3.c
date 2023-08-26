@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/25 22:05:26 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:24:01 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,23 @@ void	exit_builtin_main(t_redirect *cmds_head,
 
 int	check_env(char *var)
 {
+	int status;
+	
+	status = 0;
 	if (!ft_isalpha(var[0]))
 	{
 		printf("export: `%s': not a valid identifier\n", var);
+		status = 1;
+		exit_status(&status);
 		return (0);
 	}
+	printf("var = %s\n", var);
 	while (*var && *var != '=')
 	{
 		if (!ft_isalnum(*var))
 		{
-			printf("export: `%s': not a valid identifier\n", var);
+			status = 1;
+			exit_status(&status);
 			return (0);
 		}
 		var++;

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 18:32:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/26 20:52:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*search_env(char ***envp, char *cmd)
 	i = 0;
 	if (!cmd)
 		return (NULL);
+	if (!ft_strcmp(cmd, "?"))
+		return (ft_itoa(*exit_status(NULL)));
 	while ((*envp)[i])
 	{
 		if (!ft_strncmp((*envp)[i], cmd, len) && (*envp)[i][len] == '=')

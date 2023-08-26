@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/25 21:33:15 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 22:38:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,24 @@ void	execute(t_redirect *current_cmd, t_redirect *cmds_head,
 int	execute_builtin_main(t_redirect *current_cmd,
 		t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
-	if (*current_cmd->cmd)
+	int status;
+
+	status = 1;
+	if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "cd", 3))
 	{
-		if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "cd", 3))
-			cd(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
-		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export",
-				7))
-			export(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
-		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "unset",
-				6))
-			unset(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
-		else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "exit", 5))
-			builtin_exit(current_cmd->cmd, cmds_head, pipes_head, envp);
-		else
-			return (1);
-		return (0);
+		cd(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
 	}
-	return (1);
+	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export",
+			7))
+		export(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
+	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "unset",
+			6))
+		unset(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
+	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "exit", 5))
+		builtin_exit(current_cmd->cmd, cmds_head, pipes_head, envp);
+	else
+		return (1);
+	return (0);
 }
 
 int	execute_builtin(char **cmd, t_redirect *cmds_head,
@@ -97,12 +98,7 @@ void	execute_command(char **cmd, t_redirect *cmds_head,
 	char	*path;
 
 	path = pathfinder(cmd[0], envp);
-	if (!*cmd)
-		return ;
-	if (*cmd && (!ft_strncmp(*cmd, "cd", 3) || !ft_strncmp(*cmd, "export", 7)
-			|| !ft_strncmp(*cmd, "unset", 6) || !ft_strncmp(*cmd, "exit", 5)))
-		return ;
-	if (!path)
+	if (!path || !**cmd)
 	{
 		printf("Command not found: %s\n", *cmd);
 		ft_freematrix(*envp);
@@ -113,6 +109,6 @@ void	execute_command(char **cmd, t_redirect *cmds_head,
 	{
 		printf("Error: %s\n", strerror(errno));
 		free(path);
-		exit(EXIT_FAILURE);
+		exit(126);
 	}
 }

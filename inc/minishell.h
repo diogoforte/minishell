@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/25 21:58:56 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 21:58:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void		echo(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 void		cd(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
+int			cd_check(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp);
 void		pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 void		env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 char		*search_env(char ***envp, char *cmd);
