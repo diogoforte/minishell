@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/10 05:13:54 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/26 22:11:16 by bcastelo         ###   ########.fr        #
+#    Updated: 2023/08/27 00:37:58 by dinunes-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

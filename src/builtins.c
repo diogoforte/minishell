@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 23:13:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 00:35:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	call_chdir(char *cmd, int *status)
 {
 	if (chdir(cmd))
 	{
-		printf("cd: %s: No such file or directory\n", cmd);
+		ft_dprintf(2, "cd: %s: No such file or directory\n", cmd);
 		*status = 1;
 	}
 	else
@@ -85,7 +85,7 @@ void	builtin_exit(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	check_digits(cmd, cmds_head, pipes_head);
 	if (cmd[1] && cmd[2])
 	{
-		printf("minishell: exit: too many arguments\n");
+		ft_dprintf(2, "minishell: exit: too many arguments\n");
 		reset(cmds_head, pipes_head, NULL);
 		exit(1);
 	}

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 22:48:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 00:37:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		echo(char **cmd, t_redirect *cmds_head,
 void		cd(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			cd_check(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp);
+				t_pipe *pipes_head, char ***envp);
 void		pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 void		env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 char		*search_env(char ***envp, char *cmd);

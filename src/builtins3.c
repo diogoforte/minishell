@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/26 23:13:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 00:35:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ int	check_env(char *var)
 	status = 0;
 	if (!ft_isalpha(var[0]))
 	{
-		printf("export: `%s': not a valid identifier\n", var);
+		ft_dprintf(2, "export: `%s': not a valid identifier\n", var);
 		status = 1;
 		exit_status(&status);
 		return (0);
 	}
-	printf("var = %s\n", var);
 	while (*var && *var != '=')
 	{
 		if (!ft_isalnum(*var))

@@ -6,16 +6,28 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/20 18:44:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 00:27:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <limits.h>
+# include <stdarg.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
+# ifndef DECIMAL
+#  define DECIMAL "0123456789"
+# endif
+# ifndef HEXA
+#  define HEXA "0123456789abcdef"
+# endif
+# ifndef HEXA2
+#  define HEXA2 "0123456789ABCDEF"
+# endif
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif
@@ -80,5 +92,6 @@ char				*ft_strpbrk(char *str, char *set);
 int					ft_isspace(int c);
 char				*ft_strcpy(char *dest, const char *src);
 int					ft_strcmp(const char *s1, const char *s2);
+int					ft_dprintf(int fd, const char *str, ...);
 
 #endif

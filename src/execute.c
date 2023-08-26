@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 23:14:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 00:35:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ void	execute(t_redirect *current_cmd, t_redirect *cmds_head,
 }
 
 int	execute_builtin_main(t_redirect *current_cmd,
-		t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
+							t_redirect *cmds_head,
+							t_pipe *pipes_head,
+							char ***envp)
 {
 	if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "cd", 3))
 		cd(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
-	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export",
-			7))
+	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "export", 7))
 		export(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
-	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "unset",
-			6))
+	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "unset", 6))
 		unset(current_cmd->cmd + 1, cmds_head, pipes_head, envp);
 	else if (*current_cmd->cmd && !ft_strncmp(*current_cmd->cmd, "exit", 5))
 		builtin_exit(current_cmd->cmd, cmds_head, pipes_head, envp);
@@ -75,8 +75,8 @@ int	execute_builtin_main(t_redirect *current_cmd,
 	return (0);
 }
 
-int	execute_builtin(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp)
+int	execute_builtin(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+		char ***envp)
 {
 	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
 		echo(cmd + 1, cmds_head, pipes_head, envp);
@@ -87,23 +87,29 @@ int	execute_builtin(char **cmd, t_redirect *cmds_head,
 	return (0);
 }
 
-void	execute_command(char **cmd, t_redirect *cmds_head,
-			t_pipe *pipes_head, char ***envp)
+void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+		char ***envp)
 {
 	char	*path;
 
 	path = pathfinder(cmd[0], envp);
 	if (!path || !**cmd)
 	{
-		printf("Command not found: %s\n", *cmd);
+		ft_dprintf(2, "Command not found: %s\n", *cmd);
 		ft_freematrix(*envp);
 		reset(cmds_head, pipes_head, NULL);
 		exit(127);
 	}
 	if (execve(path, cmd, *envp) == -1)
 	{
-		printf("Error: %s\n", strerror(errno));
-		free(path);
+		if (!access(*cmd, F_OK))
+			ft_dprintf(2, "bash: %s: Is a directory\n", *cmd);
+		else
+			ft_dprintf(2, "Error: %s\n", strerror(errno));
+		if (path != *cmd)
+			free(path);
+		reset(cmds_head, pipes_head, NULL);
+		ft_freematrix(*envp);
 		exit(126);
 	}
 }

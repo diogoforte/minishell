@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 23:11:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 00:35:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_input(char *line)
 	status = 2;
 	if (!validate_redirections(line) || !validate_pipes(line))
 	{
-		printf("minishell: syntax error\n");
+		ft_dprintf(2, "minishell: syntax error\n");
 		free(line);
 		exit_status(&status);
 		return (0);
