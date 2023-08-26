@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/22 11:05:03 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 19:24:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*trim_spaces(char *str)
 
 	while (ft_isspace((unsigned char)*str))
 		str++;
-	if (*str == 0)
+	if (!*str)
 		return (str);
 	end_str = str + ft_strlen(str) - 1;
 	while (end_str > str && ft_isspace((unsigned char)*end_str))
