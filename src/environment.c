@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/15 17:12:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:32:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,31 @@ char	*search_env(char ***envp, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+char	**env_sort(char ***envp)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while ((*envp)[i])
+	{
+		j = i + 1;
+		while ((*envp)[j])
+		{
+			if (ft_strcmp((*envp)[i], (*envp)[j]) > 0)
+			{
+				tmp = (*envp)[i];
+				(*envp)[i] = (*envp)[j];
+				(*envp)[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (*envp);
 }
 
 char	**env_add(char ***envp, char *cmd)

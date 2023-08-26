@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 20:52:20 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/20 11:15:49 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ char	*strip_quotes(char *arg)
 	char	*clean;
 	int		i;
 	char	*start;
-	
+
 	start = arg;
 	clean = ft_calloc(ft_strlen(arg) + 1, sizeof(char));
 	if (!clean)
 		return (arg);
 	while (*arg)
 	{
-		if (*arg ==  '"' || *arg ==  '\'')
+		if (*arg == '"' || *arg == '\'')
 			arg = remove_char(arg, clean, *arg);
 		else
 		{

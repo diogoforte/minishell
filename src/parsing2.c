@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 16:25:01 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:26:57 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,15 @@ char	*process_redirection_out(t_cmd_parser *parser, t_redirect **redir)
 	parser->start = skip_spaces(parser->start);
 	parser->end = find_end(parser->start);
 	word = ft_calloc(parser->end - parser->start + 1, sizeof(char));
+	if ((*redir)->out_file)
+	{
+		free((*redir)->out_file);
+		(*redir)->out_file = NULL;
+	}
 	(*redir)->out_file = ft_strncpy(word, parser->start, parser->end
 			- parser->start);
 	(*redir)->out_file[parser->end - parser->start] = '\0';
+	(*redir)->out_fd = handle_output_redirection(*redir);
 	return (parser->start);
 }
 
@@ -58,9 +64,15 @@ char	*process_redirection_in(t_cmd_parser *parser, t_redirect **redir)
 	parser->start = skip_spaces(parser->start);
 	parser->end = find_end(parser->start);
 	word = ft_calloc(parser->end - parser->start + 1, sizeof(char));
+	if ((*redir)->in_file)
+	{
+		free((*redir)->in_file);
+		(*redir)->in_file = NULL;
+	}
 	(*redir)->in_file = ft_strncpy(word, parser->start, parser->end
 			- parser->start);
 	(*redir)->in_file[parser->end - parser->start] = '\0';
+	(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);
 }
 
@@ -72,6 +84,7 @@ char	*process_redirection_in_heredoc(t_cmd_parser *parser,
 		parser->start++;
 	parser->end = find_end(parser->start);
 	(*redir)->heredoc = create_heredoc_file(parser->start, parser->envp);
+	(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);
 }
 

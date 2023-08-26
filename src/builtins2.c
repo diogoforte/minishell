@@ -6,33 +6,22 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/18 21:34:11 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/25 22:05:16 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_env(char *var)
-{
-	if (!ft_isalpha(var[0]))
-		return (0);
-	while (*var && *var != '=')
-	{
-		if (!ft_isalnum(*var))
-			return (0);
-		var++;
-	}
-	return (1);	
-}
-
-void	pwd(void)
+void	pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
 	char	*pwd;
 
+	ft_freematrix(*envp);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
 		printf("Error: %s\n", strerror(errno));
+		reset(cmds_head, pipes_head, NULL);
 		exit(1);
 	}
 	else
@@ -40,56 +29,52 @@ void	pwd(void)
 		printf("%s\n", pwd);
 		free(pwd);
 	}
+	reset(cmds_head, pipes_head, NULL);
 	exit(0);
 }
 
-void	env(char ***envp)
+void	env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
-	int	i;
+	int		i;
+	char	*ptr;
 
 	i = 0;
 	while ((*envp)[i])
-		printf("%s\n", (*envp)[i++]);
+	{
+		ptr = ft_strchr((*envp)[i], '=');
+		if (ptr)
+			printf("%s\n", (*envp)[i]);
+		i++;
+	}
+	ft_freematrix(*envp);
+	reset(cmds_head, pipes_head, NULL);
 	exit(0);
 }
 
-void	export(char **cmd, char ***envp)
+void	export(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
 	int		i;
 	int		status;
-	char	**tmp;
 
 	i = 0;
 	status = 0;
 	if (!*cmd)
 	{
 		while ((*envp)[i])
-			printf("export %s\n", (*envp)[i++]);
-		exit_status(&status);
-		return ;
+			printf("declare -x %s\n", (*envp)[i++]);
 	}
-	i = 0;
-	while (cmd[i])
-	{
-		if (!check_env(cmd[i]))
-		{
-			i++;
-			continue ;
-		}
-		tmp = ft_split(cmd[i], '=');
-		if (search_env(envp, tmp[0]))
-			*envp = env_remove(envp, tmp[0]);
-		ft_freematrix(tmp);
-		*envp = env_add(envp, cmd[i]);
-		i++;
-	}
+	else
+		export_value(cmd, envp);
 	exit_status(&status);
+	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }
 
-void	unset(char **cmd, char ***envp)
+void	unset(char **cmd, t_redirect *cmds_head,
+			t_pipe *pipes_head, char ***envp)
 {
-	int		i;
-	int		status;
+	int	i;
+	int	status;
 
 	i = 0;
 	status = 0;
@@ -104,4 +89,5 @@ void	unset(char **cmd, char ***envp)
 		i++;
 	}
 	exit_status(&status);
+	exit_builtin_main(cmds_head, pipes_head, envp, status);
 }

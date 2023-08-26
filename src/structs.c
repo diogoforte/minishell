@@ -3,26 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 22:02:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:23:39 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_pipe	*get_pipe(void)
+void	reset(t_redirect *redirect, t_pipe *pipe, char *line)
 {
-	static t_pipe	pipe = {{0, 1}, -1, -1};
-
-	return (&pipe);
-}
-
-void	reset_structs(t_redirect *head)
-{
-	reset_redirections(head);
-	reset_pipe();
+	reset_redirections(redirect);
+	reset_pipes(pipe);
+	free(line);
 }
 
 void	reset_redirections(t_redirect *head)
@@ -36,14 +30,28 @@ void	reset_redirections(t_redirect *head)
 		ft_freematrix(tmp->cmd);
 		free(tmp->in_file);
 		free(tmp->out_file);
+		if (tmp->in_fd != -1)
+			close(tmp->in_fd);
+		if (tmp->out_fd != -1)
+			close(tmp->out_fd);
 		free(tmp);
 	}
 }
 
-void	reset_pipe(void)
+void	reset_pipes(t_pipe *head)
 {
-	get_pipe()->infile = -1;
-	get_pipe()->outfile = -1;
+	t_pipe	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		if (head->pipe[0] != -1)
+			close(head->pipe[0]);
+		if (head->pipe[1] != -1)
+			close(head->pipe[1]);
+		free(head);
+		head = tmp;
+	}
 }
 
 t_redirect	*init_redirect(void)
@@ -55,11 +63,13 @@ t_redirect	*init_redirect(void)
 		return (NULL);
 	new_redirect->cmd = NULL;
 	new_redirect->cmd_count = 0;
-	new_redirect->in_redir = -1;
-	new_redirect->out_redir = -1;
-	new_redirect->heredoc = -1;
+	new_redirect->in_redir = 0;
+	new_redirect->out_redir = 0;
+	new_redirect->heredoc = 0;
 	new_redirect->in_file = NULL;
 	new_redirect->out_file = NULL;
 	new_redirect->next = NULL;
+	new_redirect->in_fd = -1;
+	new_redirect->out_fd = -1;
 	return (new_redirect);
 }

@@ -6,45 +6,11 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/18 22:37:54 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/26 19:02:47 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-char	**get_pipes(char *line)
-{
-	char	**commands;
-	int		i;
-	int		j;
-	int		check;
-	
-	if (line[0] == '|' || line[ft_strlen(line) -1] == '|')
-	{
-		printf("syntax error near unexpected token `|'\n");
-		return (NULL);
-	}
-	commands = split_pipes(line, '|');
-	i = 0;
-	while (commands[i])
-	{
-		j = 0;
-		check = 0;
-		while (commands[i][j])
-		{
-			if (!ft_isspace(commands[i][j++]))
-				check = 1;
-		}
-		if (!check)
-		{
-			printf("syntax error near unexpected token `|'\n");
-			ft_freematrix(commands);
-			return (NULL);
-		}
-		i++;
-	}
-	return (commands);
-}
 
 t_redirect	*parse_pipeline(char *line, char ***envp)
 {
@@ -56,7 +22,7 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 
 	head = NULL;
 	current = NULL;
-	commands = get_pipes(line);
+	commands = split_pipes(line, '|');
 	if (!commands)
 		return (NULL);
 	i = 0;
@@ -90,49 +56,48 @@ char	*trim_spaces(char *str)
 	return (str);
 }
 
-void	handle_child(t_redirect *head, int index, char ***envp)
+void	handle_child(t_redirect **head, t_pipe *pipes_head,
+			int index, char ***envp)
 {
 	t_redirect	*current;
-	int			i;
+	t_redirect	*cmds_head;
+	t_pipe		*current_pipe;
 
-	current = head;
-	i = 1;
-	while (i < index && current && current->next)
-	{
-		current = current->next;
-		i++;
-	}
-	if (!current)
-		exit(EXIT_FAILURE);
+	current = head[0];
+	cmds_head = head[1];
+	current_pipe = get_pipe(pipes_head, index);
 	if (index != 0)
 	{
-		dup2(get_pipe()->infile, 0);
-		close(get_pipe()->infile);
+		dup2(current_pipe->infile, 0);
+		close(current_pipe->infile);
 	}
-	if (current && current->next)
-		dup2(get_pipe()->pipe[1], 1);
-	close(get_pipe()->pipe[0]);
-	close(get_pipe()->pipe[1]);
-	execute(current, envp);
-	exit(EXIT_FAILURE);
+	if (current->next)
+	{
+		dup2(current_pipe->pipe[1], 1);
+		close(current_pipe->pipe[0]);
+		close(current_pipe->pipe[1]);
+	}
+	execute(current, cmds_head, pipes_head, envp);
 }
 
-void	handle_parent(t_redirect *head, int index)
+void	handle_parent(t_redirect *head, t_pipe *pipes_head, int index)
 {
 	t_redirect	*current;
-	int			i;
+	t_pipe		*current_pipe;
 
 	current = head;
-	i = 1;
-	while (i < index && current && current->next)
+	current_pipe = get_pipe(pipes_head, index);
+	if (current_pipe->pipe[1] != -1)
+		close(current_pipe->pipe[1]);
+	if (current->next)
 	{
-		current = current->next;
-		i++;
+		current_pipe->next = add_pipe(current_pipe->next);
+		if (current_pipe->next)
+		{
+			pipe(current_pipe->next->pipe);
+			current_pipe->next->infile = current_pipe->pipe[0];
+		}
 	}
-	close(get_pipe()->pipe[1]);
-	if (index != 0)
-		close(get_pipe()->infile);
-	get_pipe()->infile = get_pipe()->pipe[0];
-	if (current && current->next)
-		pipe(get_pipe()->pipe);
+	if (index != 0 && current_pipe->infile != -1)
+		close(current_pipe->infile);
 }
