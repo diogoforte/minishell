@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 20:59:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:39:29 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	execute_builtin_main(t_redirect *current_cmd,
 int	execute_builtin(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		char ***envp)
 {
-	while (!**cmd && *cmd + 1)
+	while (!**cmd && *(cmd + 1))
 		cmd++;
 	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
 		echo(cmd + 1, cmds_head, pipes_head, envp);
