@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 15:20:24 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:25:46 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ char		*process_redirection_in_heredoc(t_cmd_parser *parser,
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
 int			handle_input_redirection(t_redirect *redir);
 int			handle_output_redirection(t_redirect *redir);
+void		file_error_exit(t_redirect *cmds_head,
+				t_pipe *pipes_head, char ***envp);
 void		reset(t_redirect *redirect, t_pipe *pipe, char *line);
 void		reset_redirections(t_redirect *head);
 void		reset_pipes(t_pipe *head);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/23 23:50:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:45:41 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,12 @@ int	handle_output_redirection(t_redirect *redir)
 			perror("Error opening output file");
 	}
 	return (out_fd);
+}
+
+void	file_error_exit(t_redirect *cmds_head,
+		t_pipe *pipes_head, char ***envp)
+{
+	ft_freematrix(*envp);
+	reset(cmds_head, pipes_head, NULL);
+	exit(1);
 }

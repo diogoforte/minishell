@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 10:34:10 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:27:38 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,23 @@ void	execute(t_redirect *current_cmd, t_redirect *cmds_head,
 {
 	if (current_cmd->out_redir)
 	{
-		dup2(current_cmd->out_fd, STDOUT_FILENO);
-		close(current_cmd->out_fd);
+		if (current_cmd->out_fd != -1)
+		{
+			dup2(current_cmd->out_fd, STDOUT_FILENO);
+			close(current_cmd->out_fd);
+		}
+		else
+			file_error_exit(cmds_head, pipes_head, envp);
 	}
 	if (current_cmd->in_redir)
 	{
-		dup2(current_cmd->in_fd, STDIN_FILENO);
-		close(current_cmd->in_fd);
+		if (current_cmd->in_fd != -1)
+		{
+			dup2(current_cmd->in_fd, STDIN_FILENO);
+			close(current_cmd->in_fd);
+		}
+		else
+			file_error_exit(cmds_head, pipes_head, envp);
 	}
 	if (!execute_builtin(current_cmd->cmd, cmds_head, pipes_head, envp)
 		&& execute_builtin_main(current_cmd, cmds_head, pipes_head, envp))
