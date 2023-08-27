@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 22:09:16 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/27 09:20:27 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 11:19:36 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	validate_red_2(char *line, int i)
 {
 	char	current_redirection;
 
-	i = 0;
 	while (line[i])
 	{
 		while (line[i] && line[i] != '>' && line[i] != '<')

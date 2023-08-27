@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 06:13:37 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 10:21:24 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	cd_check(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		i++;
 	if (i > 1)
 	{
+		ft_dprintf(2, "minishell: cd: too many arguments\n");
 		exit_status(&status);
 		exit_builtin_main(cmds_head, pipes_head, envp, status);
 		return (1);

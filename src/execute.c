@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 06:09:25 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 10:34:10 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	path = pathfinder(cmd[0], envp);
 	if (!path || !**cmd)
 	{
-		ft_dprintf(2, "Command not found: %s\n", *cmd);
+		ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);
 		ft_freematrix(*envp);
 		reset(cmds_head, pipes_head, NULL);
 		exit(127);
