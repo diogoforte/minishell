@@ -1,46 +1,57 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/10 05:13:54 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/27 00:37:58 by dinunes-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+BLUE = \033[0;94m
+GREEN = \e[1;92m
+RED = \033[0;91m
+RESET = \033[1;30m
+WHITE = \033[1;97m
+YELLOW = \033[1;33m
 
-#Program name
 NAME = minishell
 
-# Compiler
 CC = cc
 CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
 
-# Libft
-LIBFT_PATH	= libft/
-LIBFT_NAME	= libft.a
-LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
-# Includes
+LIBFT_PATH = libft/
+LIBFT_NAME = libft.a
+LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
+
 INC = -I ./inc/
 
-# Sources and Objects paths
 SRC_PATH = src/
 OBJ_PATH = obj/
 
-# Sources
-SRC = $(addprefix $(SRC_PATH),	environment.c heredoc.c parsing2.c path.c signals.c variables.c\
-								execute.c main.c parsing.c redirections.c pipe.c builtins.c builtins2.c  builtins3.c\
-								exit.c structs.c pipe2.c pipe3.c parsing3.c input.c input2.c)
+SRC = $(addprefix $(SRC_PATH), \
+	environment.c \
+	heredoc.c \
+	parsing.c \
+	parsing2.c \
+	parsing3.c \
+	path.c \
+	signals.c \
+	variables.c \
+	execute.c \
+	main.c \
+	redirections.c \
+	pipe.c \
+	pipe2.c \
+	pipe3.c \
+	builtins.c \
+	builtins2.c \
+	builtins3.c \
+	exit.c \
+	structs.c \
+	input.c \
+	input2.c \
+)
 
-# Objects
+
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
-all: $(NAME)
+all: norm $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@printf "🔨	Compiling $(WHITE)$(NAME)$(RESET):	$(BLUE)%-33s$(RESET)\r" $(notdir $@)
 
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
@@ -48,9 +59,9 @@ $(OBJ_PATH):
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -lreadline
-	@echo "\033[0;91m$(NAME) \033[0;0mready."
+	@echo "\n📦	$(WHITE)$(NAME)$(RESET)		$(YELLOW)compiled$(WHITE)"
 
 clean:
 	@rm -rf $(OBJ_PATH)
@@ -59,8 +70,19 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@make fclean -sC $(LIBFT_PATH)
-	@echo "\033[0;91m$(NAME) \033[0;0mfile removed."
+	@echo "🗑️	$(WHITE)$(NAME)$(RESET)		$(RED)removed$(RESET)"
 
 re: fclean all
 
-.PHONY: all re clean fclean
+norm:
+	@make norm -sC $(LIBFT_PATH)
+	@OUTPUT=$$($(HOME)/.local/bin/norminette $(SRC) 2>&1); \
+	ERROR_LINES=$$(echo "$$OUTPUT" | grep "Error"); \
+	if [ -n "$$ERROR_LINES" ]; then \
+		echo "$$ERROR_LINES"; \
+		echo "❌	$(RESET)norminette $(WHITE)$(NAME)	$(RED)KO"; \
+	else \
+		echo "✅	$(RESET)norminette $(WHITE)$(NAME)	$(GREEN)OK"; \
+	fi;
+
+.PHONY: all re clean fclean norm

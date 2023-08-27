@@ -1,63 +1,109 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/26 17:59:29 by dinunes-          #+#    #+#              #
-#    Updated: 2023/08/27 00:32:18 by dinunes-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+BLUE = \033[0;94m
+GREEN = \e[1;92m
+RED = \033[0;91m
+RESET = \033[1;30m
+WHITE = \033[1;97m
+YELLOW = \033[1;33m
 
 NAME = libft.a
 
-# Compiler
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
 
-# Includes
 INC = -I ./inc/
 
-# Sources and Objects paths
 SRC_PATH = src/
 OBJ_PATH = obj/
 
-# Sources
-SRC = $(addprefix $(SRC_PATH), ft_atoi.c  ft_lstadd_back.c  ft_memchr.c  ft_split.c  ft_strmapi.c  \
-                                ft_bzero.c  ft_lstadd_front.c  ft_memcmp.c  ft_strcat.c  ft_strncmp.c  \
-                                ft_calloc.c  ft_lstclear.c  ft_memcpy.c  ft_strchr.c  ft_strncpy.c  \
-                                ft_isalnum.c  ft_lstdelone.c  ft_memmove.c  ft_strdup.c  ft_strnstr.c  \
-                                ft_isalpha.c  ft_lstiter.c  ft_memset.c  ft_striteri.c  ft_strrchr.c  \
-                                ft_isascii.c  ft_lstlast.c  ft_putchar_fd.c  ft_strjoin.c  ft_strtrim.c  \
-                                ft_isdigit.c  ft_lstmap.c  ft_putendl_fd.c  ft_strlcat.c  ft_substr.c  \
-                                ft_isprint.c  ft_lstnew.c  ft_putnbr_fd.c  ft_strlcpy.c  ft_tolower.c  \
-                                ft_itoa.c  ft_lstsize.c  ft_putstr_fd.c  ft_strlen.c  ft_toupper.c \
-                                ft_triplejoin.c ft_freematrix.c ft_freetensor.c ft_strpbrk.c ft_isspace.c \
-                                ft_strcpy.c ft_strcmp.c ft_dprintf.c)
+SRC = $(addprefix $(SRC_PATH), \
+	ft_atoi.c \
+	ft_bzero.c \
+	ft_calloc.c \
+	ft_dprintf.c \
+	ft_freematrix.c \
+	ft_freetensor.c \
+	ft_isalnum.c \
+	ft_isalpha.c \
+	ft_isascii.c \
+	ft_isdigit.c \
+	ft_isprint.c \
+	ft_isspace.c \
+	ft_itoa.c \
+	ft_lstadd_back.c \
+	ft_lstadd_front.c \
+	ft_lstclear.c \
+	ft_lstdelone.c \
+	ft_lstiter.c \
+	ft_lstlast.c \
+	ft_lstmap.c \
+	ft_lstnew.c \
+	ft_lstsize.c \
+	ft_memchr.c \
+	ft_memcmp.c \
+	ft_memcpy.c \
+	ft_memmove.c \
+	ft_memset.c \
+	ft_putchar_fd.c \
+	ft_putendl_fd.c \
+	ft_putnbr_fd.c \
+	ft_putstr_fd.c \
+	ft_split.c \
+	ft_strcat.c \
+	ft_strchr.c \
+	ft_strcmp.c \
+	ft_strcpy.c \
+	ft_strdup.c \
+	ft_striteri.c \
+	ft_strjoin.c \
+	ft_strlcat.c \
+	ft_strlcpy.c \
+	ft_strlen.c \
+	ft_strmapi.c \
+	ft_strncmp.c \
+	ft_strncpy.c \
+	ft_strnstr.c \
+	ft_strpbrk.c \
+	ft_strrchr.c \
+	ft_strtrim.c \
+	ft_substr.c \
+	ft_tolower.c \
+	ft_toupper.c \
+	ft_triplejoin.c \
+)
 
-# Objects
+
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
 all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@printf "🔨	Compiling $(WHITE)$(NAME)$(RESET):	$(BLUE)%-33s$(RESET)\r" $(notdir $@)
 
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
-	@echo "\033[0;91m$(NAME) \033[0;0mready."
+	@echo "\n📦	$(WHITE)$(NAME)$(RESET)			$(YELLOW)compiled$(RESET)"
 
 clean:
 	@rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "\033[0;91m$(NAME) \033[0;0mfile removed."
+	@echo "🗑️	$(WHITE)$(NAME)$(RESET)			$(RED)removed$(RESET)"
 
 re: fclean all
+
+norm:
+	@OUTPUT=$$($(HOME)/.local/bin/norminette *.c 2>&1); \
+	ERROR_LINES=$$(echo "$$OUTPUT" | grep "Error"); \
+	if [ -n "$$ERROR_LINES" ]; then \
+		echo "$$ERROR_LINES"; \
+		echo "❌	$(RESET)norminette $(WHITE)$(NAME)	$(RED)KO"; \
+	else \
+		echo "✅	$(RESET)norminette $(WHITE)$(NAME)	$(GREEN)OK"; \
+	fi;
 
 .PHONY: all re clean fclean
