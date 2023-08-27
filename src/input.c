@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 09:19:13 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:19:58 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,40 +49,22 @@ int	check_input(char *line)
 
 int	validate_redirections(char *line)
 {
-	int			i;
-	t_in_quote	state;
+	int		valid;
+	char	*clean;
 
-	init_quote_state(&state);
-	i = 0;
-	while (line[i])
-	{
-		swap_quote_state(&state, line[i]);
-		if ((line[i] == '>' || line[i] == '<') && !state.inside)
-		{
-			if (!validate_red_2(line, i))
-				return (0);
-		}
-		i++;
-	}
-	return (1);
+	clean = ignore_in_quotes(line);
+	valid = validate_red_2(clean);
+	free(clean);
+	return (valid);
 }
 
 int	validate_pipes(char *line)
 {
-	int			i;
-	t_in_quote	state;
+	int		valid;
+	char	*clean;
 
-	init_quote_state(&state);
-	i = 0;
-	while (line[i])
-	{
-		swap_quote_state(&state, line[i]);
-		if (line[i] == '|' && !state.inside)
-		{
-			if (!validate_pipes_2(line, i))
-				return (0);
-		}
-		i++;
-	}
-	return (1);
+	clean = ignore_in_quotes(line);
+	valid = validate_pipes_2(clean);
+	free(clean);
+	return (valid);
 }

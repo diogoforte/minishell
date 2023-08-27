@@ -6,14 +6,17 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 22:09:16 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/27 11:19:36 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:52:06 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	validate_pipes_2(char *line, int i)
+int	validate_pipes_2(char *line)
 {
+	int	i;
+
+	i = 0;
 	while (line[i])
 	{
 		while (line[i] && line[i] == ' ')
@@ -35,13 +38,15 @@ int	validate_pipes_2(char *line, int i)
 			while (line[i] && line[i] != '|' && line[i] != ' ')
 				i++;
 	}
-	return (1);
+	return (validate_pipes_3(line));
 }
 
-int	validate_red_2(char *line, int i)
+int	validate_red_2(char *line)
 {
+	int		i;
 	char	current_redirection;
 
+	i = 0;
 	while (line[i])
 	{
 		while (line[i] && line[i] != '>' && line[i] != '<')
@@ -72,5 +77,36 @@ int	only_spaces(char *line)
 			return (0);
 		line++;
 	}
+	return (1);
+}
+
+char	*ignore_in_quotes(char *line)
+{
+	char		*clean;
+	int			i;
+	t_in_quote	state;
+
+	clean = ft_strdup(line);
+	init_quote_state(&state);
+	i = 0;
+	while (clean[i])
+	{
+		swap_quote_state(&state, clean[i]);
+		if (state.inside)
+			clean[i] = 'a';
+		i++;
+	}
+	return (clean);
+}
+
+int	validate_pipes_3(char *line)
+{
+	int	i;
+
+	i = ft_strlen(line) - 1;
+	while (i >= 0 && line[i] == ' ')
+		i--;
+	if (line[i] == '|')
+		return (0);
 	return (1);
 }

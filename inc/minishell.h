@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 09:18:09 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:48:59 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,11 @@ t_pipe		*initialize_pipeline(int n);
 int			count_commands(t_redirect *cmds_head);
 int			validate_pipes(char *line);
 int			validate_redirections(char *line);
-int			validate_red_2(char *line, int i);
-int			validate_pipes_2(char *line, int i);
+int			validate_red_2(char *line);
+int			validate_pipes_2(char *line);
+int			validate_pipes_3(char *line);
 int			only_spaces(char *line);
+char		*ignore_in_quotes(char *line);
 char		*read_line(char **envp);
 int			check_input(char *line);
 char		**env_sort(char ***envp);
