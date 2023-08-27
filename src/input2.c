@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 22:09:16 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/26 23:10:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 06:23:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	validate_pipes_2(char *line, int i)
 		{
 			if (i == 0)
 				return (0);
-			if (!line[i + 1] || line[i + 1] == '|')
+			if (!line[i + 1] || line[i + 1] == '|' || line[i + 1] == '>'
+				|| line[i + 1] == '<')
 				return (0);
 			i++;
 			while (line[i] && line[i] == ' ')
@@ -57,7 +58,7 @@ int	validate_red_2(char *line, int i)
 			i++;
 			while (line[i] && line[i] == ' ')
 				i++;
-			if (line[i] == '>' || line[i] == '<' || !line[i])
+			if (line[i] == '>' || line[i] == '<' || !line[i] || line[i] == '|')
 				return (0);
 		}
 	}
