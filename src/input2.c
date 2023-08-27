@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 22:09:16 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/27 06:23:29 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 09:20:27 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,17 @@ int	validate_red_2(char *line, int i)
 			if (line[i] == '>' || line[i] == '<' || !line[i] || line[i] == '|')
 				return (0);
 		}
+	}
+	return (1);
+}
+
+int	only_spaces(char *line)
+{
+	while (*line)
+	{
+		if (!ft_isspace(*line))
+			return (0);
+		line++;
 	}
 	return (1);
 }
