@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 10:21:24 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 15:41:55 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,27 @@ void	builtin_exit(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 void	check_digits(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head)
 {
 	int	j;
+	int	valid;
 
 	j = 0;
-	while (cmd[1][j])
-	{
-		if (!ft_isdigit(cmd[1][j]) && cmd[1][j] != '-' && cmd[1][j] != '+')
-		{
-			ft_dprintf(2, "minishell: exit: %s: numeric argument required\n",
-				cmd[1]);
-			reset(cmds_head, pipes_head, NULL);
-			exit(2);
-		}
+	valid = 1;
+	if (!ft_isdigit(cmd[1][j]) && cmd[1][j] != '-' && cmd[1][j] != '+')
+		valid = 0;
+	if (cmd[1][j] == '-' || cmd[1][j] == '+')
 		j++;
+	while (cmd[1][j] && valid)
+	{
+		if (!ft_isdigit(cmd[1][j]))
+			valid = 0;
+		j++;
+	}
+	if (valid)
+		valid = check_max_long(cmd[1]);
+	if (!valid)
+	{
+		ft_dprintf(2, "minishell: exit: %s: numeric argument required\n",
+			cmd[1]);
+		reset(cmds_head, pipes_head, NULL);
+		exit(2);
 	}
 }

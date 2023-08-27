@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/27 10:16:32 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 15:22:12 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,27 @@ void	echo(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	ft_freematrix(*envp);
 	reset(cmds_head, pipes_head, NULL);
 	exit(0);
+}
+
+int	check_max_long(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (cmd[i] == '+' || cmd[i] == '-')
+		i = 1;
+	while (cmd[i] == '0')
+		i++;
+	if (ft_strlen(&cmd[i]) < 19)
+		return (1);
+	if (ft_strlen(&cmd[i]) > 19)
+		return (0);
+	if (cmd[0] == '-')
+	{
+		if (ft_strncmp(&cmd[i], "9223372036854775808", ft_strlen(&cmd[i])) > 0)
+			return (0);
+	}
+	else if (ft_strncmp(&cmd[i], "9223372036854775807", ft_strlen(&cmd[i])) > 0)
+		return (0);
+	return (1);
 }
