@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/17 21:24:51 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:06:05 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ void	handle_exit_status(int *status)
 			exit_status(status);
 		}
 	}
+}
+
+void	exit_execve(t_redirect *cmds_head,
+					t_pipe *pipes_head,
+					char ***envp,
+					int status)
+{
+	ft_freematrix(*envp);
+	reset(cmds_head, pipes_head, NULL);
+	exit(status);
 }

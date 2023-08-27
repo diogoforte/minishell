@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 22:09:16 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/27 13:52:06 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:41:22 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,16 @@ int	validate_pipes_2(char *line)
 			i++;
 		if (line[i] == '|')
 		{
-			if (i == 0)
-				return (0);
-			if (!line[i + 1] || line[i + 1] == '|' || line[i + 1] == '>'
-				|| line[i + 1] == '<')
+			if (i == 0 || !line[i + 1])
 				return (0);
 			i++;
 			while (line[i] && line[i] == ' ')
 				i++;
-			if (line[i] == '|')
+			if (!line[i] || line[i] == '|')
 				return (0);
 		}
 		else
-			while (line[i] && line[i] != '|' && line[i] != ' ')
-				i++;
+			i++;
 	}
 	return (validate_pipes_3(line));
 }
@@ -54,17 +50,16 @@ int	validate_red_2(char *line)
 		if (line[i] == '>' || line[i] == '<')
 		{
 			current_redirection = line[i];
-			if (i != 0 && line[i - 1] != ' ' && line[i
-					- 1] != current_redirection && line[i - 1] != '|')
-				return (0);
-			if (line[i + 1] == current_redirection)
-				i++;
 			i++;
+			if (line[i] == current_redirection)
+				i++;
 			while (line[i] && line[i] == ' ')
 				i++;
-			if (line[i] == '>' || line[i] == '<' || !line[i] || line[i] == '|')
+			if (!line[i] || line[i] == '>' || line[i] == '<' || line[i] == '|')
 				return (0);
 		}
+		else
+			i++;
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 10:57:03 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:45:49 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*process_redirection_out(t_cmd_parser *parser, t_redirect **redir)
 	(*redir)->out_file = ft_strncpy(word, parser->start, parser->end
 			- parser->start);
 	(*redir)->out_file[parser->end - parser->start] = '\0';
+	(*redir)->out_file = strip_quotes((*redir)->out_file);
 	(*redir)->out_fd = handle_output_redirection(*redir);
 	return (parser->start);
 }
@@ -72,6 +73,7 @@ char	*process_redirection_in(t_cmd_parser *parser, t_redirect **redir)
 	(*redir)->in_file = ft_strncpy(word, parser->start, parser->end
 			- parser->start);
 	(*redir)->in_file[parser->end - parser->start] = '\0';
+	(*redir)->in_file = strip_quotes((*redir)->in_file);
 	(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);
 }

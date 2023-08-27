@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 16:25:46 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:06:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ char		*ignore_in_quotes(char *line);
 char		*read_line(char **envp);
 int			check_input(char *line);
 char		**env_sort(char ***envp);
+void		exit_execve(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp,
+				int status);
 
 #endif

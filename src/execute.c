@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 16:27:38 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:23:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	execute_builtin_main(t_redirect *current_cmd,
 int	execute_builtin(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		char ***envp)
 {
+	while(!**cmd && *cmd + 1)
+		cmd++;
 	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
 		echo(cmd + 1, cmds_head, pipes_head, envp);
 	else if (*cmd && !ft_strncmp(*cmd, "pwd", 4))
@@ -104,22 +106,22 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	struct stat	s;
 
 	path = pathfinder(cmd[0], envp);
-	if (!path || !**cmd)
+	if (!**cmd)
+		exit_execve(cmds_head, pipes_head, envp, 0);
+	if (!path)
 	{
 		ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);
-		ft_freematrix(*envp);
-		reset(cmds_head, pipes_head, NULL);
-		exit(127);
+		exit_execve(cmds_head, pipes_head, envp, 127);
+	}
+	stat(*cmd, &s);
+	if (S_ISDIR(s.st_mode))
+	{
+		ft_dprintf(2, "%s: Is a directory\n", *cmd);
+		exit_execve(cmds_head, pipes_head, envp, 126);
 	}
 	if (execve(path, cmd, *envp) == -1)
 	{
-		stat(*cmd, &s);
-		if (S_ISDIR(s.st_mode))
-			ft_dprintf(2, "%s: Is a directory\n", *cmd);
-		else
-			ft_dprintf(2, "Error: %s\n", strerror(errno));
-		reset(cmds_head, pipes_head, NULL);
-		ft_freematrix(*envp);
-		exit(126);
+		ft_dprintf(2, "Error: %s\n", strerror(errno));
+		exit_execve(cmds_head, pipes_head, envp, 126);
 	}
 }
