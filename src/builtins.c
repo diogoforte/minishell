@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 00:35:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 06:13:37 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	check_digits(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head)
 	{
 		if (!ft_isdigit(cmd[1][j]) && cmd[1][j] != '-' && cmd[1][j] != '+')
 		{
-			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
+			ft_dprintf(2, "minishell: exit: %s: numeric argument required\n",
+				cmd[1]);
 			reset(cmds_head, pipes_head, NULL);
 			exit(2);
 		}

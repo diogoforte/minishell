@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/27 00:37:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 05:45:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		ft_dprintf(2, printf"Error: %s\n", strerror(errno));
+		ft_dprintf(2, "Error: %s\n", strerror(errno));
 		reset(cmds_head, pipes_head, NULL);
 		exit(1);
 	}

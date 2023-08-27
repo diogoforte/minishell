@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 00:35:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 06:09:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	execute_builtin(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		char ***envp)
 {
-	char	*path;
+	char		*path;
+	struct stat	s;
 
 	path = pathfinder(cmd[0], envp);
 	if (!path || !**cmd)
@@ -102,12 +103,11 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	}
 	if (execve(path, cmd, *envp) == -1)
 	{
-		if (!access(*cmd, F_OK))
-			ft_dprintf(2, "bash: %s: Is a directory\n", *cmd);
+		stat(*cmd, &s);
+		if (S_ISDIR(s.st_mode))
+			ft_dprintf(2, "%s: Is a directory\n", *cmd);
 		else
 			ft_dprintf(2, "Error: %s\n", strerror(errno));
-		if (path != *cmd)
-			free(path);
 		reset(cmds_head, pipes_head, NULL);
 		ft_freematrix(*envp);
 		exit(126);
