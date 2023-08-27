@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 19:23:09 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:59:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	execute_builtin_main(t_redirect *current_cmd,
 int	execute_builtin(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		char ***envp)
 {
-	while(!**cmd && *cmd + 1)
+	while (!**cmd && *cmd + 1)
 		cmd++;
 	if (*cmd && !ft_strncmp(*cmd, "echo", 5))
 		echo(cmd + 1, cmds_head, pipes_head, envp);
@@ -108,16 +108,16 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	path = pathfinder(cmd[0], envp);
 	if (!**cmd)
 		exit_execve(cmds_head, pipes_head, envp, 0);
+	stat(*cmd, &s);
+	if (S_ISDIR(s.st_mode && access(*cmd, X_OK)))
+	{
+		ft_dprintf(2, "%s: Is a directory\n", *cmd);
+		exit_execve(cmds_head, pipes_head, envp, 126);
+	}
 	if (!path)
 	{
 		ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);
 		exit_execve(cmds_head, pipes_head, envp, 127);
-	}
-	stat(*cmd, &s);
-	if (S_ISDIR(s.st_mode))
-	{
-		ft_dprintf(2, "%s: Is a directory\n", *cmd);
-		exit_execve(cmds_head, pipes_head, envp, 126);
 	}
 	if (execve(path, cmd, *envp) == -1)
 	{

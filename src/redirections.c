@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 19:49:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/27 21:13:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	handle_input_redirection(t_redirect *redir)
 {
 	int	in_fd;
 	int	status;
-
 
 	in_fd = -1;
 	status = 1;
@@ -50,7 +49,6 @@ int	handle_output_redirection(t_redirect *redir)
 	status = 1;
 	if (redir->out_redir && redir->out_file)
 	{
-		
 		if (redir->out_redir == 1)
 			out_fd = open(redir->out_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (redir->out_redir == 2)
@@ -65,7 +63,8 @@ int	handle_output_redirection(t_redirect *redir)
 }
 
 void	file_error_exit(t_redirect *cmds_head,
-		t_pipe *pipes_head, char ***envp)
+						t_pipe *pipes_head,
+						char ***envp)
 {
 	ft_freematrix(*envp);
 	reset(cmds_head, pipes_head, NULL);
