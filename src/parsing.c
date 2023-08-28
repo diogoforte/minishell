@@ -6,9 +6,10 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:03:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:47:42 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../inc/minishell.h"
 
@@ -19,16 +20,12 @@ char	*find_end(char *start)
 
 	init_quote_state(&state);
 	end = start;
-	if (*start == '"' || *start == '\'')
+	while (*end)
 	{
-		swap_quote_state(&state, *end++);
-		while (*end && (*end != ' ' || state.inside))
-			swap_quote_state(&state, *end++);
-	}
-	else
-	{
-		while (*end && *end != ' ')
-			end++;
+		swap_quote_state(&state, *end);
+		if (*end == ' ' && !state.inside)
+			return (end);
+		end++;
 	}
 	return (end);
 }
