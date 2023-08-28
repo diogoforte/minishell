@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/28 17:48:48 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 22:35:41 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_env(char *var)
 	int	status;
 
 	status = 0;
-	if (!ft_isalpha(var[0]))
+	if (!ft_isalpha(var[0]) && var[0] != '_')
 	{
 		ft_dprintf(2, "export: `%s': not a valid identifier\n", var);
 		status = 1;
@@ -39,7 +39,7 @@ int	check_env(char *var)
 	}
 	while (*var && *var != '=')
 	{
-		if (!ft_isalnum(*var))
+		if (!ft_isalnum(*var) && *var != '_')
 		{
 			ft_dprintf(2, "export: `%s': not a valid identifier\n", var);
 			status = 1;
