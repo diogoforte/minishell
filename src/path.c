@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 11:25:17 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:46:12 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*cmd_found(char *str, char **paths)
 
 int	executable_path(char *cmd)
 {
-	if (!ft_strncmp("./", cmd, 2) && !access(cmd, X_OK))
+	if (!ft_strncmp("./", cmd, 2) && !access(cmd, F_OK))
 		return (1);
-	if (cmd[0] == '/' && !access(cmd, X_OK))
+	if (cmd[0] == '/' && !access(cmd, F_OK))
 		return (1);
 	return (0);
 }
@@ -58,7 +58,7 @@ char	*pathfinder(char *cmd, char ***envp)
 	while (paths[i])
 	{
 		str = ft_triplejoin(paths[i], "/", cmd);
-		if (str && !access(str, X_OK))
+		if (str && !access(str, F_OK))
 			return (cmd_found(str, paths));
 		free(str);
 		i++;

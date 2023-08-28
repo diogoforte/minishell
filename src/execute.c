@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 11:12:57 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:01:32 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,26 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		char ***envp)
 {
 	char		*path;
+	struct stat	s;
 
 	if (!**cmd)
 		exit_execve(cmds_head, pipes_head, envp, 0);
 	path = pathfinder(cmd[0], envp);
 	if (!path)
 	{
-		ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);
+		if (ft_strchr(cmd[0], '/'))
+			ft_dprintf(2, "minishell: '%s': No such file or directory\n", *cmd);
+		else
+			ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);
 		exit_execve(cmds_head, pipes_head, envp, 127);
 	}
 	if (execve(path, cmd, *envp) == -1)
 	{
-		ft_dprintf(2, "Error: %s\n", strerror(errno));
+		stat(path, &s);
+		if (S_ISDIR(s.st_mode))
+			ft_dprintf(2, "%s: Is a directory\n", path);
+		else
+			ft_dprintf(2, "Error: %s\n", strerror(errno));
 		exit_execve(cmds_head, pipes_head, envp, 126);
 	}
 }
