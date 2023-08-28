@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freetensor.c                                    :+:      :+:    :+:   */
+/*   ft_strjoinfree.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/03 15:02:09 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 20:22:21 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/28 22:56:48 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/28 23:02:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_freetensor(char ***tensor)
+char	*ft_strjoinfree(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+	char	*res;
 
-	i = -1;
-	if (tensor)
-	{
-		while (tensor[++i] != NULL)
-		{
-			j = -1;
-			while (tensor[i][++j] != NULL)
-				free(tensor[i][j]);
-			free(tensor[i]);
-		}
-		free(tensor);
-	}
+	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, s1, ft_strlen(s1) + 1);
+	ft_strlcat(res, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	free(s1);
+	return (res);
 }

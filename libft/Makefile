@@ -55,6 +55,7 @@ SRC = $(addprefix $(SRC_PATH), \
 	ft_strdup.c \
 	ft_striteri.c \
 	ft_strjoin.c \
+	ft_strjoinfree.c \
 	ft_strlcat.c \
 	ft_strlcpy.c \
 	ft_strlen.c \

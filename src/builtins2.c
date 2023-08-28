@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:28:39 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/28 17:48:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 23:41:23 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 {
-	char	*pwd;
+	char	pwd[PATH_MAX];
 
 	ft_freematrix(*envp);
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
+	getcwd(pwd, PATH_MAX);
+	if (!*pwd)
 	{
 		ft_dprintf(2, "Error: %s\n", strerror(errno));
 		reset(cmds_head, pipes_head, NULL);
@@ -27,7 +27,6 @@ void	pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp)
 	else
 	{
 		printf("%s\n", pwd);
-		free(pwd);
 	}
 	reset(cmds_head, pipes_head, NULL);
 	exit(0);

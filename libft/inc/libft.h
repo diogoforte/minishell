@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 00:27:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 23:02:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int					ft_isspace(int c);
 char				*ft_strcpy(char *dest, const char *src);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_dprintf(int fd, const char *str, ...);
+char				*ft_strjoinfree(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:01:51 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:49:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 21:35:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,22 @@ void	signals(int n)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, handle_sigquit);
-		return ;
 	}
-	signal(SIGINT, handle_sigint2);
-	signal(SIGQUIT, handle_sigquit2);
+	if (n == 1)
+	{
+		signal(SIGINT, handle_sigint2);
+		signal(SIGQUIT, handle_sigquit2);
+	}
+	if (n == 2)
+	{
+		signal(SIGINT, handle_sigint3);
+		signal(SIGQUIT, handle_sigquit3);
+	}
+	if (n == 3)
+	{
+		signal(SIGINT, handle_sigint4);
+		signal(SIGQUIT, handle_sigquit4);
+	}
 }
 
 void	handle_sigint2(int sig)

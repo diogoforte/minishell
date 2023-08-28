@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 02:01:14 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:16:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 23:04:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ typedef struct s_cmd_parser
 typedef struct s_heredoc
 {
 	int						fd;
-	char					*str;
+	char					*str;	
+	char					*delimiter;
 	int						start;
 	int						end;
 	char					***envp;

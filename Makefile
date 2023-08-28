@@ -28,6 +28,7 @@ SRC = $(addprefix $(SRC_PATH), \
 	parsing3.c \
 	path.c \
 	signals.c \
+	signals2.c \
 	variables.c \
 	execute.c \
 	main.c \

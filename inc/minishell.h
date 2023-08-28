@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 08:40:45 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 21:35:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,39 @@
 
 # include "../libft/inc/libft.h"
 # include "structs.h"
-# include <stdio.h>
-# include <string.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <string.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
 
-void		echo(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
-void		cd(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
-int			cd_check(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
+void		echo(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
+void		cd(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
+int			cd_check(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
 void		pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 void		env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 char		*search_env(char ***envp, char *cmd);
 char		**env_add(char ***envp, char *cmd);
 char		**env_remove(char ***envp, char *cmd);
-void		export(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
+void		export(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
 void		export_value(char **cmd, char ***envp);
-void		unset(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
-void		exit_builtin_main(t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp, int status);
+void		unset(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
+void	exit_builtin_main(t_redirect *cmds_head,
+						t_pipe *pipes_head,
+						char ***envp,
+						int status);
 void		execute(t_redirect *current_cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			execute_builtin_main(t_redirect *current_cmd, t_redirect *cmds_head,
@@ -80,21 +82,22 @@ char		*skip_spaces(char *start);
 char		*process_cmd(t_cmd_parser *parser, t_redirect **head);
 char		*process_redirection_out(t_cmd_parser *parser, t_redirect **redir);
 char		*process_redirection_in(t_cmd_parser *parser, t_redirect **redir);
-char		*process_redirection_in_heredoc(t_cmd_parser *parser,
-				t_redirect **redir);
+char	*process_redirection_in_heredoc(t_cmd_parser *parser,
+										t_redirect **redir);
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
 int			handle_input_redirection(t_redirect *redir);
 int			handle_output_redirection(t_redirect *redir);
-void		file_error_exit(t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
+void	file_error_exit(t_redirect *cmds_head,
+						t_pipe *pipes_head,
+						char ***envp);
 void		reset(t_redirect *redirect, t_pipe *pipe, char *line);
 void		reset_redirections(t_redirect *head);
 void		reset_pipes(t_pipe *head);
 t_redirect	*parse_pipeline(char *line, char ***envp);
 void		execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 				char ***envp);
-void		handle_child(t_redirect **head, t_pipe *pipes_head,
-				int index, char ***envp);
+void		handle_child(t_redirect **head, t_pipe *pipes_head, int index,
+				char ***envp);
 void		handle_parent(t_redirect *head, t_pipe *pipes_head, int index);
 char		*trim_spaces(char *str);
 void		free_strings(char *s1, char *s2);
@@ -107,8 +110,8 @@ t_redirect	*init_redirect(void);
 char		*preprocess_line(char *line);
 t_redirect	*parse_redirections(char *line, char ***envp);
 size_t		cmd_size(const char *str, int n, char c);
-void		builtin_exit(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
+void		builtin_exit(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
 void		check_digits(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head);
 t_pipe		*add_pipe(t_pipe *head);
 t_pipe		*init_pipe(void);
@@ -128,5 +131,9 @@ int			check_input(char *line);
 char		**env_sort(char ***envp);
 void		exit_execve(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp,
 				int status);
+void		handle_sigint3(int sig);
+void		handle_sigquit3(int sig);
+void		handle_sigint4(int sig);
+void		handle_sigquit4(int sig);
 
 #endif

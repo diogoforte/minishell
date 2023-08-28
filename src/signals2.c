@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freetensor.c                                    :+:      :+:    :+:   */
+/*   signals2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/03 15:02:09 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 20:22:21 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/28 21:24:16 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/28 21:40:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "../inc/minishell.h"
 
-void	ft_freetensor(char ***tensor)
+void	handle_sigint3(int sig)
 {
-	int	i;
-	int	j;
+	(void) sig;
+	write(1, "\n", 1);
+	exit(130);
+}
 
-	i = -1;
-	if (tensor)
-	{
-		while (tensor[++i] != NULL)
-		{
-			j = -1;
-			while (tensor[i][++j] != NULL)
-				free(tensor[i][j]);
-			free(tensor[i]);
-		}
-		free(tensor);
-	}
+void	handle_sigquit3(int sig)
+{
+	(void) sig;
+	exit(131);
+}
+
+void	handle_sigint4(int sig)
+{
+	(void) sig;
+}
+
+void	handle_sigquit4(int sig)
+{
+	(void) sig;
 }
