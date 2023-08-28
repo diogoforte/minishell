@@ -6,24 +6,11 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/28 22:35:41 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 23:10:04 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	exit_builtin_main(t_redirect *cmds_head,
-						t_pipe *pipes_head,
-						char ***envp,
-						int status)
-{
-	if (pipes_head->next)
-	{
-		ft_freematrix(*envp);
-		reset(cmds_head, pipes_head, NULL);
-		exit(status);
-	}
-}
 
 int	check_env(char *var)
 {
@@ -75,7 +62,7 @@ void	echo(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	int	flag;
 
 	flag = 0;
-	if (*cmd && ft_strncmp(*cmd, "-n", 2) == 0)
+	if (*cmd && check_echo_flag(*cmd))
 	{
 		cmd++;
 		flag = 1;
@@ -91,6 +78,20 @@ void	echo(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	ft_freematrix(*envp);
 	reset(cmds_head, pipes_head, NULL);
 	exit(0);
+}
+
+int	check_echo_flag(char *cmd)
+{
+	if (ft_strncmp(cmd, "-n", 2))
+		return (0);
+	cmd++;
+	while (*cmd)
+	{
+		if (*cmd != 'n')
+			return (0);
+		cmd++;
+	}
+	return (1);
 }
 
 int	check_max_long(char *cmd)
