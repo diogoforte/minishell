@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 22:29:29 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 23:08:14 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 void		echo(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
+int			check_echo_flag(char *cmd);
 void		cd(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			cd_check(char **cmd, t_redirect *cmds_head,
