@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 06:19:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 23:14:21 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 22:28:29 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	t_variables	var;
 	char		*new_cmd;
 
-	if (check_quotes(cmd) || check_apostrophe(cmd))
+	if (!check_var_assign(cmd))
 		return (cmd);
 	var.start = ft_strchr(cmd, '$');
 	if (!var.start || (!ft_isalnum(*(var.start + 1)) && *(var.start
@@ -39,39 +39,28 @@ char	*assign_variable(char *cmd, char ***envp, int flag)
 	return (new_cmd);
 }
 
-int	check_quotes(char *cmd)
+void	swap_single_quote_state(t_in_quote *state, char q)
 {
-	int		open_quotes;
-	char	*tmp;
-
-	open_quotes = 0;
-	tmp = cmd;
-	while (*tmp)
-	{
-		if (*tmp == '\'')
-			open_quotes = !open_quotes;
-		tmp++;
-	}
-	return (open_quotes);
+	if (q == '"' && !state->sing)
+		state->doub = !state->doub;
+	if (q == '\'' && !state->doub)
+		state->sing = !state->sing;
+	state->inside = state->sing;
 }
 
-int	check_apostrophe(char *cmd)
+int	check_var_assign(char *cmd)
 {
-	int		apostrophe;
-	char	*tmp;
+	t_in_quote	state;
 
-	apostrophe = 0;
-	tmp = cmd;
-	while (*tmp)
+	init_quote_state(&state);
+	while (*cmd)
 	{
-		if (*tmp == '\'')
-		{
-			apostrophe = 1;
-			break ;
-		}
-		tmp++;
+		swap_single_quote_state(&state, *cmd);
+		if (*cmd == '$' && !state.inside)
+			return (1);
+		cmd++;
 	}
-	return (apostrophe);
+	return (0);
 }
 
 char	*find_var_end(char *var_start)

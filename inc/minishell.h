@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 08:40:45 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 22:29:29 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ t_redirect	*parse_cmd(char *line, char ***envp);
 int			create_heredoc_file(char *str, char ***envp);
 int			find_delimiter(char *line);
 char		*assign_variable(char *cmd, char ***envp, int flag);
-int			check_quotes(char *cmd);
-int			check_apostrophe(char *cmd);
+int			check_var_assign(char *cmd);
 char		*find_var_end(char *var_start);
 char		*create_new_cmd(t_variables *var, char *cmd);
 void		write_all_to_file(t_heredoc *params);
@@ -103,6 +102,7 @@ char		*insert_space(char *line);
 char		*remove_char(char *str, char *clean, char c);
 void		init_quote_state(t_in_quote *state);
 void		swap_quote_state(t_in_quote *state, char q);
+void		swap_single_quote_state(t_in_quote *state, char q);
 t_redirect	*init_redirect(void);
 char		*preprocess_line(char *line);
 t_redirect	*parse_redirections(char *line, char ***envp);
