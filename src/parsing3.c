@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:54:22 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:49:19 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 20:27:05 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,10 @@ char	*remove_char(char *str, char *clean, char c)
 	size_t	i;
 
 	i = ft_strlen(clean);
-	while (*str == c)
-		str++;
+	str++;
 	while (*str && *str != c)
-	{
-		clean[i++] = *str;
-		str++;
-	}
-	while (*str == c)
-		str++;
-	return (str);
+		clean[i++] = *str++;
+	return (++str);
 }
 
 char	*skip_spaces(char *start)
