@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 02:01:14 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/21 21:50:52 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:16:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ struct						s_redirect
 	char					*out_file;
 	int						in_fd;
 	int						out_fd;
+	int						lock;
 	t_redirect				*next;
 };
 

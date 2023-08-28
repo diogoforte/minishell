@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:05:43 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/22 12:23:39 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:21:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ t_redirect	*init_redirect(void)
 	new_redirect->next = NULL;
 	new_redirect->in_fd = -1;
 	new_redirect->out_fd = -1;
+	new_redirect->lock = 0;
 	return (new_redirect);
 }

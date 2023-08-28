@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 21:13:49 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:17:05 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*process_redirection_out(t_cmd_parser *parser, t_redirect **redir)
 			- parser->start);
 	(*redir)->out_file[parser->end - parser->start] = '\0';
 	(*redir)->out_file = strip_quotes((*redir)->out_file);
-	if (!*exit_status(NULL))
+	if (!(*redir)->lock)
 		(*redir)->out_fd = handle_output_redirection(*redir);
 	return (parser->start);
 }
@@ -69,7 +69,7 @@ char	*process_redirection_in(t_cmd_parser *parser, t_redirect **redir)
 			- parser->start);
 	(*redir)->in_file[parser->end - parser->start] = '\0';
 	(*redir)->in_file = strip_quotes((*redir)->in_file);
-	if (!*exit_status(NULL))
+	if (!(*redir)->lock)
 		(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);
 }
@@ -82,7 +82,7 @@ char	*process_redirection_in_heredoc(t_cmd_parser *parser,
 		parser->start++;
 	parser->end = find_end(parser->start);
 	(*redir)->heredoc = create_heredoc_file(parser->start, parser->envp);
-	if (!*exit_status(NULL))
+	if (!(*redir)->lock)
 		(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);
 }

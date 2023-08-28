@@ -47,7 +47,7 @@ SRC = $(addprefix $(SRC_PATH), \
 
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
-all: norm $(NAME)
+all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 12:16:51 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:17:48 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	handle_input_redirection(t_redirect *redir)
 		{
 			perror("Error opening input file");
 			exit_status(&status);
+			redir->lock = 1;
 		}
 	}
 	return (in_fd);
@@ -57,6 +58,7 @@ int	handle_output_redirection(t_redirect *redir)
 		{
 			perror("Error opening output file");
 			exit_status(&status);
+			redir->lock = 1;
 		}
 	}
 	return (out_fd);
