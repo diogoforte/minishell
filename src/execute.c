@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 20:39:29 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:12:57 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,10 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 		char ***envp)
 {
 	char		*path;
-	struct stat	s;
 
-	path = pathfinder(cmd[0], envp);
 	if (!**cmd)
 		exit_execve(cmds_head, pipes_head, envp, 0);
-	stat(*cmd, &s);
-	if (S_ISDIR(s.st_mode && access(*cmd, X_OK)))
-	{
-		ft_dprintf(2, "%s: Is a directory\n", *cmd);
-		exit_execve(cmds_head, pipes_head, envp, 126);
-	}
+	path = pathfinder(cmd[0], envp);
 	if (!path)
 	{
 		ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);

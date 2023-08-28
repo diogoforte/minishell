@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 19:06:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 08:40:45 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		execute_command(char **cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			*exit_status(int *value);
 void		handle_exit_status(int *status);
+int			path_exists(char *cmd);
 char		*pathfinder(char *cmd, char ***envp);
 void		signals(int n);
 void		handle_sigint(int sig);

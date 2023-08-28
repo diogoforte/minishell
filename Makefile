@@ -8,7 +8,7 @@ YELLOW = \033[1;33m
 NAME = minishell
 
 CC = cc
-CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g
+CFLAGS = -Werror -Wextra -Wall -g #-fsanitize=address -g
 
 
 LIBFT_PATH = libft/

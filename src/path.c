@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/27 19:19:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:25:17 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,33 @@ char	*cmd_found(char *str, char **paths)
 	return (str);
 }
 
+int	executable_path(char *cmd)
+{
+	if (!ft_strncmp("./", cmd, 2) && !access(cmd, X_OK))
+		return (1);
+	if (cmd[0] == '/' && !access(cmd, X_OK))
+		return (1);
+	return (0);
+}
+
+int	path_exists(char *cmd)
+{
+	return (0);
+	if (!access(cmd, F_OK) && access(cmd, X_OK))
+	{
+		ft_dprintf(2, "minishell: '%s': Permission denied\n", *cmd);
+		return (1);
+	}
+	return (0);
+}
+
 char	*pathfinder(char *cmd, char ***envp)
 {
 	int		i;
 	char	**paths;
 	char	*str;
 
-	if (cmd && !access(cmd, X_OK))
+	if (cmd && executable_path(cmd))
 		return (cmd);
 	i = 0;
 	while ((*envp)[i] && ft_strncmp((*envp)[i], "PATH", 4))
