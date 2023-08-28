@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/26 19:45:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:31:35 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@ char	*find_end(char *start)
 
 	init_quote_state(&state);
 	end = start;
-	if (*start == '"' || *start == '\'')
+	while (*end)
 	{
-		swap_quote_state(&state, *end++);
-		while (*end && (*end != ' ' || state.inside))
-			swap_quote_state(&state, *end++);
-	}
-	else
-	{
-		while (*end && *end != ' ')
-			end++;
+		swap_quote_state(&state, *end);
+		if (*end == ' ' && !state.inside)
+			return (end);
+		end++;
 	}
 	return (end);
 }
