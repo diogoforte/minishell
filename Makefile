@@ -36,9 +36,13 @@ SRC = $(addprefix $(SRC_PATH), \
 	pipe.c \
 	pipe2.c \
 	pipe3.c \
-	builtins.c \
-	builtins2.c \
-	builtins3.c \
+	builtin_cd.c \
+	builtin_echo.c \
+	builtin_env.c \
+	builtin_exit.c \
+	builtin_export.c \
+	builtin_pwd.c \
+	builtin_unset.c \
 	exit.c \
 	structs.c \
 	input.c \

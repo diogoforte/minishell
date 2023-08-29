@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 19:32:23 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 20:38:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ char		*process_cmd(t_cmd_parser *parser, t_redirect **head,
 				t_heredoc heredoc);
 char		*process_redirection_out(t_cmd_parser *parser, t_redirect **redir);
 char		*process_redirection_in(t_cmd_parser *parser, t_redirect **redir);
-char	*process_redirection_in_heredoc(t_cmd_parser *parser,
-										t_redirect **redir,
-										t_heredoc heredoc);
+char		*process_redirection_in_heredoc(t_cmd_parser *parser,
+				t_redirect **redir,
+				t_heredoc heredoc);
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
 int			handle_input_redirection(t_redirect *redir);
 int			handle_output_redirection(t_redirect *redir);
@@ -128,7 +128,7 @@ int			check_max_long(char *cmd);
 char		*ignore_in_quotes(char *line);
 char		*read_line(char **envp);
 int			check_input(char *line);
-char	**env_sort(char **envp);
+char		**env_sort(char **envp);
 void		exit_execve(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp,
 				int status);
 void		handle_sigint3(int sig);
@@ -137,5 +137,9 @@ void		handle_sigint4(int sig);
 void		handle_sigquit4(int sig);
 int			check_export(char *var);
 int			check_unset(char *var);
-
+void		call_chdir(char *cmd, int *status);
+int			is_valid_identifier(char *var);
+int			check_unset(char *var);
+void		print_sorted_envp(char ***envp);
+void		print_variable(char **tmp);
 #endif

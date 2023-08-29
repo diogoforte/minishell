@@ -1,16 +1,78 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins3.c                                        :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/29 19:50:44 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/08/29 20:25:06 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/08/29 20:58:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	print_variable(char **tmp)
+{
+	int	j;
+
+	j = 1;
+	if (tmp[1] && tmp[2])
+	{
+		printf("declare -x %s=\"", tmp[0]);
+		while (tmp[j] && tmp[j + 1])
+		{
+			if (j == 1)
+				printf("%s", tmp[j]);
+			else
+				printf("=%s", tmp[j]);
+			j++;
+		}
+		printf("=%s\"\n", tmp[j]);
+	}
+	else
+	{
+		if (tmp[1])
+			printf("declare -x %s=\"%s\"\n", tmp[0], tmp[1]);
+		else
+			printf("declare -x %s\n", tmp[0]);
+	}
+}
+
+void	print_sorted_envp(char ***envp)
+{
+	int		i;
+	char	**tmp;
+	char	**sorted_envp;
+
+	i = -1;
+	sorted_envp = env_sort(*envp);
+	while (sorted_envp[++i])
+	{
+		tmp = ft_split(sorted_envp[i], '=');
+		print_variable(tmp);
+		ft_freematrix(tmp);
+	}
+	ft_freematrix(sorted_envp);
+}
+
+void	export(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+		char ***envp)
+{
+	int	status;
+
+	status = 0;
+	if (!*cmd)
+	{
+		print_sorted_envp(envp);
+		exit_status(&status);
+	}
+	else
+	{
+		export_value(cmd, envp);
+	}
+	exit_builtin_main(cmds_head, pipes_head, envp, status);
+}
 
 int	check_export(char *var)
 {
@@ -54,65 +116,4 @@ void	export_value(char **cmd, char ***envp)
 		ft_freematrix(tmp);
 		*envp = env_add(envp, cmd[i]);
 	}
-}
-
-void	echo(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
-		char ***envp)
-{
-	int	flag;
-
-	flag = 0;
-	if (*cmd && check_echo_flag(*cmd))
-	{
-		cmd++;
-		flag = 1;
-	}
-	while (*cmd)
-	{
-		printf("%s", *cmd++);
-		if (*cmd)
-			printf(" ");
-	}
-	if (!flag)
-		printf("\n");
-	ft_freematrix(*envp);
-	reset(cmds_head, pipes_head, NULL);
-	exit(0);
-}
-
-int	check_echo_flag(char *cmd)
-{
-	if (ft_strncmp(cmd, "-n", 2))
-		return (0);
-	cmd++;
-	while (*cmd)
-	{
-		if (*cmd != 'n')
-			return (0);
-		cmd++;
-	}
-	return (1);
-}
-
-int	check_max_long(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (cmd[i] == '+' || cmd[i] == '-')
-		i = 1;
-	while (cmd[i] == '0')
-		i++;
-	if (ft_strlen(&cmd[i]) < 19)
-		return (1);
-	if (ft_strlen(&cmd[i]) > 19)
-		return (0);
-	if (cmd[0] == '-')
-	{
-		if (ft_strncmp(&cmd[i], "9223372036854775808", ft_strlen(&cmd[i])) > 0)
-			return (0);
-	}
-	else if (ft_strncmp(&cmd[i], "9223372036854775807", ft_strlen(&cmd[i])) > 0)
-		return (0);
-	return (1);
 }
