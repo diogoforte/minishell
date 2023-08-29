@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 10:13:39 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 09:42:15 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	free_strings(char *s1, char *s2)
-{
-	free(s1);
-	free(s2);
-}
 
 int	create_heredoc_file(char *str, char ***envp)
 {
@@ -72,6 +66,7 @@ void	write_all_to_file(t_heredoc *heredoc)
 		current = ft_strchr(content_current, '\n');
 	}
 }
+
 void	free_heredoc(t_heredoc *heredoc)
 {
 	free(heredoc->str);
@@ -88,7 +83,8 @@ void	process_heredoc_lines(t_heredoc *heredoc)
 	while (1)
 	{
 		heredoc->str = readline("> ");
-		if (!heredoc->str || (!ft_strncmp(heredoc->delimiter, "\"\"", 2) && !*heredoc->str))
+		if (!heredoc->str || (!ft_strncmp(heredoc->delimiter, "\"\"", 2)
+				&& !*heredoc->str))
 			free_heredoc(heredoc);
 		processed_line = assign_variable(heredoc->str, heredoc->envp, 0);
 		processed_line = strip_quotes(processed_line);

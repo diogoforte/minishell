@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 02:32:20 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:49:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 09:40:08 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ char	*cmd_found(char *str, char **paths)
 {
 	ft_freematrix(paths);
 	return (str);
+}
+
+void	free_strings(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
 }
 
 int	executable_path(char *cmd)
