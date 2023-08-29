@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 23:37:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 07:13:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	create_heredoc_file(char *str, char ***envp)
 	t_heredoc	heredoc;
 	int			i;
 
-	if (!*str)
-		return (0);
 	heredoc.fd = open("/tmp/heredoc_file", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (heredoc.fd == -1)
 		return (0);
@@ -41,7 +39,8 @@ int	create_heredoc_file(char *str, char ***envp)
 	heredoc.delimiter = ft_substr(str, 0, heredoc.start);
 	while (heredoc.str[heredoc.start] && heredoc.str[heredoc.start] != '\n')
 		heredoc.start++;
-	if (ft_strnstr(str + heredoc.start, heredoc.delimiter, heredoc.end - heredoc.start))
+	if (ft_strnstr(str + heredoc.start, heredoc.delimiter, heredoc.end
+			- heredoc.start))
 		write_all_to_file(&heredoc);
 	else
 		write_to_file(&heredoc);
@@ -77,60 +76,54 @@ void	write_all_to_file(t_heredoc *heredoc)
 	}
 }
 
-void	write_to_file(t_heredoc *heredoc)
+void	process_heredoc_lines(t_heredoc *heredoc)
 {
 	char	*line;
 	char	*processed_line;
-	int		pid;
-	int		lock;
 
-	pid = fork();
-	lock = 0;
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			exit(0);
+		processed_line = assign_variable(line, heredoc->envp, 0);
+		processed_line = strip_quotes(processed_line);
+		if (processed_line != line)
+			line = processed_line;
+		if (ft_strlen(line) == ft_strlen(heredoc->delimiter)
+			&& !ft_strncmp(line, heredoc->delimiter,
+				ft_strlen(heredoc->delimiter)))
+		{
+			free(line);
+			exit(1);
+		}
+		write(heredoc->fd, line, ft_strlen(line));
+		write(heredoc->fd, "\n", 1);
+		free(line);
+	}
+	free(heredoc->delimiter);
+	exit(0);
+}
+
+void	write_to_file(t_heredoc *heredoc)
+{
+	int	pid;
+	int	status;
+	int	fd;
+
 	signals(3);
+	pid = fork();
 	if (!pid)
 	{
 		signals(2);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line)
-				break ;
-			processed_line = assign_variable(line, heredoc->envp, 0);
-			processed_line = strip_quotes(processed_line);
-			if (processed_line != line)
-				line = processed_line;
-			if (ft_strlen(line) == ft_strlen(heredoc->delimiter) && !ft_strncmp(line,
-					heredoc->delimiter, ft_strlen(heredoc->delimiter)))
-			{
-				free(line);
-				break ;
-			}
-			write(heredoc->fd, line, ft_strlen(line));
-			write(heredoc->fd, "\n", 1);
-			free(line);
-		}
-		free(heredoc->delimiter);
-		lock = 1;
-		exit(0);
+		process_heredoc_lines(heredoc);
 	}
-	waitpid(pid, NULL, 0);
-	if (!lock)
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) && !WEXITSTATUS(status))
 	{
-		lock = open("/tmp/heredoc_file", O_TRUNC);
-		write(lock, "", 1);
-		close(lock);
+		fd = open("/tmp/heredoc_file", O_TRUNC);
+		write(fd, "", 1);
+		close(fd);
 	}
 	signals(0);
-}
-
-int	find_delimiter(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i + 1])
-		i++;
-	while (line[i - 1] && line[i - 1] != '\n')
-		i--;
-	return (i);
 }

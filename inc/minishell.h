@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 00:25:59 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 07:04:20 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-void		echo(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
+void		echo(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
 int			check_echo_flag(char *cmd);
-void		cd(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
-int			cd_check(char **cmd, t_redirect *cmds_head,
-				t_pipe *pipes_head, char ***envp);
+void		cd(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
+int			cd_check(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
 void		pwd(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 void		env(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp);
 char		*search_env(char ***envp, char *cmd);
@@ -45,10 +45,8 @@ void		export(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 void		export_value(char **cmd, char ***envp);
 void		unset(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 				char ***envp);
-void	exit_builtin_main(t_redirect *cmds_head,
-						t_pipe *pipes_head,
-						char ***envp,
-						int status);
+void		exit_builtin_main(t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp, int status);
 void		execute(t_redirect *current_cmd, t_redirect *cmds_head,
 				t_pipe *pipes_head, char ***envp);
 int			execute_builtin_main(t_redirect *current_cmd, t_redirect *cmds_head,
@@ -82,14 +80,13 @@ char		*skip_spaces(char *start);
 char		*process_cmd(t_cmd_parser *parser, t_redirect **head);
 char		*process_redirection_out(t_cmd_parser *parser, t_redirect **redir);
 char		*process_redirection_in(t_cmd_parser *parser, t_redirect **redir);
-char	*process_redirection_in_heredoc(t_cmd_parser *parser,
-										t_redirect **redir);
+char		*process_redirection_in_heredoc(t_cmd_parser *parser,
+				t_redirect **redir);
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
 int			handle_input_redirection(t_redirect *redir);
 int			handle_output_redirection(t_redirect *redir);
-void	file_error_exit(t_redirect *cmds_head,
-						t_pipe *pipes_head,
-						char ***envp);
+void		file_error_exit(t_redirect *cmds_head, t_pipe *pipes_head,
+				char ***envp);
 void		reset(t_redirect *redirect, t_pipe *pipe, char *line);
 void		reset_redirections(t_redirect *head);
 void		reset_pipes(t_pipe *head);

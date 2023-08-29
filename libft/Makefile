@@ -79,32 +79,33 @@ all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
-	@printf "🔨	Compiling $(WHITE)$(NAME)$(RESET):	$(BLUE)%-33s$(RESET)\r" $(notdir $@)
+	@printf "🔨	$(BLUE)Compiling $(WHITE)$(NAME)	$(BLUE)%-33s$(WHITE)\r" $(notdir $@)
 
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 
 $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
-	@echo "\n📦	$(WHITE)$(NAME)$(RESET)			$(YELLOW)compiled$(RESET)"
+	@echo "\n📦	$(WHITE)$(NAME)$(RESET)			$(YELLOW)compiled$(WHITE)"
 
 clean:
 	@rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "🗑️	$(WHITE)$(NAME)$(RESET)			$(RED)removed$(RESET)"
+	@echo "🗑️	$(WHITE)$(NAME)$(RESET)			$(RED)removed$(WHITE)"
 
 re: fclean all
 
+NORM_CMD := $(shell which norminette 2>/dev/null || echo "/home/diogo/.local/bin/norminette")
 norm:
-	@OUTPUT=$$($(HOME)/.local/bin/norminette *.c 2>&1); \
+	@OUTPUT=$$($(NORM_CMD) 2>&1); \
 	ERROR_LINES=$$(echo "$$OUTPUT" | grep "Error"); \
 	if [ -n "$$ERROR_LINES" ]; then \
+		echo "❌	$(RESET)norminette $(WHITE)$(NAME)	$(RED)KO$(WHITE)"; \
 		echo "$$ERROR_LINES"; \
-		echo "❌	$(RESET)norminette $(WHITE)$(NAME)	$(RED)KO"; \
 	else \
-		echo "✅	$(RESET)norminette $(WHITE)$(NAME)	$(GREEN)OK"; \
+		echo "✅	$(RESET)norminette $(WHITE)$(NAME)	$(GREEN)OK$(WHITE)"; \
 	fi;
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean norm
