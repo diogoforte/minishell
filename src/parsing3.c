@@ -6,7 +6,7 @@
 /*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:54:22 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 20:27:05 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/29 09:45:43 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ char	*remove_char(char *str, char *clean, char c)
 	str++;
 	while (*str && *str != c)
 		clean[i++] = *str++;
-	return (++str);
+	if (*str == c)
+		str++;
+	return (str);
 }
 
 char	*skip_spaces(char *start)
