@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 15:33:30 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:37:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	write_to_file(t_heredoc *heredoc)
 		close(fd);
 		ft_dprintf(2,
 			"here-document delimited by EOF (wanted '%s')\n ",
-			heardoc->delimiter)
+			heredoc->delimiter);
 	}
-		signals(0);
-	}
+	signals(0);
+}
