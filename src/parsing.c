@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 20:27:41 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:30:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*strip_quotes(char *arg)
 	return (clean);
 }
 
-t_redirect	*parse_cmd(char *line, char ***envp)
+t_redirect	*parse_cmd(char *line, char ***envp, t_heredoc heredoc)
 {
 	char		*tmp;
 	t_redirect	*head;
@@ -76,13 +76,13 @@ t_redirect	*parse_cmd(char *line, char ***envp)
 	line = skip_spaces(line);
 	tmp = line;
 	line = preprocess_line(line);
-	head = parse_redirections(line, envp);
+	head = parse_redirections(line, envp, heredoc);
 	if ((ft_strchr(tmp, '>') || ft_strchr(tmp, '<')) && !ft_strchr(tmp, ' '))
 		free(line);
 	return (head);
 }
 
-t_redirect	*parse_redirections(char *line, char ***envp)
+t_redirect	*parse_redirections(char *line, char ***envp, t_heredoc heredoc)
 {
 	t_cmd_parser	parser;
 	t_redirect		*head;
@@ -102,7 +102,8 @@ t_redirect	*parse_redirections(char *line, char ***envp)
 			current = init_redirect();
 			head = current;
 		}
-		process_cmd(&parser, &current);
+		heredoc.redirections = head;
+		process_cmd(&parser, &current, heredoc);
 		parser.start = parser.end + 1;
 	}
 	return (head);

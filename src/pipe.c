@@ -6,29 +6,28 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 07:14:30 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:49:25 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:39:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_redirect	*parse_pipeline(char *line, char ***envp)
+t_redirect	*parse_pipeline(char *line, char ***envp, t_heredoc heredoc)
 {
 	int			i;
-	char		**commands;
 	t_redirect	*head;
 	t_redirect	*current;
 	t_redirect	*newnode;
 
 	head = NULL;
 	current = NULL;
-	commands = split_pipes(line, '|');
-	if (!commands)
+	heredoc.commands = split_pipes(line, '|');
+	if (!heredoc.commands)
 		return (NULL);
 	i = 0;
-	while (commands[i])
+	while (heredoc.commands[i])
 	{
-		newnode = parse_cmd(commands[i++], envp);
+		newnode = parse_cmd(heredoc.commands[i++], envp, heredoc);
 		if (!newnode)
 			continue ;
 		if (!head)
@@ -37,7 +36,7 @@ t_redirect	*parse_pipeline(char *line, char ***envp)
 			current->next = newnode;
 		current = newnode;
 	}
-	ft_freematrix(commands);
+	ft_freematrix(heredoc.commands);
 	return (head);
 }
 

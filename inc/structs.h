@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 02:01:14 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 09:11:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:27:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_heredoc
 	int						start;
 	int						end;
 	char					***envp;
+	t_redirect				*redirections;
+	char					**commands;
 }							t_heredoc;
 
 typedef struct s_variables

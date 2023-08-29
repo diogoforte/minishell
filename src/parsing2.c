@@ -6,19 +6,19 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 12:00:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:47:48 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:35:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*process_cmd(t_cmd_parser *parser, t_redirect **head)
+char	*process_cmd(t_cmd_parser *parser, t_redirect **head, t_heredoc heredoc)
 {
 	if (!ft_strncmp(parser->start, ">", 1) || !ft_strncmp(parser->start, ">>",
 			2))
 		parser->start = process_redirection_out(parser, head);
 	else if (ft_strncmp(parser->start, "<<", 2) == 0)
-		parser->start = process_redirection_in_heredoc(parser, head);
+		parser->start = process_redirection_in_heredoc(parser, head, heredoc);
 	else if (ft_strncmp(parser->start, "<", 1) == 0)
 		parser->start = process_redirection_in(parser, head);
 	else
@@ -75,13 +75,15 @@ char	*process_redirection_in(t_cmd_parser *parser, t_redirect **redir)
 }
 
 char	*process_redirection_in_heredoc(t_cmd_parser *parser,
-		t_redirect **redir)
+										t_redirect **redir,
+										t_heredoc heredoc)
 {
 	(*redir)->in_redir = 2;
 	while (*parser->start == '<' || *parser->start == ' ')
 		parser->start++;
 	parser->end = find_end(parser->start);
-	(*redir)->heredoc = create_heredoc_file(parser->start, parser->envp);
+	(*redir)->heredoc = create_heredoc_file(parser->start, parser->envp,
+			heredoc);
 	if (!(*redir)->lock)
 		(*redir)->in_fd = handle_input_redirection(*redir);
 	return (parser->start);

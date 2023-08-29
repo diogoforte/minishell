@@ -6,15 +6,14 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 15:37:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:33:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	create_heredoc_file(char *str, char ***envp)
+int	create_heredoc_file(char *str, char ***envp, t_heredoc heredoc)
 {
-	t_heredoc	heredoc;
 	int			i;
 
 	heredoc.fd = open("/tmp/heredoc_file", O_WRONLY | O_CREAT | O_TRUNC, 0600);
@@ -69,8 +68,9 @@ void	write_all_to_file(t_heredoc *heredoc)
 
 void	free_heredoc(t_heredoc *heredoc)
 {
-	free(heredoc->str);
+	reset(heredoc->redirections, NULL, heredoc->str);
 	free(heredoc->delimiter);
+	ft_freematrix(heredoc->commands);
 	close(heredoc->fd);
 	ft_freematrix(*heredoc->envp);
 	exit(0);

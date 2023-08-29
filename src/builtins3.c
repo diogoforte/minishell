@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 21:12:19 by bcastelo          #+#    #+#             */
-/*   Updated: 2023/08/28 23:10:04 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:50:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_env(char *var)
+int	check_export(char *var)
 {
 	int	status;
 
@@ -46,7 +46,7 @@ void	export_value(char **cmd, char ***envp)
 	i = -1;
 	while (cmd[++i])
 	{
-		if (!check_env(cmd[i]))
+		if (!check_export(cmd[i]))
 			continue ;
 		tmp = ft_split(cmd[i], '=');
 		if (search_env(envp, tmp[0]))

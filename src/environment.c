@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:55:34 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:48:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:44:48 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,33 @@ char	*search_env(char ***envp, char *cmd)
 	return (NULL);
 }
 
-char	**env_sort(char ***envp)
+char	**env_sort(char **envp)
 {
+	char	**new_envp;
 	int		i;
 	int		j;
 	char	*tmp;
 
+	new_envp = env_add(&envp, NULL);
+	if (!new_envp)
+		return (NULL);
 	i = 0;
-	while ((*envp)[i])
+	while (new_envp[i])
 	{
 		j = i + 1;
-		while ((*envp)[j])
+		while (new_envp[j])
 		{
-			if (ft_strcmp((*envp)[i], (*envp)[j]) > 0)
+			if (ft_strcmp(new_envp[i], new_envp[j]) > 0)
 			{
-				tmp = (*envp)[i];
-				(*envp)[i] = (*envp)[j];
-				(*envp)[j] = tmp;
+				tmp = new_envp[i];
+				new_envp[i] = new_envp[j];
+				new_envp[j] = tmp;
 			}
 			j++;
 		}
 		i++;
 	}
-	return (*envp);
+	return (new_envp);
 }
 
 char	**env_add(char ***envp, char *cmd)

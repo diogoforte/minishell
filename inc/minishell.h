@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 19:10:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 07:04:20 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:32:23 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void		handle_sigquit(int sig);
 char		*find_end(char *start);
 char		**resize_cmd(char **cmd, int count);
 char		*strip_quotes(char *arg);
-t_redirect	*parse_cmd(char *line, char ***envp);
-int			create_heredoc_file(char *str, char ***envp);
+t_redirect	*parse_cmd(char *line, char ***envp, t_heredoc heredoc);
+int			create_heredoc_file(char *str, char ***envp, t_heredoc heredoc);
 int			find_delimiter(char *line);
 char		*assign_variable(char *cmd, char ***envp, int flag);
 int			check_var_assign(char *cmd);
@@ -77,11 +77,13 @@ char		*create_new_cmd(t_variables *var, char *cmd);
 void		write_all_to_file(t_heredoc *params);
 void		write_to_file(t_heredoc *params);
 char		*skip_spaces(char *start);
-char		*process_cmd(t_cmd_parser *parser, t_redirect **head);
+char		*process_cmd(t_cmd_parser *parser, t_redirect **head,
+				t_heredoc heredoc);
 char		*process_redirection_out(t_cmd_parser *parser, t_redirect **redir);
 char		*process_redirection_in(t_cmd_parser *parser, t_redirect **redir);
-char		*process_redirection_in_heredoc(t_cmd_parser *parser,
-				t_redirect **redir);
+char	*process_redirection_in_heredoc(t_cmd_parser *parser,
+										t_redirect **redir,
+										t_heredoc heredoc);
 char		*process_regular_cmd(t_cmd_parser *parser, t_redirect **redir);
 int			handle_input_redirection(t_redirect *redir);
 int			handle_output_redirection(t_redirect *redir);
@@ -90,7 +92,7 @@ void		file_error_exit(t_redirect *cmds_head, t_pipe *pipes_head,
 void		reset(t_redirect *redirect, t_pipe *pipe, char *line);
 void		reset_redirections(t_redirect *head);
 void		reset_pipes(t_pipe *head);
-t_redirect	*parse_pipeline(char *line, char ***envp);
+t_redirect	*parse_pipeline(char *line, char ***envp, t_heredoc heredoc);
 void		execute_pipeline(t_redirect *cmds_head, t_pipe *pipes_head,
 				char ***envp);
 void		handle_child(t_redirect **head, t_pipe *pipes_head, int index,
@@ -106,7 +108,7 @@ void		swap_quote_state(t_in_quote *state, char q);
 void		swap_single_quote_state(t_in_quote *state, char q);
 t_redirect	*init_redirect(void);
 char		*preprocess_line(char *line);
-t_redirect	*parse_redirections(char *line, char ***envp);
+t_redirect	*parse_redirections(char *line, char ***envp, t_heredoc heredoc);
 size_t		cmd_size(const char *str, int n, char c);
 void		builtin_exit(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 				char ***envp);
@@ -126,12 +128,14 @@ int			check_max_long(char *cmd);
 char		*ignore_in_quotes(char *line);
 char		*read_line(char **envp);
 int			check_input(char *line);
-char		**env_sort(char ***envp);
+char	**env_sort(char **envp);
 void		exit_execve(t_redirect *cmds_head, t_pipe *pipes_head, char ***envp,
 				int status);
 void		handle_sigint3(int sig);
 void		handle_sigquit3(int sig);
 void		handle_sigint4(int sig);
 void		handle_sigquit4(int sig);
+int			check_export(char *var);
+int			check_unset(char *var);
 
 #endif
