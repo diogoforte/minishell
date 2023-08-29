@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 05:06:45 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:49:07 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 10:03:23 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*read_line(char **envp)
 		rl_clear_history();
 		exit(0);
 	}
+	if (line && *line)
+			add_history(line);
 	return (line);
 }
 

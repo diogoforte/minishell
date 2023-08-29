@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 05:13:48 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 20:18:12 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 10:13:24 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,11 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	cmds_head = NULL;
-	pipes_head = NULL;
 	new_envp = env_add(&envp, NULL);
 	while (1)
 	{
 		signals(0);
 		line = read_line(new_envp);
-		if (line && *line)
-			add_history(line);
 		if (!check_input(line))
 			continue ;
 		cmds_head = parse_pipeline(line, &new_envp);

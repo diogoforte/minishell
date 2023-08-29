@@ -6,14 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 07:13:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 10:13:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-#define DELIMITER 0
-#define NL 1
 
 void	free_strings(char *s1, char *s2)
 {
@@ -75,34 +72,36 @@ void	write_all_to_file(t_heredoc *heredoc)
 		current = ft_strchr(content_current, '\n');
 	}
 }
+void	free_heredoc(t_heredoc *heredoc)
+{
+	free(heredoc->str);
+	free(heredoc->delimiter);
+	close(heredoc->fd);
+	ft_freematrix(*heredoc->envp);
+	exit (1);
+}
 
 void	process_heredoc_lines(t_heredoc *heredoc)
 {
-	char	*line;
 	char	*processed_line;
 
 	while (1)
 	{
-		line = readline("> ");
-		if (!line)
-			exit(0);
-		processed_line = assign_variable(line, heredoc->envp, 0);
+		heredoc->str = readline("> ");
+		if (!heredoc->str || (!ft_strncmp(heredoc->delimiter, "\"\"", 2) && !*heredoc->str))
+			free_heredoc(heredoc);
+		processed_line = assign_variable(heredoc->str, heredoc->envp, 0);
 		processed_line = strip_quotes(processed_line);
-		if (processed_line != line)
-			line = processed_line;
-		if (ft_strlen(line) == ft_strlen(heredoc->delimiter)
-			&& !ft_strncmp(line, heredoc->delimiter,
+		if (processed_line != heredoc->str)
+			heredoc->str = processed_line;
+		if (ft_strlen(heredoc->str) == ft_strlen(heredoc->delimiter)
+			&& !ft_strncmp(heredoc->str, heredoc->delimiter,
 				ft_strlen(heredoc->delimiter)))
-		{
-			free(line);
-			exit(1);
-		}
-		write(heredoc->fd, line, ft_strlen(line));
+			free_heredoc(heredoc);
+		write(heredoc->fd, heredoc->str, ft_strlen(heredoc->str));
 		write(heredoc->fd, "\n", 1);
-		free(line);
+		free(heredoc->str);
 	}
-	free(heredoc->delimiter);
-	exit(0);
 }
 
 void	write_to_file(t_heredoc *heredoc)
