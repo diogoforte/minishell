@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 21:24:16 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 07:01:23 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:23:22 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	handle_sigint3(int sig)
 void	handle_sigquit3(int sig)
 {
 	(void) sig;
-	exit(131);
 }
 
 void	handle_sigint4(int sig)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 22:52:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 09:42:15 by bcastelo         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:33:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	free_heredoc(t_heredoc *heredoc)
 	free(heredoc->delimiter);
 	close(heredoc->fd);
 	ft_freematrix(*heredoc->envp);
-	exit (1);
+	exit(0);
 }
 
 void	process_heredoc_lines(t_heredoc *heredoc)
@@ -114,11 +114,14 @@ void	write_to_file(t_heredoc *heredoc)
 		process_heredoc_lines(heredoc);
 	}
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) && !WEXITSTATUS(status))
+	if (WIFEXITED(status) && WEXITSTATUS(status))
 	{
 		fd = open("/tmp/heredoc_file", O_TRUNC);
 		write(fd, "", 1);
 		close(fd);
+		ft_dprintf(2,
+			"here-document delimited by EOF (wanted '%s')\n ",
+			heardoc->delimiter)
 	}
-	signals(0);
-}
+		signals(0);
+	}
