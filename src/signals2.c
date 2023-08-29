@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 21:24:16 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/29 15:23:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:01:32 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 void	handle_sigint3(int sig)
 {
+	int	i;
+
 	(void) sig;
 	write(1, "\n", 1);
+	i = 3;
+	while (i < 1024)
+		close(i++);
 	exit(130);
 }
 
