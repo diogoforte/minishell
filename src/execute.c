@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: bcastelo <bcastelo@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 07:13:58 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/28 17:48:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/08/29 09:51:13 by bcastelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ void	execute_command(char **cmd, t_redirect *cmds_head, t_pipe *pipes_head,
 	if (!path)
 	{
 		if (ft_strchr(cmd[0], '/'))
-			ft_dprintf(2, "minishell: '%s': No such file or directory\n", *cmd);
+			ft_dprintf(2, "minishell: %s: No such file or directory\n", *cmd);
 		else
-			ft_dprintf(2, "minishell: '%s': command not found\n", *cmd);
+			ft_dprintf(2, "minishell: %s: command not found\n", *cmd);
 		exit_execve(cmds_head, pipes_head, envp, 127);
 	}
 	if (execve(path, cmd, *envp) == -1)
